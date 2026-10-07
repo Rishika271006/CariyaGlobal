@@ -797,6 +797,10 @@ p {
 .section-eyebrow-blue {
   color: var(--blue);
 }
+.section-eyebrow.red,
+.section-eyebrow-red {
+  color: var(--red);
+}
 .section-header.center .section-eyebrow {
   margin-left: auto;
   margin-right: auto;
