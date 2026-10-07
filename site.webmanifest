@@ -1,0 +1,24 @@
+{
+  "name": "CARIYA Global",
+  "short_name": "CARIYA",
+  "description": "CARIYA Global connects people, places and possibilities across Hospitality, Tourism, Aviation and Travel \u2014 through international education, professional training, internships and career pathways across Asia.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0B2545",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/assets/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
