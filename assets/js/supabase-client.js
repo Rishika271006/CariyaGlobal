@@ -5,8 +5,8 @@
  */
 
 const CARIYA_SUPABASE_CONFIG = {
-  // Supabase Project URL (can be set in Admin Settings or Netlify environment)
-  url: window.SUPABASE_URL || localStorage.getItem('cariya_supabase_url') || '',
+  // Supabase Project URL (CARIYA Global project)
+  url: window.SUPABASE_URL || localStorage.getItem('cariya_supabase_url') || 'https://flzpejzgletmrbxzovtn.supabase.co',
   // Official Supabase Publishable Key (safe for client-side browser usage)
   publishableKey: 'sb_publishable_T6-c7BdQfJOeNikLlJ0sNg_B1I6ckif'
 };
