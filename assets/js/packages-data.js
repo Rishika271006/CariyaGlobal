@@ -320,6 +320,12 @@ const CariyaPackagesStore = {
     };
     list.unshift(newPkg);
     this.saveAll(list);
+
+    // Sync to Supabase cloud if configured
+    if (typeof window !== 'undefined' && window.CariyaSupabase && window.CariyaSupabase.isConfigured()) {
+      window.CariyaSupabase.syncPackage(newPkg).catch(e => console.warn('Supabase auto-sync error:', e));
+    }
+
     return newPkg;
   },
 
@@ -344,6 +350,12 @@ const CariyaPackagesStore = {
 
     list[index] = updated;
     this.saveAll(list);
+
+    // Sync to Supabase cloud if configured
+    if (typeof window !== 'undefined' && window.CariyaSupabase && window.CariyaSupabase.isConfigured()) {
+      window.CariyaSupabase.syncPackage(updated).catch(e => console.warn('Supabase auto-sync error:', e));
+    }
+
     return updated;
   },
 
@@ -353,6 +365,12 @@ const CariyaPackagesStore = {
     const filtered = list.filter(item => item.id !== id);
     if (filtered.length !== list.length) {
       this.saveAll(filtered);
+
+      // Delete from Supabase cloud if configured
+      if (typeof window !== 'undefined' && window.CariyaSupabase && window.CariyaSupabase.isConfigured()) {
+        window.CariyaSupabase.deletePackage(id).catch(e => console.warn('Supabase auto-delete error:', e));
+      }
+
       return true;
     }
     return false;
@@ -365,6 +383,12 @@ const CariyaPackagesStore = {
     if (target) {
       target.status = target.status === 'active' ? 'inactive' : 'active';
       this.saveAll(list);
+
+      // Sync updated status to Supabase cloud
+      if (typeof window !== 'undefined' && window.CariyaSupabase && window.CariyaSupabase.isConfigured()) {
+        window.CariyaSupabase.syncPackage(target).catch(e => console.warn('Supabase auto-sync error:', e));
+      }
+
       return target;
     }
     return null;

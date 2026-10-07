@@ -817,9 +817,72 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ==========================================================================
+  // 12. SUPABASE SETTINGS & CLOUD SYNC CONTROLLER
+  // ==========================================================================
+  function initSupabaseSettings() {
+    const form = document.getElementById('supabaseConfigForm');
+    const input = document.getElementById('supabaseProjectUrlInput');
+    const testBtn = document.getElementById('supabaseTestBtn');
+    const statusBadge = document.getElementById('supabaseStatusBadge');
+
+    function updateSupabaseBadge() {
+      if (!statusBadge) return;
+      if (window.CariyaSupabase && window.CariyaSupabase.isConfigured()) {
+        statusBadge.className = 'status-badge active';
+        statusBadge.textContent = 'Cloud Sync Connected';
+      } else {
+        statusBadge.className = 'status-badge inactive';
+        statusBadge.textContent = 'Local Storage Mode';
+      }
+    }
+
+    if (input && window.CariyaSupabase) {
+      input.value = window.CariyaSupabase.getProjectUrl();
+      updateSupabaseBadge();
+    }
+
+    if (form) {
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const url = input.value.trim();
+        if (!url) {
+          showToast('Please enter your Supabase Project URL', 'warning');
+          return;
+        }
+
+        if (window.CariyaSupabase) {
+          window.CariyaSupabase.setProjectUrl(url);
+          updateSupabaseBadge();
+          showToast('Testing cloud connection...', 'info');
+          const res = await window.CariyaSupabase.testConnection();
+          if (res.success) {
+            showToast('Connected to Supabase Cloud!', 'success');
+          } else {
+            showToast(res.message, 'warning');
+          }
+        }
+      });
+    }
+
+    if (testBtn) {
+      testBtn.addEventListener('click', async function () {
+        if (!window.CariyaSupabase) return;
+        const res = await window.CariyaSupabase.testConnection();
+        if (res.success) {
+          showToast('Supabase connection verified!', 'success');
+        } else {
+          showToast(res.message, 'warning');
+        }
+        updateSupabaseBadge();
+      });
+    }
+  }
+
+  // ==========================================================================
   // INITIALIZE APP
   // ==========================================================================
   checkAuth();
   renderDashboard();
   initInquiries();
+  initSupabaseSettings();
 });
