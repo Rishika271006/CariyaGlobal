@@ -1,286 +1,361 @@
 /**
- * CARIYA GLOBAL - Packages Data & State Management System
+ * CARIYA GLOBAL - Courses Data & State Management System
  * Shared data layer between Public Pages and Admin Portal
- * Persisted in browser localStorage (cariya_packages_v1)
+ * Persisted in browser localStorage (cariya_courses_v2 & cariya_packages_v1)
  */
 
-const STORAGE_KEY = 'cariya_packages_v1';
+const STORAGE_KEY = 'cariya_courses_v2';
+const LEGACY_STORAGE_KEY = 'cariya_packages_v1';
 const AUTH_KEY = 'cariya_admin_auth_v1';
 const INQUIRIES_KEY = 'cariya_inquiries_v1';
 
 // Default Cover Images available in CARIYA Global image directory
 const CARIYA_IMAGE_LIBRARY = [
-  { path: 'assets/images/hero-internships-singapore.jpg', label: 'Singapore Internships' },
-  { path: 'assets/images/hero-internships-malaysia.jpg', label: 'Malaysia Internships' },
-  { path: 'assets/images/hero-internships-thailand.jpg', label: 'Thailand Internships' },
-  { path: 'assets/images/hero-internships-japan.jpg', label: 'Japan Internships' },
-  { path: 'assets/images/hero-internships-south-korea.jpg', label: 'South Korea Internships' },
   { path: 'assets/images/hero-hotel-management-course.jpg', label: 'Hotel Management Course' },
+  { path: 'assets/images/hero-hotel-management-course-chandigarh.jpg', label: 'Hotel Management Chandigarh' },
+  { path: 'assets/images/hero-hospitality-management-course.jpg', label: 'Hospitality Management Course' },
+  { path: 'assets/images/hero-hospitality-courses.jpg', label: 'Hospitality Courses Hub' },
+  { path: 'assets/images/hero-hospitality-courses-chandigarh.jpg', label: 'Hospitality Courses Chandigarh' },
   { path: 'assets/images/hero-aviation-management-course.jpg', label: 'Aviation Management Course' },
   { path: 'assets/images/hero-aviation.jpg', label: 'Aviation & Cabin Crew' },
-  { path: 'assets/images/hero-tourism-management-course.jpg', label: 'Tourism Management' },
-  { path: 'assets/images/hero-travel-management-course.jpg', label: 'Travel Trade & Tour Operations' },
-  { path: 'assets/images/hero-professional-training.jpg', label: 'Professional Skills Training' },
-  { path: 'assets/images/hero-study-in-asia.jpg', label: 'Study in Asia Hub' }
+  { path: 'assets/images/hero-aviation-courses-chandigarh.jpg', label: 'Aviation Courses Chandigarh' },
+  { path: 'assets/images/hero-tourism-management-course.jpg', label: 'Tourism Management Course' },
+  { path: 'assets/images/hero-tourism-courses.jpg', label: 'Tourism Courses & Guiding' },
+  { path: 'assets/images/hero-travel-management-course.jpg', label: 'Travel Trade & GDS Operations' },
+  { path: 'assets/images/hero-courses.jpg', label: 'All Courses & Programmes' }
 ];
 
-// Initial Core Packages for CARIYA Global
-const DEFAULT_PACKAGES = [
+// Initial Real Courses Catalog for CARIYA Global
+const DEFAULT_COURSES = [
   {
-    id: 'pkg-sg-hospitality',
-    title: 'Singapore International Hospitality Internship Package',
-    destination: 'Singapore',
-    category: 'internships',
-    industry: 'Hospitality',
+    id: 'course-hotel-mgmt',
+    title: 'Hotel Management Course (Front Office, F&B & Housekeeping)',
+    destination: 'Chandigarh Hub / Hybrid',
+    category: 'hospitality',
+    industry: 'Hotel Management',
     duration: '6 Months',
-    mode: 'On-site / International',
-    price: 145000,
-    priceFormatted: '₹1,45,000',
-    priceUnit: '/ candidate',
-    rating: 4.95,
-    badge: 'High Stipend & Placement',
+    mode: 'Offline Class & Labs',
+    price: 45000,
+    priceFormatted: '₹45,000',
+    priceUnit: '/ student',
+    rating: 4.92,
+    badge: 'AI-Powered Curriculum',
     status: 'active',
-    image: 'assets/images/hero-internships-singapore.jpg',
-    description: 'Structured 6-month international internship placement in 4-star and 5-star hotels across Singapore with visa guidance, interview prep, and monthly training stipend.',
-    features: ['5-Star Hotel Placement', 'Monthly Training Allowance', 'International Work Experience', 'Visa Support'],
+    image: 'assets/images/hero-hotel-management-course.jpg',
+    description: 'Comprehensive hotel operations diploma covering front office management, guest relations, housekeeping standards, F&B service, and emerging AI tools for personalized hospitality guest experiences.',
+    features: ['Front Office & Reservations', 'Housekeeping Presentation Standards', 'F&B Service Fundamentals', 'AI Guest Experience Tools'],
     inclusions: [
-      'Resume & Video Profile Optimization',
-      'Direct Hotel Partner Interviews',
-      'Training Work Permit (TWP) Guidance',
-      'Pre-departure Briefing & Singapore Airport Welcome',
-      'On-ground Mentorship & 24/7 Support'
+      'Practical Lab Simulation & Front Office Software',
+      'PMS (Opera / Fidelio) Operations Training',
+      'Hospitality Grooming & Communication Clinics',
+      'Placement & Internship Fast-Track Referral',
+      'Verified CARIYA Global Certificate'
     ],
     createdAt: '2026-03-01T10:00:00Z'
   },
   {
-    id: 'pkg-chd-hotel-mgmt',
-    title: 'AI-Powered Hotel Management & Guest Services Diploma',
-    destination: 'Chandigarh / Hybrid',
+    id: 'course-hospitality-mgmt',
+    title: 'Hospitality Management Course (Resort Operations & Leadership)',
+    destination: 'Chandigarh Hub / Asia Track',
     category: 'hospitality',
-    industry: 'Hospitality',
-    duration: '3 Months',
-    mode: 'Offline / Hybrid',
-    price: 45000,
-    priceFormatted: '₹45,000',
+    industry: 'Hospitality Leadership',
+    duration: '6 Months',
+    mode: 'Hybrid / International',
+    price: 65000,
+    priceFormatted: '₹65,000',
     priceUnit: '/ student',
-    rating: 4.88,
-    badge: 'AI Integrated Curriculum',
+    rating: 4.90,
+    badge: 'Luxury Resort Pathway',
     status: 'active',
-    image: 'assets/images/hero-hotel-management-course.jpg',
-    description: 'Modern hotel operations curriculum combining front office management, guest relations, F&B service standards, and emerging AI tools for personalized hospitality.',
-    features: ['Front Office & Reservations', 'F&B Service Standards', 'AI Guest Experience Tools', 'Industry Certification'],
+    image: 'assets/images/hero-hospitality-management-course.jpg',
+    description: 'Executive management pathway exploring luxury hospitality, resort operations, department budgeting, customer experience strategy, and interdepartmental leadership across Asia.',
+    features: ['Luxury Resort Operations', 'Guest Relations Leadership', 'Quality Management', 'Revenue & Yield Basics'],
     inclusions: [
-      'Interactive Classroom & Practical Simulation',
-      'PMS & Reservation Software Training',
-      'Hospitality Communication & Grooming',
-      'Portfolio & CV Building Session',
-      'Placement & Internship Fast-Track Referral'
+      'Departmental Rotations Simulation',
+      'Multicultural Workplace Communication',
+      'Executive Hospitality Portfolio Building',
+      'Singapore & Thailand International Pathway Guidance',
+      'CARIYA Global Professional Diploma'
     ],
     createdAt: '2026-03-05T11:30:00Z'
   },
   {
-    id: 'pkg-chd-aviation',
-    title: 'Aviation Management & Airport Operations Career Package',
+    id: 'course-aviation-mgmt',
+    title: 'Aviation Management & Airport Operations Course',
     destination: 'Chandigarh Hub',
     category: 'aviation',
-    industry: 'Aviation',
+    industry: 'Aviation & Airport Ops',
     duration: '6 Months',
     mode: 'Offline Class & Labs',
     price: 85000,
     priceFormatted: '₹85,000',
     priceUnit: '/ student',
-    rating: 4.92,
-    badge: 'Industry Preferred',
+    rating: 4.95,
+    badge: 'Airport & Airline Career',
     status: 'active',
     image: 'assets/images/hero-aviation-management-course.jpg',
-    description: 'Comprehensive airline and airport ground operations training covering check-in systems, passenger handling, safety protocol awareness, and aviation digital workflows.',
-    features: ['Airport Ground Handling', 'Aviation Safety & Security', 'Boarding & Gate Procedures', 'Interview Simulation'],
+    description: 'Professional airline and airport ground operations training covering check-in systems (DCS), passenger handling, ramp awareness, aviation security protocols, and flight dispatch workflows.',
+    features: ['Airport Ground Handling', 'Aviation Safety & Security', 'DCS Check-in Systems', 'Boarding & Gate Procedures'],
     inclusions: [
       'Aviation Terminology & Dangerous Goods Awareness',
-      'DCS & Ticketing Systems Overview',
-      'Personality Grooming & Group Discussion Drills',
       'Airline Mock Assessment Interviews',
-      'Lifetime Alumni Guidance Network'
+      'Personality Grooming & Group Discussion Drills',
+      'Direct Open-Day Screening Notifications',
+      'Industry Accredited Aviation Certificate'
     ],
     createdAt: '2026-03-10T09:15:00Z'
   },
   {
-    id: 'pkg-th-resort-tourism',
-    title: 'Thailand Luxury Resort & Island Tourism Internship Package',
-    destination: 'Phuket / Bangkok, Thailand',
-    category: 'internships',
-    industry: 'Tourism & Hospitality',
-    duration: '6 Months',
-    mode: 'On-site / International',
-    price: 120000,
-    priceFormatted: '₹1,20,000',
-    priceUnit: '/ candidate',
-    rating: 4.85,
-    badge: 'Exotic Resort Exposure',
+    id: 'course-cabin-crew',
+    title: 'Cabin Crew Grooming & In-Flight Service Master Course',
+    destination: 'Chandigarh Hub',
+    category: 'aviation',
+    industry: 'Aviation & Cabin Crew',
+    duration: '3 Months',
+    mode: 'Offline Intensive',
+    price: 55000,
+    priceFormatted: '₹55,000',
+    priceUnit: '/ student',
+    rating: 4.94,
+    badge: 'High Selection Rate',
     status: 'active',
-    image: 'assets/images/hero-internships-thailand.jpg',
-    description: 'Gain hands-on hospitality and eco-tourism experience in premier beach resorts across Phuket and Samui. Includes housing assistance, meals on duty, and certification.',
-    features: ['Beach Resort Placement', 'Accommodation & Duty Meals', 'Cultural Immersion', 'Global Certificate'],
+    image: 'assets/images/hero-aviation.jpg',
+    description: 'Intensive grooming, body language, voice modulation, in-flight passenger service etiquette, emergency procedures, and airline mock interview drills designed for domestic and international cabin crew aspirants.',
+    features: ['Grooming & Posture Clinics', 'In-Flight Announcement Drills', 'Customer Service & Safety Drills', 'Stress Interview Drills'],
     inclusions: [
-      'English & Basic Hospitality Thai Orientation',
-      'Cross-departmental Resort Rotation',
-      'Non-B / ED Visa Documentation Guidance',
-      'Certificate of International Internship Completion',
-      'Post-Internship Career Recommendation'
+      'Professional Studio Grooming Portfolio Shoot',
+      'Airline-Specific Screening Simulation Drills',
+      'Aviation First Aid & Emergency Protocol Basics',
+      'Personalized Video Analysis & Instructor Feedback'
     ],
     createdAt: '2026-03-12T14:20:00Z'
   },
   {
-    id: 'pkg-my-tourism-ops',
-    title: 'Malaysia Travel Trade & Tourism Operations Pathway',
-    destination: 'Kuala Lumpur, Malaysia',
+    id: 'course-tourism-mgmt',
+    title: 'International Tourism Management & Destination Development Course',
+    destination: 'Chandigarh Hub / Online',
     category: 'tourism',
-    industry: 'Tourism & Travel',
-    duration: '3 Months',
+    industry: 'Tourism Management',
+    duration: '6 Months',
     mode: 'Hybrid / International',
-    price: 65000,
-    priceFormatted: '₹65,000',
-    priceUnit: '/ candidate',
-    rating: 4.78,
-    badge: 'Fast-Track',
+    price: 52000,
+    priceFormatted: '₹52,000',
+    priceUnit: '/ student',
+    rating: 4.86,
+    badge: 'Eco-Tourism & Global Travel',
     status: 'active',
-    image: 'assets/images/hero-internships-malaysia.jpg',
-    description: 'Specialized program for students entering destination management companies, inbound tour operating, and business travel desks across Southeast Asia.',
-    features: ['Tour Itinerary Costing', 'Inbound & Outbound Logistics', 'MICE & Event Support', 'Southeast Asia Focus'],
+    image: 'assets/images/hero-tourism-management-course.jpg',
+    description: 'Executive training in international tourism development, destination marketing, eco-tourism, cultural tour planning, visitor experience strategy, and travel agency alliance building.',
+    features: ['Destination Marketing', 'Eco-Tourism Strategy', 'Tour Operating Systems', 'Global Visitor Experience'],
     inclusions: [
-      'GDS & Travel Booking Software Foundations',
-      'Visa Requirements & Border Protocols Matrix',
       'Case Studies in Asian Tourism Destinations',
+      'Field Survey & Tour Packaging Project',
+      'Digital Marketing for Tourism Desks',
       'Verified Partner Training Certificate'
     ],
     createdAt: '2026-03-15T08:00:00Z'
   },
   {
-    id: 'pkg-cabin-crew-prep',
-    title: 'Cabin Crew Grooming & International Airline Interview Prep',
-    destination: 'Chandigarh Hub',
-    category: 'aviation',
-    industry: 'Aviation',
-    duration: '2 Months',
-    mode: 'Offline Intensive',
+    id: 'course-tourism-courses',
+    title: 'Tourism Courses & Guiding Operations Foundation',
+    destination: 'Chandigarh Hub / Online',
+    category: 'tourism',
+    industry: 'Tourism Foundations',
+    duration: '3 Months',
+    mode: 'Offline / Hybrid',
+    price: 35000,
+    priceFormatted: '₹35,000',
+    priceUnit: '/ student',
+    rating: 4.84,
+    badge: 'Travel Agency & Guiding',
+    status: 'active',
+    image: 'assets/images/hero-tourism-courses.jpg',
+    description: 'Foundation course covering tourist guidance techniques, itinerary planning, customer relations, cultural heritage presentation, and travel documentation across South & Southeast Asia.',
+    features: ['Tour Guiding Protocols', 'Cultural Heritage Presentation', 'Visitor Safety & Ethics', 'Asia Tour Itineraries'],
+    inclusions: [
+      'Practical Guiding Simulation & Commentary Drills',
+      'Group Leadership & Client Care Workshops',
+      'Asia Destination Knowledge Base',
+      'Course Completion Certificate'
+    ],
+    createdAt: '2026-03-18T10:30:00Z'
+  },
+  {
+    id: 'course-travel-ticketing',
+    title: 'Travel Trade Operations & Global GDS Ticketing Course',
+    destination: 'Online / Chandigarh Hub',
+    category: 'travel',
+    industry: 'Travel Trade & GDS',
+    duration: '3 Months',
+    mode: 'Online Interactive',
     price: 38000,
     priceFormatted: '₹38,000',
     priceUnit: '/ student',
-    rating: 4.90,
-    badge: 'High Selection Rate',
+    rating: 4.82,
+    badge: 'GDS Amadeus / Galileo',
     status: 'active',
-    image: 'assets/images/hero-aviation.jpg',
-    description: 'Intensive grooming, body language, voice modulation, in-flight service etiquette, and mock interview drill course designed for international airline cabin crew aspirants.',
-    features: ['Grooming & Posture Clinics', 'In-flight Announcement Practice', 'Group Task Drills', 'Stress Interview Prep'],
+    image: 'assets/images/hero-travel-management-course.jpg',
+    description: 'Hands-on training on Global Distribution Systems (GDS Amadeus / Galileo), airline reservation codes, international fare calculation, PNR generation, and visa rules for travel professionals.',
+    features: ['GDS Reservation Systems', 'Fare Rules & Ticketing Logic', 'Visa Regulation Protocols', 'Domestic & International Itineraries'],
     inclusions: [
-      'Professional Studio Portfolio Photoshoot',
-      'Airline-Specific Screening Simulation',
-      'Personalized Feedback & Video Analysis',
-      'Direct Open-Day Interview Notifications'
+      'Live GDS Software Simulation Access',
+      'Practical Air Ticketing & Fare Calculation Drills',
+      'Commercial Costing Templates & Tools',
+      'Executive Travel Consultant Certification'
     ],
     createdAt: '2026-03-20T12:00:00Z'
   },
   {
-    id: 'pkg-jp-hospitality',
-    title: 'Japan Omotenashi Cultural & Hotel Training Program',
-    destination: 'Tokyo / Kyoto, Japan',
-    category: 'study-asia',
-    industry: 'Hospitality & Culture',
-    duration: '12 Months',
-    mode: 'On-site / International',
-    price: 220000,
-    priceFormatted: '₹2,20,000',
-    priceUnit: '/ candidate',
-    rating: 4.96,
-    badge: 'Premium Immersion',
+    id: 'course-travel-management',
+    title: 'Corporate Travel Management & MICE Operations Course',
+    destination: 'Chandigarh Hub / Hybrid',
+    category: 'travel',
+    industry: 'Corporate Travel & MICE',
+    duration: '6 Months',
+    mode: 'Hybrid / International',
+    price: 48000,
+    priceFormatted: '₹48,000',
+    priceUnit: '/ student',
+    rating: 4.85,
+    badge: 'Corporate & MICE Focus',
     status: 'active',
-    image: 'assets/images/hero-internships-japan.jpg',
-    description: 'Elite 1-year pathway exploring traditional Omotenashi hospitality excellence, luxury ryokan and five-star hotel service standards in Tokyo and Kyoto.',
-    features: ['Omotenashi Service Masterclass', 'Japanese Language Modules', 'Traditional & Modern Hotel Training', 'High Global Prestige'],
+    image: 'assets/images/hero-travel-courses.jpg',
+    description: 'Specialized course for managing corporate travel desks, MICE (Meetings, Incentives, Conferences, Exhibitions), corporate negotiation, and luxury inbound/outbound travel logistics.',
+    features: ['Corporate Travel Desks', 'MICE Event Management', 'Vendor & Hotel Contracts', 'Corporate Client Account Mgmt'],
     inclusions: [
-      'JLPT N5/N4 Preparatory Language Training',
-      'Sponsor Institution Matching & Visa Support',
-      'Dormitory Accommodation Coordination',
-      'Accredited International Completion Diploma'
+      '10 Real-world Corporate Proposal Projects',
+      'Contract Negotiation Playbooks',
+      'Travel ERP & Expense Tools Overview',
+      'Advanced Travel Management Diploma'
     ],
     createdAt: '2026-03-22T16:45:00Z'
   },
   {
-    id: 'pkg-travel-consultant',
-    title: 'Executive Travel Consultant & Package Designing Diploma',
-    destination: 'Online / Hybrid',
-    category: 'travel',
-    industry: 'Travel Trade',
-    duration: '3 Months',
-    mode: 'Online Interactive',
-    price: 42000,
-    priceFormatted: '₹42,000',
+    id: 'course-hotel-mgmt-chandigarh',
+    title: 'Hotel Management Diploma Course in Chandigarh (Sector 34-A)',
+    destination: 'Chandigarh Hub (SCO 64-65, Sector 34-A)',
+    category: 'hospitality',
+    industry: 'Chandigarh Hub Campus',
+    duration: '6 Months',
+    mode: 'Offline Class & Labs',
+    price: 45000,
+    priceFormatted: '₹45,000',
     priceUnit: '/ student',
-    rating: 4.75,
-    badge: 'Remote Friendly',
+    rating: 4.93,
+    badge: 'Sector 34-A Practical Labs',
     status: 'active',
-    image: 'assets/images/hero-travel-management-course.jpg',
-    description: 'Learn the commercial backbone of international travel agencies: assembling complex multi-destination itineraries, quotation costing, supplier negotiation, and client retention.',
-    features: ['Custom Package Designing', 'Fare Rules & Ticketing Logic', 'Supplier Contract Negotiation', 'Digital Marketing for Travel'],
+    image: 'assets/images/hero-hotel-management-course-chandigarh.jpg',
+    description: 'Dedicated on-campus diploma at CARIYA Global Chandigarh Hub with physical front office simulation, food & beverage practical lab, guest handling workshops, and local hotel visits.',
+    features: ['In-Person Lab Training', 'Sector 34-A Training Hub', '1-on-1 Faculty Mentorship', 'Direct Tricity & Regional Placements'],
     inclusions: [
-      'Live Masterclasses with Senior Travel Executives',
-      '10 Real-world Itinerary Creation Assignments',
-      'Commercial Costing Templates & Tools',
-      'Certificate in Travel Trade Operations'
+      'Daily Practical Lab Sessions in Sector 34-A Hub',
+      'Uniform & Professional Grooming Kit Included',
+      'Local 5-Star Hotel Immersion Visits',
+      'Lifetime Alumni Placement Referral Network'
     ],
     createdAt: '2026-03-25T13:10:00Z'
   },
   {
-    id: 'pkg-kr-service-excellence',
-    title: 'South Korea K-Hospitality & Event Management Pathway',
-    destination: 'Seoul, South Korea',
-    category: 'study-asia',
-    industry: 'Hospitality & Events',
+    id: 'course-aviation-chandigarh',
+    title: 'Aviation & Airport Operations Diploma in Chandigarh',
+    destination: 'Chandigarh Hub (SCO 64-65, Sector 34-A)',
+    category: 'aviation',
+    industry: 'Chandigarh Hub Campus',
     duration: '6 Months',
-    mode: 'On-site / International',
-    price: 175000,
-    priceFormatted: '₹1,75,000',
-    priceUnit: '/ candidate',
-    rating: 4.86,
-    badge: 'Next-Gen Asia',
+    mode: 'Offline Class & Labs',
+    price: 75000,
+    priceFormatted: '₹75,000',
+    priceUnit: '/ student',
+    rating: 4.91,
+    badge: 'Airport & Airline Hub',
     status: 'active',
-    image: 'assets/images/hero-internships-south-korea.jpg',
-    description: 'Explore the fast-growing hospitality, convention, and entertainment event sector in Seoul. Combines operational service exposure with modern hospitality tech.',
-    features: ['Convention & Hotel Exposure', 'Korean Service Culture', 'Smart City Hospitality', 'Seoul Based'],
+    image: 'assets/images/hero-aviation-courses-chandigarh.jpg',
+    description: 'Classroom and practical aviation training at CARIYA Global Chandigarh Hub covering airport security, passenger service, check-in software, grooming clinics, and interview assessment rounds.',
+    features: ['Direct Airport Orientation', 'Mock Check-in Counters', 'Personality Grooming Classes', 'Aviation English & Communication'],
     inclusions: [
-      'Pre-departure Cultural Orientation',
-      'International Trainee Visa Documentation Support',
-      'Shared Accommodation Guidance in Seoul',
-      'CARIYA Global Partner Certification'
+      'Aviation Uniform & Grooming Standards Kit',
+      'DCS Simulation Software Training',
+      'Airlines Screening Interview Prep',
+      'Chandigarh Airport Practical Exposure Visit'
     ],
     createdAt: '2026-03-28T15:30:00Z'
+  },
+  {
+    id: 'course-hospitality-chandigarh',
+    title: 'Professional Hospitality & Food Service Course in Chandigarh',
+    destination: 'Chandigarh Hub (Sector 34-A)',
+    category: 'hospitality',
+    industry: 'Chandigarh Hub Campus',
+    duration: '3 Months',
+    mode: 'Offline Class & Labs',
+    price: 35000,
+    priceFormatted: '₹35,000',
+    priceUnit: '/ student',
+    rating: 4.87,
+    badge: 'Fast-Track Certification',
+    status: 'active',
+    image: 'assets/images/hero-hospitality-courses-chandigarh.jpg',
+    description: 'Short-term hands-on certificate course focusing on frontline hospitality service, banquet operations, bar & beverage service basics, guest communication, and dining room management.',
+    features: ['F&B Practical Drills', 'Banquet & Event Operations', 'Customer Service Etiquette', 'Fast-Track Completion'],
+    inclusions: [
+      'Hands-on Table Setting & Service Practice',
+      'Food Hygiene & Safety Protocols',
+      'Resume Building & Interview Coaching',
+      'Industry Recognized Certificate'
+    ],
+    createdAt: '2026-03-30T10:00:00Z'
   }
 ];
 
+// Alias for backwards compatibility
+const DEFAULT_PACKAGES = DEFAULT_COURSES;
+
 // Helper functions for Data Operations
-const CariyaPackagesStore = {
-  // Get all packages
+const CariyaCoursesStore = {
+  // Get all courses (with automatic legacy migration)
   getAll: function () {
     try {
+      // 1. Check current courses storage key
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          // If the stored data is not legacy package data, return it
+          const isLegacy = parsed.some(item => item.id === 'pkg-sg-hospitality');
+          if (!isLegacy) {
+            return parsed;
+          }
+        }
+      }
+
+      // 2. Check if legacy key has custom (non-default) items
+      const legacyStored = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacyStored) {
+        const legacyParsed = JSON.parse(legacyStored);
+        if (Array.isArray(legacyParsed) && legacyParsed.length > 0) {
+          const isLegacyOnly = legacyParsed.every(item => item.id && item.id.startsWith('pkg-'));
+          if (!isLegacyOnly) {
+            // Keep user-created custom items and migrate
+            this.saveAll(legacyParsed);
+            return legacyParsed;
+          }
         }
       }
     } catch (e) {
-      console.warn('Error reading from localStorage, using defaults:', e);
+      console.warn('Error reading courses from localStorage, using defaults:', e);
     }
-    // Initialize default if not present
-    this.saveAll(DEFAULT_PACKAGES);
-    return DEFAULT_PACKAGES;
+
+    // Initialize default courses
+    this.saveAll(DEFAULT_COURSES);
+    return DEFAULT_COURSES;
   },
 
-  // Save full packages array
-  saveAll: function (packages) {
+  // Save full courses array
+  saveAll: function (courses) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(packages));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(courses));
+      // Also update legacy key for any public scripts that read it
+      localStorage.setItem(LEGACY_STORAGE_KEY, JSON.stringify(courses));
       return true;
     } catch (e) {
       console.error('Failed to save to localStorage:', e);
@@ -288,48 +363,48 @@ const CariyaPackagesStore = {
     }
   },
 
-  // Get single package by ID
+  // Get single course by ID
   getById: function (id) {
     const list = this.getAll();
     return list.find(item => item.id === id) || null;
   },
 
-  // Add new package
-  add: function (pkgData) {
+  // Add new course
+  add: function (courseData) {
     const list = this.getAll();
-    const id = 'pkg-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 6);
-    const newPkg = {
+    const id = 'course-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 6);
+    const newCourse = {
       id: id,
-      title: pkgData.title.trim(),
-      destination: pkgData.destination.trim(),
-      category: pkgData.category || 'hospitality',
-      industry: pkgData.industry || 'Hospitality',
-      duration: pkgData.duration.trim(),
-      mode: pkgData.mode || 'Offline / Hybrid',
-      price: Number(pkgData.price) || 0,
-      priceFormatted: '₹' + Number(pkgData.price || 0).toLocaleString('en-IN'),
-      priceUnit: pkgData.priceUnit || '/ candidate',
-      rating: Number(pkgData.rating) || 4.8,
-      badge: pkgData.badge ? pkgData.badge.trim() : '',
-      status: pkgData.status || 'active',
-      image: pkgData.image || 'assets/images/hero-home.jpg',
-      description: pkgData.description ? pkgData.description.trim() : '',
-      features: Array.isArray(pkgData.features) ? pkgData.features : (pkgData.features ? pkgData.features.split(',').map(s => s.trim()).filter(Boolean) : []),
-      inclusions: Array.isArray(pkgData.inclusions) ? pkgData.inclusions : (pkgData.inclusions ? pkgData.inclusions.split(',').map(s => s.trim()).filter(Boolean) : []),
+      title: courseData.title.trim(),
+      destination: courseData.destination.trim(),
+      category: courseData.category || 'hospitality',
+      industry: courseData.industry || 'Hospitality',
+      duration: courseData.duration.trim(),
+      mode: courseData.mode || 'Offline / Hybrid',
+      price: Number(courseData.price) || 0,
+      priceFormatted: '₹' + Number(courseData.price || 0).toLocaleString('en-IN'),
+      priceUnit: courseData.priceUnit || '/ student',
+      rating: Number(courseData.rating) || 4.8,
+      badge: courseData.badge ? courseData.badge.trim() : '',
+      status: courseData.status || 'active',
+      image: courseData.image || 'assets/images/hero-courses.jpg',
+      description: courseData.description ? courseData.description.trim() : '',
+      features: Array.isArray(courseData.features) ? courseData.features : (courseData.features ? courseData.features.split(',').map(s => s.trim()).filter(Boolean) : []),
+      inclusions: Array.isArray(courseData.inclusions) ? courseData.inclusions : (courseData.inclusions ? courseData.inclusions.split(',').map(s => s.trim()).filter(Boolean) : []),
       createdAt: new Date().toISOString()
     };
-    list.unshift(newPkg);
+    list.unshift(newCourse);
     this.saveAll(list);
 
     // Sync to Supabase cloud if configured
     if (typeof window !== 'undefined' && window.CariyaSupabase && window.CariyaSupabase.isConfigured()) {
-      window.CariyaSupabase.syncPackage(newPkg).catch(e => console.warn('Supabase auto-sync error:', e));
+      window.CariyaSupabase.syncPackage(newCourse).catch(e => console.warn('Supabase auto-sync error:', e));
     }
 
-    return newPkg;
+    return newCourse;
   },
 
-  // Update existing package
+  // Update existing course
   update: function (id, updateData) {
     const list = this.getAll();
     const index = list.findIndex(item => item.id === id);
@@ -359,7 +434,7 @@ const CariyaPackagesStore = {
     return updated;
   },
 
-  // Delete package
+  // Delete course
   delete: function (id) {
     const list = this.getAll();
     const filtered = list.filter(item => item.id !== id);
@@ -394,10 +469,10 @@ const CariyaPackagesStore = {
     return null;
   },
 
-  // Reset to initial default packages
+  // Reset to initial default courses
   resetToDefaults: function () {
-    this.saveAll(DEFAULT_PACKAGES);
-    return DEFAULT_PACKAGES;
+    this.saveAll(DEFAULT_COURSES);
+    return DEFAULT_COURSES;
   },
 
   // Export JSON string for download
@@ -414,16 +489,21 @@ const CariyaPackagesStore = {
         this.saveAll(parsed);
         return { success: true, count: parsed.length };
       }
-      return { success: false, error: 'JSON does not contain a valid array of packages.' };
+      return { success: false, error: 'JSON does not contain a valid array of courses.' };
     } catch (e) {
       return { success: false, error: e.message };
     }
   }
 };
 
+// Aliases for compatibility
+const CariyaPackagesStore = CariyaCoursesStore;
+
 // Export to window
 if (typeof window !== 'undefined') {
-  window.CariyaPackagesStore = CariyaPackagesStore;
-  window.DEFAULT_PACKAGES = DEFAULT_PACKAGES;
+  window.CariyaCoursesStore = CariyaCoursesStore;
+  window.CariyaPackagesStore = CariyaCoursesStore;
+  window.DEFAULT_COURSES = DEFAULT_COURSES;
+  window.DEFAULT_PACKAGES = DEFAULT_COURSES;
   window.CARIYA_IMAGE_LIBRARY = CARIYA_IMAGE_LIBRARY;
 }

@@ -1,6 +1,6 @@
 /**
  * CARIYA GLOBAL - Admin Portal Controller
- * Manages Packages CRUD, Modals, Filters, Metrics & Auth
+ * Manages Courses CRUD, Modals, Filters, Metrics & Auth
  */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -54,6 +54,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let packageToDeleteId = null;
   let currentViewMode = 'table'; // 'table' or 'grid'
+
+  // Data Store Reference
+  const store = window.CariyaCoursesStore || window.CariyaPackagesStore;
 
   // ==========================================================================
   // 1. AUTHENTICATION CONTROLLER
@@ -173,34 +176,34 @@ document.addEventListener('DOMContentLoaded', function () {
   // ==========================================================================
   // 4. METRICS & DATA RENDERING
   // ==========================================================================
-  function updateMetrics(packages) {
-    const total = packages.length;
-    metricTotalPackages.textContent = total;
+  function updateMetrics(courses) {
+    const total = courses.length;
+    if (metricTotalPackages) metricTotalPackages.textContent = total;
     if (sidebarPkgBadge) sidebarPkgBadge.textContent = total;
 
     // Categories count
-    const uniqueCats = new Set(packages.map(p => p.category)).size;
-    metricCategories.textContent = uniqueCats;
+    const uniqueCats = new Set(courses.map(p => p.category)).size;
+    if (metricCategories) metricCategories.textContent = uniqueCats;
 
-    // Destinations count
-    const uniqueDests = new Set(packages.map(p => p.destination)).size;
+    // Campus Hubs & Modes count
+    const uniqueDests = new Set(courses.map(p => p.destination)).size;
     if (metricDestinations) metricDestinations.textContent = uniqueDests;
 
-    // Average Price
-    if (total > 0) {
-      const sum = packages.reduce((acc, curr) => acc + (Number(curr.price) || 0), 0);
+    // Average Fee
+    if (total > 0 && metricAvgPrice) {
+      const sum = courses.reduce((acc, curr) => acc + (Number(curr.price) || 0), 0);
       const avg = Math.round(sum / total);
       metricAvgPrice.textContent = '₹' + avg.toLocaleString('en-IN');
-    } else {
+    } else if (metricAvgPrice) {
       metricAvgPrice.textContent = '₹0';
     }
   }
 
   function getFilteredAndSortedPackages() {
-    let list = CariyaPackagesStore.getAll();
+    let list = store.getAll();
 
     // Search filter
-    const searchTerm = searchPackageInput.value.toLowerCase().trim();
+    const searchTerm = searchPackageInput ? searchPackageInput.value.toLowerCase().trim() : '';
     if (searchTerm) {
       list = list.filter(pkg =>
         pkg.title.toLowerCase().includes(searchTerm) ||
@@ -212,13 +215,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Category filter
-    const category = filterCategorySelect.value;
+    const category = filterCategorySelect ? filterCategorySelect.value : 'all';
     if (category !== 'all') {
       list = list.filter(pkg => pkg.category === category);
     }
 
     // Sorting
-    const sortVal = sortPackageSelect.value;
+    const sortVal = sortPackageSelect ? sortPackageSelect.value : 'newest';
     list.sort((a, b) => {
       if (sortVal === 'newest') {
         return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
@@ -241,30 +244,31 @@ document.addEventListener('DOMContentLoaded', function () {
     return list;
   }
 
-  function renderTable(packages) {
+  function renderTable(courses) {
+    if (!packagesTableBody) return;
     packagesTableBody.innerHTML = '';
 
-    if (packages.length === 0) {
+    if (courses.length === 0) {
       packagesTableBody.innerHTML = `
         <tr>
           <td colspan="7" style="text-align: center; padding: 48px 20px; color: var(--text-muted);">
-            <i class="fa-solid fa-boxes-stacked" style="font-size: 2.2rem; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
-            <strong>No matching packages found.</strong>
-            <p style="font-size: 0.85rem; margin-top: 4px;">Try clearing filters or click "+ Add New Package".</p>
+            <i class="fa-solid fa-graduation-cap" style="font-size: 2.2rem; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
+            <strong>No matching courses found.</strong>
+            <p style="font-size: 0.85rem; margin-top: 4px;">Try clearing filters or click "+ Add New Course".</p>
           </td>
         </tr>
       `;
       return;
     }
 
-    packages.forEach(pkg => {
+    courses.forEach(pkg => {
       const tr = document.createElement('tr');
       const catClass = pkg.category || 'hospitality';
 
       tr.innerHTML = `
         <td>
           <div class="pkg-cell">
-            <img src="${pkg.image || 'assets/images/hero-home.jpg'}" alt="${pkg.title}" class="pkg-thumb" onerror="this.src='assets/images/hero-home.jpg'">
+            <img src="${pkg.image || 'assets/images/hero-courses.jpg'}" alt="${pkg.title}" class="pkg-thumb" onerror="this.src='assets/images/hero-courses.jpg'">
             <div class="pkg-title-wrap">
               <strong>${pkg.title}</strong>
               <small><i class="fa-solid fa-location-dot" style="color: var(--red);"></i> ${pkg.destination} &bull; ${pkg.duration}</small>
@@ -283,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <td>
           <div class="price-display">
             ${pkg.priceFormatted || ('₹' + Number(pkg.price || 0).toLocaleString('en-IN'))}
-            <small>${pkg.priceUnit || '/ candidate'}</small>
+            <small>${pkg.priceUnit || '/ student'}</small>
           </div>
         </td>
         <td>
@@ -298,13 +302,13 @@ document.addEventListener('DOMContentLoaded', function () {
         </td>
         <td>
           <div class="action-buttons">
-            <button class="btn btn-outline btn-icon" data-action="duplicate" data-id="${pkg.id}" title="Duplicate Package">
+            <button class="btn btn-outline btn-icon" data-action="duplicate" data-id="${pkg.id}" title="Duplicate Course">
               <i class="fa-solid fa-clone" style="color: var(--blue);"></i>
             </button>
-            <button class="btn btn-outline btn-icon" data-action="edit" data-id="${pkg.id}" title="Edit Package">
+            <button class="btn btn-outline btn-icon" data-action="edit" data-id="${pkg.id}" title="Edit Course Details">
               <i class="fa-solid fa-pen-to-square" style="color: var(--navy);"></i>
             </button>
-            <button class="btn btn-outline btn-icon" data-action="delete" data-id="${pkg.id}" title="Delete Package">
+            <button class="btn btn-outline btn-icon" data-action="delete" data-id="${pkg.id}" title="Delete Course">
               <i class="fa-solid fa-trash" style="color: #EF4444;"></i>
             </button>
           </div>
@@ -315,26 +319,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  function renderGrid(packages) {
+  function renderGrid(courses) {
+    if (!packagesGridView) return;
     packagesGridView.innerHTML = '';
 
-    if (packages.length === 0) {
+    if (courses.length === 0) {
       packagesGridView.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: var(--text-muted);">
-          <i class="fa-solid fa-boxes-stacked" style="font-size: 2.2rem; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
-          <strong>No matching packages found.</strong>
+          <i class="fa-solid fa-graduation-cap" style="font-size: 2.2rem; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
+          <strong>No matching courses found.</strong>
         </div>
       `;
       return;
     }
 
-    packages.forEach(pkg => {
+    courses.forEach(pkg => {
       const card = document.createElement('div');
       card.className = 'admin-pkg-card';
 
       card.innerHTML = `
         <div class="admin-pkg-card-media">
-          <img src="${pkg.image || 'assets/images/hero-home.jpg'}" alt="${pkg.title}" onerror="this.src='assets/images/hero-home.jpg'">
+          <img src="${pkg.image || 'assets/images/hero-courses.jpg'}" alt="${pkg.title}" onerror="this.src='assets/images/hero-courses.jpg'">
           ${pkg.badge ? `<span class="admin-pkg-card-badge">${pkg.badge}</span>` : ''}
           <div class="admin-pkg-card-status">
             <span class="status-badge ${pkg.status === 'active' ? 'active' : 'inactive'}">
@@ -357,13 +362,13 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="admin-pkg-card-footer">
           <div class="price-display">
             ${pkg.priceFormatted || ('₹' + Number(pkg.price || 0).toLocaleString('en-IN'))}
-            <small>${pkg.priceUnit || '/ candidate'}</small>
+            <small>${pkg.priceUnit || '/ student'}</small>
           </div>
           <div class="action-buttons">
-            <button class="btn btn-outline btn-sm btn-icon" data-action="edit" data-id="${pkg.id}" title="Edit">
+            <button class="btn btn-outline btn-sm btn-icon" data-action="edit" data-id="${pkg.id}" title="Edit Course">
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button class="btn btn-outline btn-sm btn-icon" data-action="delete" data-id="${pkg.id}" title="Delete">
+            <button class="btn btn-outline btn-sm btn-icon" data-action="delete" data-id="${pkg.id}" title="Delete Course">
               <i class="fa-solid fa-trash" style="color: #EF4444;"></i>
             </button>
           </div>
@@ -375,17 +380,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function renderDashboard() {
-    const all = CariyaPackagesStore.getAll();
+    const all = store.getAll();
     updateMetrics(all);
 
     const filtered = getFilteredAndSortedPackages();
     if (currentViewMode === 'table') {
-      packagesTableView.style.display = 'block';
-      packagesGridView.style.display = 'none';
+      if (packagesTableView) packagesTableView.style.display = 'block';
+      if (packagesGridView) packagesGridView.style.display = 'none';
       renderTable(filtered);
     } else {
-      packagesTableView.style.display = 'none';
-      packagesGridView.style.display = 'grid';
+      if (packagesTableView) packagesTableView.style.display = 'none';
+      if (packagesGridView) packagesGridView.style.display = 'grid';
       renderGrid(filtered);
     }
   }
@@ -418,17 +423,17 @@ document.addEventListener('DOMContentLoaded', function () {
   // Export JSON
   if (exportPackagesBtn) {
     exportPackagesBtn.addEventListener('click', function () {
-      const json = CariyaPackagesStore.exportJSON();
+      const json = store.exportJSON();
       const blob = new Blob([json], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `cariya-global-packages-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `cariya-global-courses-${new Date().toISOString().slice(0, 10)}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast('Packages exported successfully', 'success');
+      showToast('Courses exported successfully', 'success');
     });
   }
 
@@ -440,9 +445,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const reader = new FileReader();
       reader.onload = function (event) {
-        const result = CariyaPackagesStore.importJSON(event.target.result);
+        const result = store.importJSON(event.target.result);
         if (result.success) {
-          showToast(`Imported ${result.count} packages successfully`, 'success');
+          showToast(`Imported ${result.count} courses successfully`, 'success');
           renderDashboard();
         } else {
           showToast(`Import failed: ${result.error}`, 'error');
@@ -456,10 +461,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // Reset to Defaults
   if (resetPackagesBtn) {
     resetPackagesBtn.addEventListener('click', function () {
-      if (confirm('Reset packages back to the original CARIYA Global defaults? Any custom packages created will be overwritten.')) {
-        CariyaPackagesStore.resetToDefaults();
+      if (confirm('Reset courses back to the original CARIYA Global defaults? Any custom courses created will be overwritten.')) {
+        store.resetToDefaults();
         renderDashboard();
-        showToast('Reset to default packages', 'info');
+        showToast('Reset to default courses', 'info');
       }
     });
   }
@@ -502,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function () {
             input.value = dataUrl;
             if (preview) preview.src = dataUrl;
             grid.querySelectorAll('.image-thumb-option').forEach(el => el.classList.remove('selected'));
-            showToast('Custom image loaded for package', 'info');
+            showToast('Custom image loaded for course', 'info');
           };
           reader.readAsDataURL(file);
         }
@@ -517,15 +522,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ==========================================================================
-  // 7. ADD PACKAGE MODAL & FORM
+  // 7. ADD COURSE MODAL & FORM
   // ==========================================================================
   if (openAddPackageBtn) {
     openAddPackageBtn.addEventListener('click', function () {
       addPackageForm.reset();
       setupImagePicker('addImageSelectorGrid', 'addPkgImageInput', 'addPkgImagePreview', 'addPkgImageUpload');
       // Set default image
-      document.getElementById('addPkgImageInput').value = 'assets/images/hero-internships-singapore.jpg';
-      document.getElementById('addPkgImagePreview').src = 'assets/images/hero-internships-singapore.jpg';
+      document.getElementById('addPkgImageInput').value = 'assets/images/hero-courses.jpg';
+      document.getElementById('addPkgImagePreview').src = 'assets/images/hero-courses.jpg';
       addPackageModal.classList.add('active');
     });
   }
@@ -534,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function () {
     addPackageForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const newPkgData = {
+      const newCourseData = {
         title: document.getElementById('addPkgTitle').value,
         destination: document.getElementById('addPkgLocation').value,
         category: document.getElementById('addPkgCategory').value,
@@ -552,33 +557,33 @@ document.addEventListener('DOMContentLoaded', function () {
         status: document.getElementById('addPkgStatus').value
       };
 
-      const added = CariyaPackagesStore.add(newPkgData);
+      const added = store.add(newCourseData);
       if (added) {
         addPackageModal.classList.remove('active');
         renderDashboard();
-        showToast(`Package "${added.title}" added successfully`, 'success');
+        showToast(`Course "${added.title}" added successfully`, 'success');
       } else {
-        showToast('Failed to add package', 'error');
+        showToast('Failed to add course', 'error');
       }
     });
   }
 
   // ==========================================================================
-  // 8. EDIT PACKAGE MODAL & FORM
+  // 8. EDIT COURSE MODAL & FORM
   // ==========================================================================
   function openEditModal(pkgId) {
-    const pkg = CariyaPackagesStore.getById(pkgId);
+    const pkg = store.getById(pkgId);
     if (!pkg) return;
 
     document.getElementById('editPkgId').value = pkg.id;
     document.getElementById('editPkgTitle').value = pkg.title;
     document.getElementById('editPkgLocation').value = pkg.destination;
     document.getElementById('editPkgCategory').value = pkg.category || 'hospitality';
-    document.getElementById('editPkgIndustry').value = pkg.industry || 'Hospitality';
+    document.getElementById('editPkgIndustry').value = pkg.industry || 'Hotel Management';
     document.getElementById('editPkgDuration').value = pkg.duration;
-    document.getElementById('editPkgMode').value = pkg.mode || 'Offline / Hybrid';
+    document.getElementById('editPkgMode').value = pkg.mode || 'Offline Class & Labs';
     document.getElementById('editPkgPrice').value = pkg.price;
-    document.getElementById('editPkgUnit').value = pkg.priceUnit || '/ candidate';
+    document.getElementById('editPkgUnit').value = pkg.priceUnit || '/ student';
     document.getElementById('editPkgRating').value = pkg.rating;
     document.getElementById('editPkgBadge').value = pkg.badge || '';
     document.getElementById('editPkgImageInput').value = pkg.image;
@@ -616,13 +621,13 @@ document.addEventListener('DOMContentLoaded', function () {
         status: document.getElementById('editPkgStatus').value
       };
 
-      const updated = CariyaPackagesStore.update(id, updatedData);
+      const updated = store.update(id, updatedData);
       if (updated) {
         editPackageModal.classList.remove('active');
         renderDashboard();
         showToast(`Updated "${updated.title}" successfully`, 'success');
       } else {
-        showToast('Failed to update package', 'error');
+        showToast('Failed to update course', 'error');
       }
     });
   }
@@ -631,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 9. DELETE CONFIRMATION & STATUS TOGGLE
   // ==========================================================================
   function openDeleteModal(pkgId) {
-    const pkg = CariyaPackagesStore.getById(pkgId);
+    const pkg = store.getById(pkgId);
     if (!pkg) return;
 
     packageToDeleteId = pkgId;
@@ -643,15 +648,15 @@ document.addEventListener('DOMContentLoaded', function () {
     confirmDeleteBtn.addEventListener('click', function () {
       if (!packageToDeleteId) return;
 
-      const pkg = CariyaPackagesStore.getById(packageToDeleteId);
-      const success = CariyaPackagesStore.delete(packageToDeleteId);
+      const pkg = store.getById(packageToDeleteId);
+      const success = store.delete(packageToDeleteId);
 
       if (success) {
         deletePackageModal.classList.remove('active');
         renderDashboard();
-        showToast(`Deleted ${pkg ? pkg.title : 'package'} successfully`, 'success');
+        showToast(`Deleted ${pkg ? pkg.title : 'course'} successfully`, 'success');
       } else {
-        showToast('Could not delete package', 'error');
+        showToast('Could not delete course', 'error');
       }
       packageToDeleteId = null;
     });
@@ -670,22 +675,22 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (action === 'delete') {
       openDeleteModal(id);
     } else if (action === 'toggle-status') {
-      const updated = CariyaPackagesStore.toggleStatus(id);
+      const updated = store.toggleStatus(id);
       if (updated) {
         renderDashboard();
-        showToast(`Package status changed to ${updated.status}`, 'info');
+        showToast(`Course status changed to ${updated.status}`, 'info');
       }
     } else if (action === 'duplicate') {
-      const orig = CariyaPackagesStore.getById(id);
+      const orig = store.getById(id);
       if (orig) {
         const copyData = {
           ...orig,
           title: orig.title + ' (Copy)'
         };
-        const dup = CariyaPackagesStore.add(copyData);
+        const dup = store.add(copyData);
         if (dup) {
           renderDashboard();
-          showToast(`Duplicated package "${dup.title}"`, 'success');
+          showToast(`Duplicated course "${dup.title}"`, 'success');
         }
       }
     }
@@ -749,7 +754,7 @@ document.addEventListener('DOMContentLoaded', function () {
         name: 'Amanpreet Singh',
         phone: '+91 98141 55210',
         email: 'aman.hospitality@gmail.com',
-        destination: 'Singapore Hospitality Internship',
+        destination: 'Hotel Management Course',
         status: 'Follow Up'
       },
       {
@@ -757,7 +762,7 @@ document.addEventListener('DOMContentLoaded', function () {
         name: 'Priya Sharma',
         phone: '+91 98722 41908',
         email: 'priya.sharma99@yahoo.com',
-        destination: 'Aviation Management Diploma',
+        destination: 'Aviation Management & Airport Operations',
         status: 'Counselling Scheduled'
       },
       {
@@ -765,7 +770,7 @@ document.addEventListener('DOMContentLoaded', function () {
         name: 'Rohit Verma',
         phone: '+91 99880 12345',
         email: 'rohit.v.asia@outlook.com',
-        destination: 'Thailand Resort Tourism Package',
+        destination: 'Cabin Crew Grooming Master Course',
         status: 'Application Review'
       }
     ];
@@ -782,13 +787,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (tableBody) {
       tableBody.innerHTML = '';
-      inquiries.forEach((inq, idx) => {
+      inquiries.forEach((inq) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><small style="color: var(--text-muted);">${inq.timestamp}</small></td>
           <td><strong>${inq.name}</strong></td>
           <td>
-            <a href="https://wa.me/${inq.phone.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(inq.name)},%20regarding%20your%20inquiry%20with%20CARIYA%20Global" target="_blank" style="color: #25D366; font-weight: 700; text-decoration: none;">
+            <a href="https://wa.me/${inq.phone.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(inq.name)},%20regarding%20your%20course%20inquiry%20with%20CARIYA%20Global" target="_blank" style="color: #25D366; font-weight: 700; text-decoration: none;">
               <i class="fa-brands fa-whatsapp"></i> ${inq.phone}
             </a>
           </td>

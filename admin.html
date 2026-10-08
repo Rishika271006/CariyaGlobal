@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Portal - Packages Management | CARIYA Global (cariyaglobal.com)</title>
+  <title>Admin Portal - Courses Management | CARIYA Global (cariyaglobal.com)</title>
   <meta name="robots" content="noindex, nofollow">
 
   <!-- Favicon -->
@@ -34,7 +34,7 @@
       <img src="assets/images/logo-cariya-global.png" alt="CARIYA Global" class="login-logo">
       <h2>Admin Authentication</h2>
       <p class="login-sub">
-        Sign in to manage career packages, training programs, fees, and student inquiries.
+        Sign in to manage courses, training programs, fees, curriculum, and student inquiries.
       </p>
 
       <form id="loginForm">
@@ -84,9 +84,9 @@
         <div class="nav-section-title">Core Management</div>
 
         <button class="sidebar-link active" data-tab="tabPackages">
-          <i class="fa-solid fa-boxes-stacked"></i>
-          <span>Career Packages</span>
-          <span class="sidebar-badge" id="sidebarPkgBadge">9</span>
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Courses Management</span>
+          <span class="sidebar-badge" id="sidebarPkgBadge">11</span>
         </button>
 
         <button class="sidebar-link" data-tab="tabInquiries">
@@ -102,14 +102,14 @@
 
         <div class="nav-section-title">Live Website Shortcuts</div>
 
-        <a href="packages.html" target="_blank" class="sidebar-link">
-          <i class="fa-solid fa-layer-group"></i>
-          <span>Public Packages Page</span>
+        <a href="courses.html" target="_blank" class="sidebar-link">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Public Courses Hub</span>
         </a>
 
-        <a href="courses.html" target="_blank" class="sidebar-link">
-          <i class="fa-solid fa-graduation-cap"></i>
-          <span>Courses Hub</span>
+        <a href="packages.html" target="_blank" class="sidebar-link">
+          <i class="fa-solid fa-layer-group"></i>
+          <span>Public Courses Showcase</span>
         </a>
 
         <a href="internships.html" target="_blank" class="sidebar-link">
@@ -152,8 +152,8 @@
             <i class="fa-solid fa-bars"></i>
           </button>
           <div class="header-title-wrap">
-            <h2>Package Control Center</h2>
-            <div class="breadcrumb-hint">Manage, customize, and publish student packages for Asia</div>
+            <h2>Course Control Center</h2>
+            <div class="breadcrumb-hint">Manage, customize, and publish professional courses &amp; diplomas for Asia</div>
           </div>
         </div>
 
@@ -162,7 +162,7 @@
             <i class="fa-solid fa-eye"></i> View Live Site
           </a>
           <button class="btn btn-primary btn-sm" id="openAddPackageBtn">
-            <i class="fa-solid fa-plus"></i> Add New Package
+            <i class="fa-solid fa-plus"></i> Add New Course
           </button>
         </div>
       </header>
@@ -171,7 +171,7 @@
       <div class="admin-content">
 
         <!-- ==================================================================
-             TAB 1: PACKAGES MANAGEMENT
+             TAB 1: COURSES MANAGEMENT
              ================================================================== -->
         <div class="tab-pane" id="tabPackages">
 
@@ -179,11 +179,11 @@
           <div class="metrics-grid">
             <div class="metric-card">
               <div class="metric-icon navy">
-                <i class="fa-solid fa-boxes-stacked"></i>
+                <i class="fa-solid fa-graduation-cap"></i>
               </div>
               <div class="metric-details">
-                <small>Total Packages</small>
-                <h3 id="metricTotalPackages">9</h3>
+                <small>Total Courses</small>
+                <h3 id="metricTotalPackages">11</h3>
               </div>
             </div>
 
@@ -192,8 +192,8 @@
                 <i class="fa-solid fa-layer-group"></i>
               </div>
               <div class="metric-details">
-                <small>Active Industries</small>
-                <h3 id="metricCategories">5</h3>
+                <small>Active Sectors</small>
+                <h3 id="metricCategories">4</h3>
               </div>
             </div>
 
@@ -202,69 +202,67 @@
                 <i class="fa-solid fa-indian-rupee-sign"></i>
               </div>
               <div class="metric-details">
-                <small>Average Package Fee</small>
-                <h3 id="metricAvgPrice">₹1,03,333</h3>
+                <small>Average Course Fee</small>
+                <h3 id="metricAvgPrice">₹52,727</h3>
               </div>
             </div>
 
             <div class="metric-card">
               <div class="metric-icon emerald">
-                <i class="fa-solid fa-globe"></i>
+                <i class="fa-solid fa-map-location-dot"></i>
               </div>
               <div class="metric-details">
-                <small>Destinations Covered</small>
-                <h3 id="metricDestinations">6</h3>
+                <small>Campus Hubs &amp; Modes</small>
+                <h3 id="metricDestinations">4</h3>
               </div>
             </div>
           </div>
 
-          <!-- Content Card: Packages Table & Grid -->
+          <!-- Content Card: Courses Table & Grid -->
           <div class="content-card">
             <div class="content-card-header">
               <div class="content-card-title">
-                <i class="fa-solid fa-cubes" style="color: var(--red);"></i>
-                Education &amp; Internship Packages Catalog
+                <i class="fa-solid fa-graduation-cap" style="color: var(--red);"></i>
+                Professional Courses &amp; Diplomas Catalog
               </div>
 
               <!-- Toolbar -->
               <div class="table-toolbar">
                 <div class="toolbar-search">
                   <i class="fa-solid fa-magnifying-glass"></i>
-                  <input type="text" id="searchPackageInput" placeholder="Search packages, destinations...">
+                  <input type="text" id="searchPackageInput" placeholder="Search courses, sectors, study hubs, durations...">
                 </div>
 
                 <select id="filterCategorySelect" class="filter-select">
-                  <option value="all">All Industries</option>
-                  <option value="hospitality">Hospitality</option>
-                  <option value="aviation">Aviation</option>
-                  <option value="tourism">Tourism</option>
-                  <option value="travel">Travel Trade</option>
-                  <option value="internships">Internships</option>
-                  <option value="study-asia">Study in Asia</option>
+                  <option value="all">All Sectors</option>
+                  <option value="hospitality">Hospitality &amp; Hotel Mgmt</option>
+                  <option value="aviation">Aviation &amp; Cabin Crew</option>
+                  <option value="tourism">Tourism Management</option>
+                  <option value="travel">Travel Trade &amp; GDS</option>
                 </select>
 
                 <select id="sortPackageSelect" class="filter-select">
                   <option value="newest">Sort: Newest First</option>
-                  <option value="priceAsc">Price: Low to High</option>
-                  <option value="priceDesc">Price: High to Low</option>
+                  <option value="priceAsc">Fee: Low to High</option>
+                  <option value="priceDesc">Fee: High to Low</option>
                   <option value="rating">Top Rated (Stars)</option>
-                  <option value="title">Alphabetical (A - Z)</option>
+                  <option value="title">Course Title (A - Z)</option>
                 </select>
 
                 <button id="viewModeToggleBtn" class="btn btn-outline btn-sm" title="Toggle between Table and Card Grid">
                   <i class="fa-solid fa-table-cells-large"></i> Grid View
                 </button>
 
-                <button id="exportPackagesBtn" class="btn btn-outline btn-sm" title="Download packages as JSON file">
+                <button id="exportPackagesBtn" class="btn btn-outline btn-sm" title="Download courses as JSON file">
                   <i class="fa-solid fa-download"></i> Export JSON
                 </button>
 
-                <label class="btn btn-outline btn-sm" style="margin: 0; cursor: pointer;" title="Import packages from JSON file">
+                <label class="btn btn-outline btn-sm" style="margin: 0; cursor: pointer;" title="Import courses from JSON file">
                   <i class="fa-solid fa-upload"></i> Import JSON
                   <input type="file" id="importFileInput" accept=".json" style="display: none;">
                 </label>
 
-                <button id="resetPackagesBtn" class="btn btn-outline btn-sm" title="Reset back to default CARIYA packages" style="color: #DC2626;">
+                <button id="resetPackagesBtn" class="btn btn-outline btn-sm" title="Reset back to default CARIYA courses" style="color: #DC2626;">
                   <i class="fa-solid fa-rotate-left"></i> Reset Defaults
                 </button>
               </div>
@@ -275,10 +273,10 @@
               <table class="data-table">
                 <thead>
                   <tr>
-                    <th>Package &amp; Destination</th>
-                    <th>Industry &amp; Tag</th>
+                    <th>Course &amp; Study Hub</th>
+                    <th>Sector &amp; Tag</th>
                     <th>Mode</th>
-                    <th>Investment / Fee</th>
+                    <th>Course Fee / Investment</th>
                     <th>Rating</th>
                     <th>Status</th>
                     <th style="text-align: right; padding-right: 24px;">Actions</th>
@@ -307,7 +305,7 @@
             <div class="content-card-header">
               <div class="content-card-title">
                 <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
-                Student Enquiries &amp; Package Consultations
+                Student Enquiries &amp; Course Consultations
               </div>
               <div>
                 <button id="clearInquiriesBtn" class="btn btn-outline btn-sm" style="color: #DC2626;">
@@ -324,7 +322,7 @@
                     <th>Student Name</th>
                     <th>WhatsApp / Phone</th>
                     <th>Email Address</th>
-                    <th>Interested Package</th>
+                    <th>Interested Course</th>
                     <th>Counselling Status</th>
                   </tr>
                 </thead>
@@ -388,7 +386,7 @@
                 <span id="supabaseStatusBadge" class="status-badge inactive" style="font-size: 0.75rem;">Local Storage Mode</span>
               </h4>
               <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">
-                Connect your Supabase project to automatically sync career packages and student inquiries in real-time across devices.
+                Connect your Supabase project to automatically sync courses and student inquiries in real-time across devices.
               </p>
 
               <form id="supabaseConfigForm">
@@ -422,48 +420,46 @@
   </div>
 
   <!-- ==========================================================================
-       ADD PACKAGE MODAL
+       ADD COURSE MODAL
        ========================================================================== -->
   <div class="modal-overlay" id="addPackageModal">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-plus-circle" style="color: var(--red);"></i> Add New Career Package</h3>
+        <h3><i class="fa-solid fa-plus-circle" style="color: var(--red);"></i> Add New Course</h3>
         <button class="modal-close" aria-label="Close modal">&times;</button>
       </div>
       <form id="addPackageForm">
         <div class="modal-body">
 
           <div class="form-group">
-            <label for="addPkgTitle">Package Title *</label>
-            <input type="text" id="addPkgTitle" class="form-control" placeholder="e.g. Singapore 6-Month International Hospitality Internship" required>
+            <label for="addPkgTitle">Course Title *</label>
+            <input type="text" id="addPkgTitle" class="form-control" placeholder="e.g. Hotel Management Diploma (Front Office, F&B & Housekeeping)" required>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="addPkgLocation">Destination / Hub *</label>
-              <input type="text" id="addPkgLocation" class="form-control" placeholder="e.g. Singapore / Chandigarh Hub" required>
+              <label for="addPkgLocation">Study Hub / Campus *</label>
+              <input type="text" id="addPkgLocation" class="form-control" placeholder="e.g. Chandigarh Hub / Sector 34-A / Online / Hybrid" required>
             </div>
             <div class="form-group">
-              <label for="addPkgCategory">Category *</label>
+              <label for="addPkgCategory">Category / Sector *</label>
               <select id="addPkgCategory" class="form-control" required>
-                <option value="hospitality">Hospitality</option>
+                <option value="hospitality">Hospitality &amp; Hotel Management</option>
                 <option value="aviation">Aviation &amp; Cabin Crew</option>
                 <option value="tourism">Tourism Management</option>
-                <option value="travel">Travel Trade</option>
-                <option value="internships">International Internships</option>
-                <option value="study-asia">Study in Asia</option>
+                <option value="travel">Travel Trade &amp; GDS</option>
               </select>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="addPkgIndustry">Industry Label</label>
-              <input type="text" id="addPkgIndustry" class="form-control" placeholder="e.g. Hospitality & Tourism" value="Hospitality">
+              <label for="addPkgIndustry">Sector Tag / Code</label>
+              <input type="text" id="addPkgIndustry" class="form-control" placeholder="e.g. Hotel Management" value="Hotel Management">
             </div>
             <div class="form-group">
-              <label for="addPkgDuration">Duration *</label>
-              <input type="text" id="addPkgDuration" class="form-control" placeholder="e.g. 6 Months / 3 Months" value="6 Months" required>
+              <label for="addPkgDuration">Course Duration *</label>
+              <input type="text" id="addPkgDuration" class="form-control" placeholder="e.g. 6 Months / 3 Months / 12 Months" value="6 Months" required>
             </div>
           </div>
 
@@ -472,9 +468,9 @@
               <label for="addPkgMode">Delivery Mode</label>
               <select id="addPkgMode" class="form-control">
                 <option value="Offline Class & Labs">Offline Class &amp; Labs</option>
-                <option value="On-site / International">On-site / International</option>
                 <option value="Hybrid / International">Hybrid / International</option>
                 <option value="Online Interactive">Online Interactive</option>
+                <option value="On-campus Chandigarh">On-campus Chandigarh</option>
               </select>
             </div>
             <div class="form-group">
@@ -488,19 +484,19 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="addPkgPrice">Program Fee / Investment (₹) *</label>
-              <input type="number" id="addPkgPrice" class="form-control" placeholder="125000" required min="1000">
+              <label for="addPkgPrice">Course Fee / Investment (₹) *</label>
+              <input type="number" id="addPkgPrice" class="form-control" placeholder="45000" required min="1000">
             </div>
             <div class="form-group">
               <label for="addPkgUnit">Fee Unit</label>
-              <input type="text" id="addPkgUnit" class="form-control" value="/ candidate" placeholder="/ candidate">
+              <input type="text" id="addPkgUnit" class="form-control" value="/ student" placeholder="/ student">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="addPkgBadge">Highlight Badge (Optional)</label>
-              <input type="text" id="addPkgBadge" class="form-control" placeholder="e.g. High Stipend / Fast-Track">
+              <label for="addPkgBadge">Eligibility / Highlight Badge (Optional)</label>
+              <input type="text" id="addPkgBadge" class="form-control" placeholder="e.g. AI-Powered Curriculum / 10th & 12th Pass">
             </div>
             <div class="form-group">
               <label for="addPkgRating">Rating (Out of 5.0)</label>
@@ -511,9 +507,9 @@
           <!-- Cover Image Selector -->
           <div class="form-group">
             <label>Cover Image</label>
-            <input type="text" id="addPkgImageInput" class="form-control" value="assets/images/hero-internships-singapore.jpg" required>
+            <input type="text" id="addPkgImageInput" class="form-control" value="assets/images/hero-courses.jpg" required>
 
-            <small style="color: var(--text-muted); display: block; margin-top: 6px;">Select from CARIYA Global image catalog:</small>
+            <small style="color: var(--text-muted); display: block; margin-top: 6px;">Select from CARIYA Global course image catalog:</small>
             <div class="image-selector-grid" id="addImageSelectorGrid">
               <!-- Populated via JS -->
             </div>
@@ -523,30 +519,30 @@
                 <i class="fa-solid fa-file-arrow-up"></i> Upload Custom Image
                 <input type="file" id="addPkgImageUpload" accept="image/*" style="display: none;">
               </label>
-              <img id="addPkgImagePreview" src="assets/images/hero-internships-singapore.jpg" alt="Preview" style="height: 44px; width: 68px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-subtle);">
+              <img id="addPkgImagePreview" src="assets/images/hero-courses.jpg" alt="Preview" style="height: 44px; width: 68px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-subtle);">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="addPkgDescription">Program Overview &amp; Description *</label>
-            <textarea id="addPkgDescription" class="form-control" rows="3" placeholder="Explain what the candidate gains from this pathway, training, and destination..." required></textarea>
+            <label for="addPkgDescription">Course Overview &amp; Syllabus *</label>
+            <textarea id="addPkgDescription" class="form-control" rows="3" placeholder="Explain course syllabus, hands-on practical labs, and career pathways covered..." required></textarea>
           </div>
 
           <div class="form-group">
-            <label for="addPkgFeatures">Key Highlights / Feature Pills (Comma-separated)</label>
-            <input type="text" id="addPkgFeatures" class="form-control" placeholder="e.g. 5-Star Hotel Placement, International Certificate, Monthly Stipend" value="5-Star Placement, International Certificate, Visa Guidance">
+            <label for="addPkgFeatures">Key Modules / Curriculum Pills (Comma-separated)</label>
+            <input type="text" id="addPkgFeatures" class="form-control" placeholder="e.g. Front Office & Reservations, F&B Service, AI Guest Experience Tools" value="Front Office & Reservations, Housekeeping Standards, F&B Service Fundamentals">
           </div>
 
           <div class="form-group">
             <label for="addPkgInclusions">Inclusions &amp; Deliverables (Comma-separated)</label>
-            <input type="text" id="addPkgInclusions" class="form-control" placeholder="e.g. CV Building, Mock Interviews, Direct Employer Screening" value="CV Grooming, Mock Interviews, Visa Support, On-ground Mentorship">
+            <input type="text" id="addPkgInclusions" class="form-control" placeholder="e.g. Practical Lab Simulation, PMS Software Training, Grooming & Interview Prep, CARIYA Certificate" value="Practical Lab Simulation, PMS Software Training, Grooming & Interview Prep, CARIYA Certificate">
           </div>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline modal-cancel">Cancel</button>
           <button type="submit" class="btn btn-primary">
-            <i class="fa-solid fa-plus"></i> Save &amp; Publish Package
+            <i class="fa-solid fa-plus"></i> Save &amp; Publish Course
           </button>
         </div>
       </form>
@@ -554,12 +550,12 @@
   </div>
 
   <!-- ==========================================================================
-       EDIT PACKAGE MODAL
+       EDIT COURSE MODAL
        ========================================================================== -->
   <div class="modal-overlay" id="editPackageModal">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-pen-to-square" style="color: var(--navy);"></i> Edit Career Package</h3>
+        <h3><i class="fa-solid fa-pen-to-square" style="color: var(--navy);"></i> Edit Course Details</h3>
         <button class="modal-close" aria-label="Close modal">&times;</button>
       </div>
       <form id="editPackageForm">
@@ -567,35 +563,33 @@
         <div class="modal-body">
 
           <div class="form-group">
-            <label for="editPkgTitle">Package Title *</label>
+            <label for="editPkgTitle">Course Title *</label>
             <input type="text" id="editPkgTitle" class="form-control" required>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="editPkgLocation">Destination / Hub *</label>
+              <label for="editPkgLocation">Study Hub / Campus *</label>
               <input type="text" id="editPkgLocation" class="form-control" required>
             </div>
             <div class="form-group">
-              <label for="editPkgCategory">Category *</label>
+              <label for="editPkgCategory">Category / Sector *</label>
               <select id="editPkgCategory" class="form-control" required>
-                <option value="hospitality">Hospitality</option>
+                <option value="hospitality">Hospitality &amp; Hotel Management</option>
                 <option value="aviation">Aviation &amp; Cabin Crew</option>
                 <option value="tourism">Tourism Management</option>
-                <option value="travel">Travel Trade</option>
-                <option value="internships">International Internships</option>
-                <option value="study-asia">Study in Asia</option>
+                <option value="travel">Travel Trade &amp; GDS</option>
               </select>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="editPkgIndustry">Industry Label</label>
+              <label for="editPkgIndustry">Sector Tag / Code</label>
               <input type="text" id="editPkgIndustry" class="form-control">
             </div>
             <div class="form-group">
-              <label for="editPkgDuration">Duration *</label>
+              <label for="editPkgDuration">Course Duration *</label>
               <input type="text" id="editPkgDuration" class="form-control" required>
             </div>
           </div>
@@ -605,9 +599,9 @@
               <label for="editPkgMode">Delivery Mode</label>
               <select id="editPkgMode" class="form-control">
                 <option value="Offline Class & Labs">Offline Class &amp; Labs</option>
-                <option value="On-site / International">On-site / International</option>
                 <option value="Hybrid / International">Hybrid / International</option>
                 <option value="Online Interactive">Online Interactive</option>
+                <option value="On-campus Chandigarh">On-campus Chandigarh</option>
               </select>
             </div>
             <div class="form-group">
@@ -621,7 +615,7 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="editPkgPrice">Program Fee / Investment (₹) *</label>
+              <label for="editPkgPrice">Course Fee / Investment (₹) *</label>
               <input type="number" id="editPkgPrice" class="form-control" required min="1000">
             </div>
             <div class="form-group">
@@ -632,7 +626,7 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="editPkgBadge">Highlight Badge</label>
+              <label for="editPkgBadge">Eligibility / Highlight Badge</label>
               <input type="text" id="editPkgBadge" class="form-control">
             </div>
             <div class="form-group">
@@ -659,12 +653,12 @@
           </div>
 
           <div class="form-group">
-            <label for="editPkgDescription">Program Overview &amp; Description *</label>
+            <label for="editPkgDescription">Course Overview &amp; Syllabus *</label>
             <textarea id="editPkgDescription" class="form-control" rows="3" required></textarea>
           </div>
 
           <div class="form-group">
-            <label for="editPkgFeatures">Key Highlights / Feature Pills (Comma-separated)</label>
+            <label for="editPkgFeatures">Key Modules / Curriculum Pills (Comma-separated)</label>
             <input type="text" id="editPkgFeatures" class="form-control">
           </div>
 
@@ -677,7 +671,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-outline modal-cancel">Cancel</button>
           <button type="submit" class="btn btn-navy">
-            <i class="fa-solid fa-floppy-disk"></i> Update Package
+            <i class="fa-solid fa-floppy-disk"></i> Update Course Details
           </button>
         </div>
       </form>
@@ -695,7 +689,7 @@
       </div>
       <div class="modal-body" style="text-align: center; padding: 30px 24px;">
         <i class="fa-solid fa-trash-can" style="font-size: 3rem; color: #DC2626; margin-bottom: 16px; display: block;"></i>
-        <h4>Delete this package?</h4>
+        <h4>Delete this course?</h4>
         <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 8px;">
           You are about to delete <strong id="deletePkgTitle" style="color: var(--navy);"></strong>. It will be immediately removed from the catalog and public listings.
         </p>
@@ -703,7 +697,7 @@
       <div class="modal-footer" style="justify-content: center;">
         <button type="button" class="btn btn-outline modal-cancel">Cancel</button>
         <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
-          <i class="fa-solid fa-trash"></i> Delete Package
+          <i class="fa-solid fa-trash"></i> Delete Course
         </button>
       </div>
     </div>
