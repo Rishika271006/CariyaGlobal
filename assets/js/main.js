@@ -79,6 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const course = courseInput ? courseInput.value : 'General Enquiry';
       const message = msgInput ? msgInput.value.trim() : '';
 
+      // Check if this is the Stay Updated broadcast form
+      if (form.classList.contains('stay-updated-form')) {
+        const updateText = `Hello CARIYA Global!%0A%0A*Name:* ${encodeURIComponent(name || 'Prospective Student')}%0A*Request:* Please keep me updated with the latest courses, upcoming intakes, and career opportunities across Asia.%0A%0APlease add me to your WhatsApp updates broadcast.`;
+        const waUpdateUrl = `https://wa.me/919115511250?text=${updateText}`;
+        showToast('Connecting you to WhatsApp for updates...', 'success');
+        setTimeout(() => {
+          window.open(waUpdateUrl, '_blank');
+        }, 300);
+        return;
+      }
+
       let text = `Hello CARIYA Global!%0A%0A*Name:* ${encodeURIComponent(name)}`;
       if (phone) text += `%0A*Phone:* ${encodeURIComponent(phone)}`;
       if (email) text += `%0A*Email:* ${encodeURIComponent(email)}`;
