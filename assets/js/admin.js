@@ -870,10 +870,318 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ==========================================================================
+  // 12. FRONT PAGE POSTS CONTROLLER
+  // ==========================================================================
+  function initPostsManagement() {
+    const postsStore = window.CariyaPostsStore;
+    if (!postsStore) return;
+
+    // Elements
+    const sidebarPostBadge = document.getElementById('sidebarPostBadge');
+    const metricTotalPosts = document.getElementById('metricTotalPosts');
+    const metricPublishedPosts = document.getElementById('metricPublishedPosts');
+    const searchPostInput = document.getElementById('searchPostInput');
+    const filterPostCategorySelect = document.getElementById('filterPostCategorySelect');
+    const filterPostStatusSelect = document.getElementById('filterPostStatusSelect');
+    const resetPostsBtn = document.getElementById('resetPostsBtn');
+    const postsTableBody = document.getElementById('postsTableBody');
+
+    const openAddPostBtn = document.getElementById('openAddPostBtn');
+    const addPostModal = document.getElementById('addPostModal');
+    const addPostForm = document.getElementById('addPostForm');
+
+    const editPostModal = document.getElementById('editPostModal');
+    const editPostForm = document.getElementById('editPostForm');
+
+    const deletePostModal = document.getElementById('deletePostModal');
+    const deletePostTitle = document.getElementById('deletePostTitle');
+    const confirmDeletePostBtn = document.getElementById('confirmDeletePostBtn');
+
+    let postToDeleteId = null;
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function updatePostMetrics(allPosts) {
+      const total = allPosts.length;
+      const published = allPosts.filter(p => p.status === 'published').length;
+      if (sidebarPostBadge) sidebarPostBadge.textContent = total;
+      if (metricTotalPosts) metricTotalPosts.textContent = total;
+      if (metricPublishedPosts) metricPublishedPosts.textContent = published;
+    }
+
+    function getFilteredPosts() {
+      let list = postsStore.getAll();
+      updatePostMetrics(list);
+
+      const q = searchPostInput ? searchPostInput.value.toLowerCase().trim() : '';
+      if (q) {
+        list = list.filter(p =>
+          (p.title && p.title.toLowerCase().includes(q)) ||
+          (p.industry && p.industry.toLowerCase().includes(q)) ||
+          (p.author && p.author.toLowerCase().includes(q)) ||
+          (p.excerpt && p.excerpt.toLowerCase().includes(q)) ||
+          (p.category && p.category.toLowerCase().includes(q))
+        );
+      }
+
+      const cat = filterPostCategorySelect ? filterPostCategorySelect.value : 'all';
+      if (cat !== 'all') {
+        list = list.filter(p => p.category === cat);
+      }
+
+      const stat = filterPostStatusSelect ? filterPostStatusSelect.value : 'all';
+      if (stat !== 'all') {
+        list = list.filter(p => p.status === stat);
+      }
+
+      return list;
+    }
+
+    function renderPostsTable() {
+      if (!postsTableBody) return;
+      const posts = getFilteredPosts();
+      postsTableBody.innerHTML = '';
+
+      if (posts.length === 0) {
+        postsTableBody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; padding: 48px 20px; color: var(--text-muted);">
+              <i class="fa-solid fa-file-circle-xmark" style="font-size: 2.5rem; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
+              <div style="font-size: 1.05rem; font-weight: 600;">No articles match your criteria</div>
+              <p style="font-size: 0.85rem; margin-top: 4px;">Try clearing filters or adding a new front page article.</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      posts.forEach(post => {
+        const isPublished = post.status === 'published';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <img src="${escapeHtml(post.image || 'assets/images/hero-home.jpg')}" alt="" style="width: 52px; height: 42px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-subtle); flex-shrink: 0;" onerror="this.src='assets/images/hero-home.jpg'">
+              <div>
+                <strong style="color: var(--navy); display: block; font-size: 0.95rem; line-height: 1.35;">${escapeHtml(post.title)}</strong>
+                <span style="font-size: 0.78rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; max-width: 380px;">${escapeHtml(post.excerpt || '')}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="badge badge-sector" style="font-size: 0.76rem; background: var(--blue-light); color: var(--navy); padding: 4px 10px; border-radius: 20px; font-weight: 600;">
+              ${escapeHtml(post.industry || post.category || 'Insights')}
+            </span>
+          </td>
+          <td>
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--navy);">${escapeHtml(post.date || 'Recent')}</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">${escapeHtml(post.readTime || '4 min read')}</div>
+          </td>
+          <td>
+            <span style="font-size: 0.85rem; color: var(--text-main); font-weight: 500;">${escapeHtml(post.author || 'CARIYA Desk')}</span>
+          </td>
+          <td>
+            <button class="status-pill ${isPublished ? 'status-active' : 'status-inactive'}" data-post-action="toggle-status" data-id="${escapeHtml(post.id)}" title="Click to toggle publish status" style="cursor: pointer; border: none; font-size: 0.78rem;">
+              <i class="fa-solid ${isPublished ? 'fa-circle-check' : 'fa-circle-pause'}"></i>
+              ${isPublished ? 'Published' : 'Draft'}
+            </button>
+          </td>
+          <td style="text-align: right; white-space: nowrap; padding-right: 20px;">
+            <div class="action-btn-group" style="display: inline-flex; gap: 6px;">
+              <button class="btn btn-outline btn-sm btn-icon" data-post-action="edit" data-id="${escapeHtml(post.id)}" title="Edit Post">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn btn-outline btn-sm btn-icon" data-post-action="delete" data-id="${escapeHtml(post.id)}" title="Delete Post" style="color: #DC2626;">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        `;
+        postsTableBody.appendChild(tr);
+      });
+    }
+
+    function openAddModal() {
+      if (!addPostForm) return;
+      addPostForm.reset();
+      setupImagePicker('addPostImageSelectorGrid', 'addPostImageInput', 'addPostImagePreview', 'addPostImageUpload');
+      const imgInput = document.getElementById('addPostImageInput');
+      const imgPrev = document.getElementById('addPostImagePreview');
+      if (imgInput) imgInput.value = 'assets/images/hero-courses.jpg';
+      if (imgPrev) imgPrev.src = 'assets/images/hero-courses.jpg';
+      const dateInput = document.getElementById('addPostDate');
+      if (dateInput) {
+        dateInput.value = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      }
+      if (addPostModal) addPostModal.classList.add('active');
+    }
+
+    function openEditModal(id) {
+      const post = postsStore.getById(id);
+      if (!post) {
+        showToast('Article not found', 'error');
+        return;
+      }
+
+      document.getElementById('editPostId').value = post.id;
+      document.getElementById('editPostTitle').value = post.title || '';
+      document.getElementById('editPostCategory').value = post.category || 'hospitality';
+      document.getElementById('editPostIndustry').value = post.industry || 'Industry Insights';
+      document.getElementById('editPostAuthor').value = post.author || '';
+      document.getElementById('editPostDate').value = post.date || '';
+      document.getElementById('editPostReadTime').value = post.readTime || '4 min read';
+      document.getElementById('editPostLink').value = post.link || 'insights.html';
+      document.getElementById('editPostStatus').value = post.status || 'published';
+      document.getElementById('editPostExcerpt').value = post.excerpt || '';
+
+      const imgInput = document.getElementById('editPostImageInput');
+      const imgPrev = document.getElementById('editPostImagePreview');
+      if (imgInput) imgInput.value = post.image || 'assets/images/hero-courses.jpg';
+      if (imgPrev) imgPrev.src = post.image || 'assets/images/hero-courses.jpg';
+
+      setupImagePicker('editPostImageSelectorGrid', 'editPostImageInput', 'editPostImagePreview', 'editPostImageUpload');
+
+      if (editPostModal) editPostModal.classList.add('active');
+    }
+
+    function openDeleteModal(id) {
+      const post = postsStore.getById(id);
+      if (!post) return;
+      postToDeleteId = id;
+      if (deletePostTitle) deletePostTitle.textContent = `"${post.title}"`;
+      if (deletePostModal) deletePostModal.classList.add('active');
+    }
+
+    // Modal Triggers
+    if (openAddPostBtn) {
+      openAddPostBtn.addEventListener('click', openAddModal);
+    }
+
+    if (addPostForm) {
+      addPostForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const newPost = {
+          title: document.getElementById('addPostTitle').value.trim(),
+          category: document.getElementById('addPostCategory').value,
+          industry: document.getElementById('addPostIndustry').value.trim(),
+          author: document.getElementById('addPostAuthor').value.trim(),
+          date: document.getElementById('addPostDate').value.trim(),
+          readTime: document.getElementById('addPostReadTime').value.trim(),
+          link: document.getElementById('addPostLink').value.trim(),
+          status: document.getElementById('addPostStatus').value,
+          image: document.getElementById('addPostImageInput').value.trim(),
+          excerpt: document.getElementById('addPostExcerpt').value.trim()
+        };
+
+        const created = postsStore.add(newPost);
+        if (created) {
+          if (addPostModal) addPostModal.classList.remove('active');
+          renderPostsTable();
+          showToast(`Article "${created.title}" added & saved!`, 'success');
+        } else {
+          showToast('Could not save post', 'error');
+        }
+      });
+    }
+
+    if (editPostForm) {
+      editPostForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const id = document.getElementById('editPostId').value;
+        const updateData = {
+          title: document.getElementById('editPostTitle').value.trim(),
+          category: document.getElementById('editPostCategory').value,
+          industry: document.getElementById('editPostIndustry').value.trim(),
+          author: document.getElementById('editPostAuthor').value.trim(),
+          date: document.getElementById('editPostDate').value.trim(),
+          readTime: document.getElementById('editPostReadTime').value.trim(),
+          link: document.getElementById('editPostLink').value.trim(),
+          status: document.getElementById('editPostStatus').value,
+          image: document.getElementById('editPostImageInput').value.trim(),
+          excerpt: document.getElementById('editPostExcerpt').value.trim()
+        };
+
+        const updated = postsStore.update(id, updateData);
+        if (updated) {
+          if (editPostModal) editPostModal.classList.remove('active');
+          renderPostsTable();
+          showToast(`Article "${updated.title}" updated successfully`, 'success');
+        } else {
+          showToast('Could not update post', 'error');
+        }
+      });
+    }
+
+    if (confirmDeletePostBtn) {
+      confirmDeletePostBtn.addEventListener('click', function () {
+        if (!postToDeleteId) return;
+        const post = postsStore.getById(postToDeleteId);
+        const ok = postsStore.delete(postToDeleteId);
+        if (ok) {
+          if (deletePostModal) deletePostModal.classList.remove('active');
+          renderPostsTable();
+          showToast(`Deleted "${post ? post.title : 'post'}" successfully`, 'success');
+        } else {
+          showToast('Failed to delete post', 'error');
+        }
+        postToDeleteId = null;
+      });
+    }
+
+    if (resetPostsBtn) {
+      resetPostsBtn.addEventListener('click', function () {
+        if (confirm('Reset all front page articles back to official CARIYA Global defaults? Any custom posts will be overwritten.')) {
+          postsStore.saveAll(window.DEFAULT_POSTS);
+          renderPostsTable();
+          showToast('Front page posts reset to official defaults', 'info');
+        }
+      });
+    }
+
+    // Filter Listeners
+    if (searchPostInput) searchPostInput.addEventListener('input', renderPostsTable);
+    if (filterPostCategorySelect) filterPostCategorySelect.addEventListener('change', renderPostsTable);
+    if (filterPostStatusSelect) filterPostStatusSelect.addEventListener('change', renderPostsTable);
+
+    // Delegated actions for Posts
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('[data-post-action]');
+      if (!btn) return;
+
+      const action = btn.getAttribute('data-post-action');
+      const id = btn.getAttribute('data-id');
+
+      if (action === 'edit') {
+        openEditModal(id);
+      } else if (action === 'delete') {
+        openDeleteModal(id);
+      } else if (action === 'toggle-status') {
+        const toggled = postsStore.toggleStatus(id);
+        if (toggled) {
+          renderPostsTable();
+          showToast(`Article status set to ${toggled.status}`, 'info');
+        }
+      }
+    });
+
+    // Initial render
+    renderPostsTable();
+  }
+
+  // ==========================================================================
   // INITIALIZE APP
   // ==========================================================================
   checkAuth();
   renderDashboard();
   initInquiries();
+  initPostsManagement();
   initSupabaseSettings();
 });

@@ -456,6 +456,159 @@ const CariyaCoursesStore = {
 // Aliases for compatibility
 const CariyaPackagesStore = CariyaCoursesStore;
 
+// ============================================================================
+// FRONT PAGE POSTS / INSIGHTS DATA STORE
+// ============================================================================
+const POSTS_STORAGE_KEY = 'cariya_posts_v1';
+
+const DEFAULT_POSTS = [
+  {
+    id: 'post-ai-hospitality',
+    title: 'The Rise of AI in Modern Hospitality & Hotel Management',
+    category: 'hospitality',
+    industry: 'Hospitality Tech',
+    author: 'CARIYA Editorial Desk',
+    date: '08 Oct 2026',
+    readTime: '4 min read',
+    image: 'assets/images/hero-hotel-management-course.jpg',
+    excerpt: 'How artificial intelligence and automated guest experience tools are transforming front-office operations and career skills across premier Asian hotels.',
+    content: 'Artificial intelligence is revolutionizing the global hospitality industry. Modern hotels and luxury resorts are integrating AI-powered personalization, automated front desk check-in systems, predictive customer preferences, and dynamic revenue management tools.',
+    link: 'insights.html',
+    status: 'published',
+    createdAt: '2026-10-08T09:00:00Z'
+  },
+  {
+    id: 'post-aviation-screening',
+    title: 'Cabin Crew & Airport Operations: What Airlines Look for in 2026',
+    category: 'aviation',
+    industry: 'Aviation Careers',
+    author: 'Aviation Faculty Panel',
+    date: '05 Oct 2026',
+    readTime: '5 min read',
+    image: 'assets/images/hero-aviation-management-course.jpg',
+    excerpt: 'From personality grooming to emergency safety drills, explore the key competencies required to clear international airline screening assessments.',
+    content: 'Airlines across India, the Middle East, and Southeast Asia are experiencing record passenger volume. Recruitment teams place high value on communication poise, situational awareness, grooming standards, and customer service composure.',
+    link: 'aviation-courses.html',
+    status: 'published',
+    createdAt: '2026-10-05T11:00:00Z'
+  },
+  {
+    id: 'post-asia-internships',
+    title: 'Why International Internships Across Asia Accelerate Career Progression',
+    category: 'internships',
+    industry: 'Global Pathways',
+    author: 'International Career Cell',
+    date: '02 Oct 2026',
+    readTime: '6 min read',
+    image: 'assets/images/hero-internships-singapore.jpg',
+    excerpt: 'Gaining hands-on rotational training in Singapore, Thailand, and Malaysia equips candidates with real global exposure and high placement velocity.',
+    content: 'Employers in tourism and luxury hospitality place immense weight on candidates with international exposure. An overseas internship demonstrates cultural adaptability, language fluency, and familiarity with multinational standard operating procedures.',
+    link: 'internships.html',
+    status: 'published',
+    createdAt: '2026-10-02T14:30:00Z'
+  }
+];
+
+const CariyaPostsStore = {
+  getAll: function () {
+    try {
+      const stored = localStorage.getItem(POSTS_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Error reading posts from localStorage:', e);
+    }
+    this.saveAll(DEFAULT_POSTS);
+    return DEFAULT_POSTS;
+  },
+
+  saveAll: function (posts) {
+    try {
+      localStorage.setItem(POSTS_STORAGE_KEY, JSON.stringify(posts));
+      return true;
+    } catch (e) {
+      console.error('Failed to save posts to localStorage:', e);
+      return false;
+    }
+  },
+
+  getById: function (id) {
+    const list = this.getAll();
+    return list.find(item => item.id === id) || null;
+  },
+
+  getTopPublished: function (limit = 3) {
+    const list = this.getAll();
+    const published = list.filter(item => item.status === 'published');
+    return published.slice(0, limit);
+  },
+
+  add: function (postData) {
+    const list = this.getAll();
+    const id = 'post-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 6);
+    const newPost = {
+      id: id,
+      title: postData.title.trim(),
+      category: postData.category || 'hospitality',
+      industry: postData.industry || 'Industry Insights',
+      author: postData.author ? postData.author.trim() : 'CARIYA Editorial Desk',
+      date: postData.date ? postData.date.trim() : new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+      readTime: postData.readTime ? postData.readTime.trim() : '4 min read',
+      image: postData.image || 'assets/images/hero-home.jpg',
+      excerpt: postData.excerpt ? postData.excerpt.trim() : '',
+      content: postData.content ? postData.content.trim() : '',
+      link: postData.link ? postData.link.trim() : 'insights.html',
+      status: postData.status || 'published',
+      createdAt: new Date().toISOString()
+    };
+    list.unshift(newPost);
+    this.saveAll(list);
+    return newPost;
+  },
+
+  update: function (id, updateData) {
+    const list = this.getAll();
+    const index = list.findIndex(item => item.id === id);
+    if (index === -1) return null;
+
+    const existing = list[index];
+    const updated = {
+      ...existing,
+      ...updateData,
+      id: id,
+      updatedAt: new Date().toISOString()
+    };
+    list[index] = updated;
+    this.saveAll(list);
+    return updated;
+  },
+
+  delete: function (id) {
+    const list = this.getAll();
+    const filtered = list.filter(item => item.id !== id);
+    if (filtered.length !== list.length) {
+      this.saveAll(filtered);
+      return true;
+    }
+    return false;
+  },
+
+  toggleStatus: function (id) {
+    const list = this.getAll();
+    const target = list.find(item => item.id === id);
+    if (target) {
+      target.status = target.status === 'published' ? 'draft' : 'published';
+      this.saveAll(list);
+      return target;
+    }
+    return null;
+  }
+};
+
 // Export to window
 if (typeof window !== 'undefined') {
   window.CariyaCoursesStore = CariyaCoursesStore;
@@ -463,4 +616,6 @@ if (typeof window !== 'undefined') {
   window.DEFAULT_COURSES = DEFAULT_COURSES;
   window.DEFAULT_PACKAGES = DEFAULT_COURSES;
   window.CARIYA_IMAGE_LIBRARY = CARIYA_IMAGE_LIBRARY;
+  window.CariyaPostsStore = CariyaPostsStore;
+  window.DEFAULT_POSTS = DEFAULT_POSTS;
 }

@@ -89,6 +89,12 @@
           <span class="sidebar-badge" id="sidebarPkgBadge">11</span>
         </button>
 
+        <button class="sidebar-link" data-tab="tabPosts">
+          <i class="fa-solid fa-newspaper"></i>
+          <span>Front Page Posts</span>
+          <span class="sidebar-badge" id="sidebarPostBadge">3</span>
+        </button>
+
         <button class="sidebar-link" data-tab="tabInquiries">
           <i class="fa-brands fa-whatsapp"></i>
           <span>Student Inquiries</span>
@@ -294,6 +300,113 @@
 
           </div>
 
+        </div>
+
+        <!-- ==================================================================
+             TAB: FRONT PAGE POSTS & INSIGHTS
+             ================================================================== -->
+        <div class="tab-pane" id="tabPosts" style="display: none;">
+
+          <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 24px;">
+            <div class="metric-card">
+              <div class="metric-icon" style="background: rgba(14, 165, 233, 0.12); color: var(--blue-primary);">
+                <i class="fa-solid fa-newspaper"></i>
+              </div>
+              <div class="metric-details">
+                <div class="metric-val" id="metricTotalPosts">3</div>
+                <div class="metric-lbl">Total Articles</div>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon" style="background: rgba(16, 185, 129, 0.12); color: #10B981;">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+              <div class="metric-details">
+                <div class="metric-val" id="metricPublishedPosts">3</div>
+                <div class="metric-lbl">Published Online</div>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B;">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <div class="metric-details">
+                <div class="metric-val">Top 3</div>
+                <div class="metric-lbl">Active on Homepage</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-card">
+            <div class="content-card-header">
+              <div>
+                <div class="content-card-title">
+                  <i class="fa-solid fa-newspaper" style="color: var(--blue-primary);"></i>
+                  Front Page Posts &amp; Articles
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin: 4px 0 0 0;">
+                  Manage articles and insights displayed on the CARIYA Global homepage. The first 3 published articles are highlighted to visitors.
+                </p>
+              </div>
+
+              <div>
+                <button class="btn btn-primary btn-sm" id="openAddPostBtn">
+                  <i class="fa-solid fa-plus"></i> Add New Post
+                </button>
+              </div>
+            </div>
+
+            <!-- Posts Toolbar -->
+            <div class="table-toolbar">
+              <div class="table-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchPostInput" placeholder="Search posts by title, industry, author...">
+              </div>
+
+              <div class="table-filter-group">
+                <select id="filterPostCategorySelect" class="form-control" style="width: auto;">
+                  <option value="all">All Sectors</option>
+                  <option value="hospitality">Hospitality</option>
+                  <option value="aviation">Aviation</option>
+                  <option value="internships">Internships</option>
+                  <option value="tourism">Tourism</option>
+                  <option value="travel">Travel</option>
+                </select>
+
+                <select id="filterPostStatusSelect" class="form-control" style="width: auto;">
+                  <option value="all">All Statuses</option>
+                  <option value="published">Published Only</option>
+                  <option value="draft">Drafts Only</option>
+                </select>
+
+                <button id="resetPostsBtn" class="btn btn-outline btn-sm" title="Reset back to default CARIYA posts" style="color: #DC2626;">
+                  <i class="fa-solid fa-rotate-left"></i> Reset Defaults
+                </button>
+              </div>
+            </div>
+
+            <!-- Table View -->
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Article &amp; Thumbnail</th>
+                    <th>Sector &amp; Tag</th>
+                    <th>Date &amp; Read Time</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                    <th style="text-align: right; padding-right: 24px;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="postsTableBody">
+                  <!-- Populated by admin.js -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
         </div>
 
         <!-- ==================================================================
@@ -680,6 +793,223 @@
         <button type="button" class="btn btn-outline modal-cancel">Cancel</button>
         <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
           <i class="fa-solid fa-trash"></i> Delete Course
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ADD NEW POST MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="addPostModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-plus-circle" style="color: var(--blue-primary);"></i> Add New Front Page Post</h3>
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="addPostForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="addPostTitle">Post / Article Title *</label>
+            <input type="text" id="addPostTitle" class="form-control" placeholder="e.g. Modern AI Tools in Luxury Asian Hotel Operations" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="addPostCategory">Sector Category *</label>
+              <select id="addPostCategory" class="form-control" required>
+                <option value="hospitality">Hospitality &amp; Hotel Management</option>
+                <option value="aviation">Aviation &amp; Cabin Crew</option>
+                <option value="internships">International Internships</option>
+                <option value="tourism">Tourism &amp; Travel</option>
+                <option value="career">Career Insights</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="addPostIndustry">Industry Badge Tag *</label>
+              <input type="text" id="addPostIndustry" class="form-control" placeholder="e.g. Hospitality Tech, Aviation Careers" required value="Industry Insights">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="addPostAuthor">Author / Desk</label>
+              <input type="text" id="addPostAuthor" class="form-control" placeholder="e.g. CARIYA Editorial Desk" value="CARIYA Editorial Desk">
+            </div>
+            <div class="form-group">
+              <label for="addPostDate">Publish Date</label>
+              <input type="text" id="addPostDate" class="form-control" placeholder="e.g. 08 Oct 2026">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="addPostReadTime">Estimated Read Time</label>
+              <input type="text" id="addPostReadTime" class="form-control" placeholder="e.g. 4 min read" value="4 min read">
+            </div>
+            <div class="form-group">
+              <label for="addPostLink">Article Target Link</label>
+              <input type="text" id="addPostLink" class="form-control" placeholder="e.g. insights.html, aviation-courses.html" value="insights.html">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="addPostStatus">Publication Status</label>
+            <select id="addPostStatus" class="form-control">
+              <option value="published">Published (Visible on Frontend)</option>
+              <option value="draft">Draft (Hidden from Frontend)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Cover Thumbnail Image</label>
+            <input type="text" id="addPostImageInput" class="form-control" value="assets/images/hero-courses.jpg" required>
+
+            <small style="color: var(--text-muted); display: block; margin-top: 6px;">Select from CARIYA Global image catalog:</small>
+            <div class="image-selector-grid" id="addPostImageSelectorGrid">
+              <!-- Populated via JS -->
+            </div>
+
+            <div style="margin-top: 10px; display: flex; align-items: center; gap: 14px;">
+              <label class="btn btn-outline btn-sm" style="cursor: pointer; margin: 0;">
+                <i class="fa-solid fa-file-arrow-up"></i> Upload Custom Image
+                <input type="file" id="addPostImageUpload" accept="image/*" style="display: none;">
+              </label>
+              <img id="addPostImagePreview" src="assets/images/hero-courses.jpg" alt="Preview" style="height: 44px; width: 68px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-subtle);">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="addPostExcerpt">Short Excerpt (Displayed on Front Page Card) *</label>
+            <textarea id="addPostExcerpt" class="form-control" rows="3" placeholder="Provide a concise 2-sentence teaser summarizing the post..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Save &amp; Publish Post
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       EDIT POST MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="editPostModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-pen-to-square" style="color: var(--navy);"></i> Edit Front Page Post</h3>
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="editPostForm">
+        <input type="hidden" id="editPostId">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="editPostTitle">Post / Article Title *</label>
+            <input type="text" id="editPostTitle" class="form-control" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editPostCategory">Sector Category *</label>
+              <select id="editPostCategory" class="form-control" required>
+                <option value="hospitality">Hospitality &amp; Hotel Management</option>
+                <option value="aviation">Aviation &amp; Cabin Crew</option>
+                <option value="internships">International Internships</option>
+                <option value="tourism">Tourism &amp; Travel</option>
+                <option value="career">Career Insights</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editPostIndustry">Industry Badge Tag *</label>
+              <input type="text" id="editPostIndustry" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editPostAuthor">Author / Desk</label>
+              <input type="text" id="editPostAuthor" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="editPostDate">Publish Date</label>
+              <input type="text" id="editPostDate" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editPostReadTime">Estimated Read Time</label>
+              <input type="text" id="editPostReadTime" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="editPostLink">Article Target Link</label>
+              <input type="text" id="editPostLink" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editPostStatus">Publication Status</label>
+            <select id="editPostStatus" class="form-control">
+              <option value="published">Published (Visible on Frontend)</option>
+              <option value="draft">Draft (Hidden from Frontend)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Cover Thumbnail Image</label>
+            <input type="text" id="editPostImageInput" class="form-control" required>
+
+            <div class="image-selector-grid" id="editPostImageSelectorGrid">
+              <!-- Populated via JS -->
+            </div>
+
+            <div style="margin-top: 10px; display: flex; align-items: center; gap: 14px;">
+              <label class="btn btn-outline btn-sm" style="cursor: pointer; margin: 0;">
+                <i class="fa-solid fa-file-arrow-up"></i> Upload Replacement Image
+                <input type="file" id="editPostImageUpload" accept="image/*" style="display: none;">
+              </label>
+              <img id="editPostImagePreview" src="" alt="Preview" style="height: 44px; width: 68px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-subtle);">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editPostExcerpt">Short Excerpt (Displayed on Front Page Card) *</label>
+            <textarea id="editPostExcerpt" class="form-control" rows="3" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-navy">
+            <i class="fa-solid fa-floppy-disk"></i> Update Post Details
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       DELETE POST CONFIRMATION MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="deletePostModal">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 style="color: #DC2626;"><i class="fa-solid fa-triangle-exclamation"></i> Confirm Post Deletion</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 30px 24px;">
+        <i class="fa-solid fa-trash-can" style="font-size: 3rem; color: #DC2626; margin-bottom: 16px; display: block;"></i>
+        <h4>Delete this post?</h4>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 8px;">
+          You are about to delete <strong id="deletePostTitle" style="color: var(--navy);"></strong>. It will be immediately removed from the front page and insights list.
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center;">
+        <button type="button" class="btn btn-outline modal-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeletePostBtn">
+          <i class="fa-solid fa-trash"></i> Delete Post
         </button>
       </div>
     </div>

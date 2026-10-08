@@ -154,4 +154,45 @@ document.addEventListener('DOMContentLoaded', () => {
       toast.style.transform = 'translateX(-50%) translateY(100px)';
     }, 3200);
   }
+
+  // Dynamic hydration of Front Page Posts from CariyaPostsStore
+  function initFrontPosts() {
+    const container = document.getElementById('frontPostsContainer');
+    if (!container || !window.CariyaPostsStore) return;
+
+    const posts = window.CariyaPostsStore.getTopPublished(3);
+    if (!posts || posts.length === 0) return;
+
+    function sanitize(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    container.innerHTML = posts.map(post => `
+      <article class="industry-card post-card" data-post-id="${sanitize(post.id)}">
+        <div class="card-media-wrap">
+          <img src="${sanitize(post.image || 'assets/images/hero-home.jpg')}" alt="${sanitize(post.title)}" onerror="this.src='assets/images/hero-home.jpg'">
+          <span class="card-badge-tag">${sanitize(post.industry || 'Industry Insights')}</span>
+        </div>
+        <div class="card-body">
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+            <span><i class="fa-regular fa-calendar" style="color: var(--blue-primary); margin-right: 4px;"></i> ${sanitize(post.date || 'Recent')}</span>
+            <span>•</span>
+            <span><i class="fa-regular fa-clock" style="color: var(--blue-primary); margin-right: 4px;"></i> ${sanitize(post.readTime || '4 min read')}</span>
+          </div>
+          <h3 style="font-size: 1.18rem; line-height: 1.45; margin-bottom: 10px; color: var(--navy);">${sanitize(post.title)}</h3>
+          <p style="font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 20px; flex: 1;">${sanitize(post.excerpt || '')}</p>
+          <a href="${sanitize(post.link || 'insights.html')}" class="btn btn-primary" style="margin-top: auto;">Read Article &rarr;</a>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  initFrontPosts();
 });
+
