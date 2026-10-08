@@ -463,7 +463,7 @@
             ? pkg.features.slice(0, 3).map(f => `<li class="package-feature-item">${f}</li>`).join('')
             : '';
 
-          const waMsg = encodeURIComponent(`Hello CARIYA Global! I am interested in the course "${pkg.title}" (${pkg.destination}). Please share curriculum, fee details, and next intake dates.`);
+          const waMsg = encodeURIComponent(`Hello CARIYA Global! I am interested in the course "${pkg.title}" (${pkg.destination}). Please share eligibility criteria, duration options, syllabus, and intake dates.`);
 
           card.innerHTML = `
             <div class="package-card-media">
@@ -484,12 +484,15 @@
               <h3 class="package-card-title">${pkg.title}</h3>
               <p class="package-desc">${pkg.description}</p>
               ${featuresHtml ? `<ul class="package-features-list">${featuresHtml}</ul>` : ''}
-              <div class="package-pricing-row">
-                <div class="package-price-wrap">
-                  <strong>${pkg.priceFormatted || ('₹' + Number(pkg.price).toLocaleString('en-IN'))}</strong>
-                  <small>${pkg.priceUnit || '/ candidate'}</small>
+              <div class="package-pricing-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-top: 1px solid var(--border-subtle); margin-top: auto;">
+                <div class="package-price-wrap" style="display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; color: var(--text-muted);">Eligibility</span>
+                  <strong style="font-size: 0.88rem; color: var(--navy); display: flex; align-items: center; gap: 4px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    ${pkg.eligibility || '10th / 12th Pass'}
+                  </strong>
                 </div>
-                <div class="package-duration">
+                <div class="package-duration" style="background: var(--blue-pale); color: var(--blue); padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 0.82rem; white-space: nowrap;">
                   ⏱ ${pkg.duration}
                 </div>
               </div>

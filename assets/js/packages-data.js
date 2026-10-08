@@ -1,10 +1,11 @@
 /**
  * CARIYA GLOBAL - Courses Data & State Management System
  * Shared data layer between Public Pages and Admin Portal
- * Persisted in browser localStorage (cariya_courses_v2 & cariya_packages_v1)
+ * Focus: Academic Structure, Eligibility, Duration & Curriculum (without fee structure)
+ * Persisted in browser localStorage (cariya_courses_v3)
  */
 
-const STORAGE_KEY = 'cariya_courses_v2';
+const STORAGE_KEY = 'cariya_courses_v3';
 const LEGACY_STORAGE_KEY = 'cariya_packages_v1';
 const AUTH_KEY = 'cariya_admin_auth_v1';
 const INQUIRIES_KEY = 'cariya_inquiries_v1';
@@ -25,7 +26,7 @@ const CARIYA_IMAGE_LIBRARY = [
   { path: 'assets/images/hero-courses.jpg', label: 'All Courses & Programmes' }
 ];
 
-// Initial Real Courses Catalog for CARIYA Global
+// Initial Real Courses Catalog for CARIYA Global (Duration & Eligibility focused)
 const DEFAULT_COURSES = [
   {
     id: 'course-hotel-mgmt',
@@ -33,11 +34,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub / Hybrid',
     category: 'hospitality',
     industry: 'Hotel Management',
-    duration: '6 Months',
+    duration: '6 Months (2, 3, 6 & 12 Mos)',
+    eligibility: '10th or 12th Pass',
     mode: 'Offline Class & Labs',
-    price: 45000,
-    priceFormatted: '₹45,000',
-    priceUnit: '/ student',
     rating: 4.92,
     badge: 'AI-Powered Curriculum',
     status: 'active',
@@ -59,11 +58,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub / Asia Track',
     category: 'hospitality',
     industry: 'Hospitality Leadership',
-    duration: '6 Months',
+    duration: '6 Months (3, 6 & 12 Mos)',
+    eligibility: '12th Pass or Equivalent',
     mode: 'Hybrid / International',
-    price: 65000,
-    priceFormatted: '₹65,000',
-    priceUnit: '/ student',
     rating: 4.90,
     badge: 'Luxury Resort Pathway',
     status: 'active',
@@ -85,16 +82,14 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub',
     category: 'aviation',
     industry: 'Aviation & Airport Ops',
-    duration: '6 Months',
+    duration: '6 Months (3 & 6 Mos)',
+    eligibility: '12th Pass / Graduate',
     mode: 'Offline Class & Labs',
-    price: 85000,
-    priceFormatted: '₹85,000',
-    priceUnit: '/ student',
     rating: 4.95,
     badge: 'Airport & Airline Career',
     status: 'active',
     image: 'assets/images/hero-aviation-management-course.jpg',
-    description: 'Professional airline and airport ground operations training covering check-in systems (DCS), passenger handling, ramp awareness, aviation security protocols, and flight dispatch workflows.',
+    description: 'Professional airline and airport ground operations training covering check-in systems (DCS), passenger handling, ramp awareness, aviation safety regulations, and flight dispatch workflows.',
     features: ['Airport Ground Handling', 'Aviation Safety & Security', 'DCS Check-in Systems', 'Boarding & Gate Procedures'],
     inclusions: [
       'Aviation Terminology & Dangerous Goods Awareness',
@@ -111,11 +106,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub',
     category: 'aviation',
     industry: 'Aviation & Cabin Crew',
-    duration: '3 Months',
+    duration: '3 Months Intensive',
+    eligibility: '12th Pass (Min 18 Years)',
     mode: 'Offline Intensive',
-    price: 55000,
-    priceFormatted: '₹55,000',
-    priceUnit: '/ student',
     rating: 4.94,
     badge: 'High Selection Rate',
     status: 'active',
@@ -136,11 +129,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub / Online',
     category: 'tourism',
     industry: 'Tourism Management',
-    duration: '6 Months',
+    duration: '6 Months (3 & 6 Mos)',
+    eligibility: '12th Pass / Any Stream',
     mode: 'Hybrid / International',
-    price: 52000,
-    priceFormatted: '₹52,000',
-    priceUnit: '/ student',
     rating: 4.86,
     badge: 'Eco-Tourism & Global Travel',
     status: 'active',
@@ -161,11 +152,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub / Online',
     category: 'tourism',
     industry: 'Tourism Foundations',
-    duration: '3 Months',
+    duration: '3 Months Foundation',
+    eligibility: '10th or 12th Pass',
     mode: 'Offline / Hybrid',
-    price: 35000,
-    priceFormatted: '₹35,000',
-    priceUnit: '/ student',
     rating: 4.84,
     badge: 'Travel Agency & Guiding',
     status: 'active',
@@ -187,10 +176,8 @@ const DEFAULT_COURSES = [
     category: 'travel',
     industry: 'Travel Trade & GDS',
     duration: '3 Months',
+    eligibility: '12th Pass / Basic Computers',
     mode: 'Online Interactive',
-    price: 38000,
-    priceFormatted: '₹38,000',
-    priceUnit: '/ student',
     rating: 4.82,
     badge: 'GDS Amadeus / Galileo',
     status: 'active',
@@ -211,11 +198,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub / Hybrid',
     category: 'travel',
     industry: 'Corporate Travel & MICE',
-    duration: '6 Months',
+    duration: '6 Months (3 & 6 Mos)',
+    eligibility: '12th Pass / Graduate',
     mode: 'Hybrid / International',
-    price: 48000,
-    priceFormatted: '₹48,000',
-    priceUnit: '/ student',
     rating: 4.85,
     badge: 'Corporate & MICE Focus',
     status: 'active',
@@ -236,11 +221,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub (SCO 64-65, Sector 34-A)',
     category: 'hospitality',
     industry: 'Chandigarh Hub Campus',
-    duration: '6 Months',
+    duration: '6 Months Campus Track',
+    eligibility: '10th or 12th Pass',
     mode: 'Offline Class & Labs',
-    price: 45000,
-    priceFormatted: '₹45,000',
-    priceUnit: '/ student',
     rating: 4.93,
     badge: 'Sector 34-A Practical Labs',
     status: 'active',
@@ -261,11 +244,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub (SCO 64-65, Sector 34-A)',
     category: 'aviation',
     industry: 'Chandigarh Hub Campus',
-    duration: '6 Months',
+    duration: '6 Months Campus Track',
+    eligibility: '12th Pass or Equivalent',
     mode: 'Offline Class & Labs',
-    price: 75000,
-    priceFormatted: '₹75,000',
-    priceUnit: '/ student',
     rating: 4.91,
     badge: 'Airport & Airline Hub',
     status: 'active',
@@ -286,11 +267,9 @@ const DEFAULT_COURSES = [
     destination: 'Chandigarh Hub (Sector 34-A)',
     category: 'hospitality',
     industry: 'Chandigarh Hub Campus',
-    duration: '3 Months',
+    duration: '3 Months Fast-Track',
+    eligibility: '10th Pass or Above',
     mode: 'Offline Class & Labs',
-    price: 35000,
-    priceFormatted: '₹35,000',
-    priceUnit: '/ student',
     rating: 4.87,
     badge: 'Fast-Track Certification',
     status: 'active',
@@ -312,33 +291,14 @@ const DEFAULT_PACKAGES = DEFAULT_COURSES;
 
 // Helper functions for Data Operations
 const CariyaCoursesStore = {
-  // Get all courses (with automatic legacy migration)
+  // Get all courses (with automatic localStorage version check)
   getAll: function () {
     try {
-      // 1. Check current courses storage key
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // If the stored data is not legacy package data, return it
-          const isLegacy = parsed.some(item => item.id === 'pkg-sg-hospitality');
-          if (!isLegacy) {
-            return parsed;
-          }
-        }
-      }
-
-      // 2. Check if legacy key has custom (non-default) items
-      const legacyStored = localStorage.getItem(LEGACY_STORAGE_KEY);
-      if (legacyStored) {
-        const legacyParsed = JSON.parse(legacyStored);
-        if (Array.isArray(legacyParsed) && legacyParsed.length > 0) {
-          const isLegacyOnly = legacyParsed.every(item => item.id && item.id.startsWith('pkg-'));
-          if (!isLegacyOnly) {
-            // Keep user-created custom items and migrate
-            this.saveAll(legacyParsed);
-            return legacyParsed;
-          }
+          return parsed;
         }
       }
     } catch (e) {
@@ -354,7 +314,6 @@ const CariyaCoursesStore = {
   saveAll: function (courses) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(courses));
-      // Also update legacy key for any public scripts that read it
       localStorage.setItem(LEGACY_STORAGE_KEY, JSON.stringify(courses));
       return true;
     } catch (e) {
@@ -379,11 +338,9 @@ const CariyaCoursesStore = {
       destination: courseData.destination.trim(),
       category: courseData.category || 'hospitality',
       industry: courseData.industry || 'Hospitality',
-      duration: courseData.duration.trim(),
-      mode: courseData.mode || 'Offline / Hybrid',
-      price: Number(courseData.price) || 0,
-      priceFormatted: '₹' + Number(courseData.price || 0).toLocaleString('en-IN'),
-      priceUnit: courseData.priceUnit || '/ student',
+      duration: (courseData.duration || '6 Months').trim(),
+      eligibility: (courseData.eligibility || '10th / 12th Pass').trim(),
+      mode: courseData.mode || 'Offline Class & Labs',
       rating: Number(courseData.rating) || 4.8,
       badge: courseData.badge ? courseData.badge.trim() : '',
       status: courseData.status || 'active',
@@ -415,8 +372,8 @@ const CariyaCoursesStore = {
       ...existing,
       ...updateData,
       id: id,
-      price: Number(updateData.price !== undefined ? updateData.price : existing.price),
-      priceFormatted: '₹' + Number(updateData.price !== undefined ? updateData.price : existing.price).toLocaleString('en-IN'),
+      duration: updateData.duration !== undefined ? updateData.duration.trim() : existing.duration,
+      eligibility: updateData.eligibility !== undefined ? updateData.eligibility.trim() : existing.eligibility,
       rating: Number(updateData.rating !== undefined ? updateData.rating : existing.rating),
       features: Array.isArray(updateData.features) ? updateData.features : (typeof updateData.features === 'string' ? updateData.features.split(',').map(s => s.trim()).filter(Boolean) : existing.features),
       inclusions: Array.isArray(updateData.inclusions) ? updateData.inclusions : (typeof updateData.inclusions === 'string' ? updateData.inclusions.split(',').map(s => s.trim()).filter(Boolean) : existing.inclusions),

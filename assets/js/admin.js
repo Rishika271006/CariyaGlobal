@@ -1,6 +1,7 @@
 /**
  * CARIYA GLOBAL - Admin Portal Controller
  * Manages Courses CRUD, Modals, Filters, Metrics & Auth
+ * Focus: Academic Structure, Eligibility & Duration (Fee Structure removed)
  */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Metrics
   const metricTotalPackages = document.getElementById('metricTotalPackages');
   const metricCategories = document.getElementById('metricCategories');
-  const metricAvgPrice = document.getElementById('metricAvgPrice');
+  const metricEligibility = document.getElementById('metricEligibility');
   const metricDestinations = document.getElementById('metricDestinations');
   const sidebarPkgBadge = document.getElementById('sidebarPkgBadge');
 
@@ -185,17 +186,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const uniqueCats = new Set(courses.map(p => p.category)).size;
     if (metricCategories) metricCategories.textContent = uniqueCats;
 
-    // Campus Hubs & Modes count
+    // Campus Hubs count
     const uniqueDests = new Set(courses.map(p => p.destination)).size;
     if (metricDestinations) metricDestinations.textContent = uniqueDests;
 
-    // Average Fee
-    if (total > 0 && metricAvgPrice) {
-      const sum = courses.reduce((acc, curr) => acc + (Number(curr.price) || 0), 0);
-      const avg = Math.round(sum / total);
-      metricAvgPrice.textContent = '₹' + avg.toLocaleString('en-IN');
-    } else if (metricAvgPrice) {
-      metricAvgPrice.textContent = '₹0';
+    // Eligibility Metric
+    if (metricEligibility) {
+      metricEligibility.textContent = '10th / 12th / Grad';
     }
   }
 
@@ -208,6 +205,8 @@ document.addEventListener('DOMContentLoaded', function () {
       list = list.filter(pkg =>
         pkg.title.toLowerCase().includes(searchTerm) ||
         pkg.destination.toLowerCase().includes(searchTerm) ||
+        (pkg.duration && pkg.duration.toLowerCase().includes(searchTerm)) ||
+        (pkg.eligibility && pkg.eligibility.toLowerCase().includes(searchTerm)) ||
         (pkg.industry && pkg.industry.toLowerCase().includes(searchTerm)) ||
         (pkg.badge && pkg.badge.toLowerCase().includes(searchTerm)) ||
         (pkg.description && pkg.description.toLowerCase().includes(searchTerm))
@@ -226,11 +225,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (sortVal === 'newest') {
         return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
       }
-      if (sortVal === 'priceAsc') {
-        return (Number(a.price) || 0) - (Number(b.price) || 0);
-      }
-      if (sortVal === 'priceDesc') {
-        return (Number(b.price) || 0) - (Number(a.price) || 0);
+      if (sortVal === 'duration') {
+        return (parseInt(b.duration, 10) || 0) - (parseInt(a.duration, 10) || 0);
       }
       if (sortVal === 'rating') {
         return (Number(b.rating) || 0) - (Number(a.rating) || 0);
@@ -271,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <img src="${pkg.image || 'assets/images/hero-courses.jpg'}" alt="${pkg.title}" class="pkg-thumb" onerror="this.src='assets/images/hero-courses.jpg'">
             <div class="pkg-title-wrap">
               <strong>${pkg.title}</strong>
-              <small><i class="fa-solid fa-location-dot" style="color: var(--red);"></i> ${pkg.destination} &bull; ${pkg.duration}</small>
+              <small><i class="fa-solid fa-location-dot" style="color: var(--red);"></i> ${pkg.destination}</small>
             </div>
           </div>
         </td>
@@ -280,19 +276,18 @@ document.addEventListener('DOMContentLoaded', function () {
           ${pkg.badge ? `<br><small style="color: var(--amber); font-weight: 700; margin-top: 3px; display: inline-block;"><i class="fa-solid fa-tag"></i> ${pkg.badge}</small>` : ''}
         </td>
         <td>
-          <span class="badge" style="background: var(--bg-body); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; color: var(--navy); border: 1px solid var(--border-subtle);">
-            ${pkg.mode || 'Offline / Hybrid'}
+          <span class="duration-pill">
+            <i class="fa-solid fa-clock"></i> ${pkg.duration || '6 Months'}
           </span>
         </td>
         <td>
-          <div class="price-display">
-            ${pkg.priceFormatted || ('₹' + Number(pkg.price || 0).toLocaleString('en-IN'))}
-            <small>${pkg.priceUnit || '/ student'}</small>
-          </div>
+          <span class="eligibility-pill">
+            <i class="fa-solid fa-user-graduate"></i> ${pkg.eligibility || '10th / 12th Pass'}
+          </span>
         </td>
         <td>
-          <span class="rating-stars">
-            <i class="fa-solid fa-star"></i> ${Number(pkg.rating || 4.8).toFixed(1)}
+          <span class="badge" style="background: var(--bg-body); padding: 5px 9px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; color: var(--navy); border: 1px solid var(--border-subtle);">
+            ${pkg.mode || 'Offline Class & Labs'}
           </span>
         </td>
         <td>
@@ -354,16 +349,13 @@ document.addEventListener('DOMContentLoaded', function () {
           </div>
           <h4>${pkg.title}</h4>
           <p>${pkg.description ? pkg.description.substring(0, 110) + '...' : ''}</p>
-          <div class="admin-pkg-card-meta">
-            <small style="color: var(--text-muted);"><i class="fa-solid fa-location-dot" style="color: var(--red);"></i> ${pkg.destination}</small>
-            <small style="color: var(--navy); font-weight: 700;"><i class="fa-solid fa-clock"></i> ${pkg.duration}</small>
+          <div class="admin-pkg-card-meta" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; margin-top: 10px;">
+            <span class="duration-pill"><i class="fa-solid fa-clock"></i> ${pkg.duration || '6 Months'}</span>
+            <span class="eligibility-pill"><i class="fa-solid fa-user-graduate"></i> ${pkg.eligibility || '10th / 12th Pass'}</span>
           </div>
         </div>
-        <div class="admin-pkg-card-footer">
-          <div class="price-display">
-            ${pkg.priceFormatted || ('₹' + Number(pkg.price || 0).toLocaleString('en-IN'))}
-            <small>${pkg.priceUnit || '/ student'}</small>
-          </div>
+        <div class="admin-pkg-card-footer" style="display: flex; justify-content: space-between; align-items: center;">
+          <small style="color: var(--text-muted); font-weight: 600;"><i class="fa-solid fa-location-dot" style="color: var(--red);"></i> ${pkg.destination}</small>
           <div class="action-buttons">
             <button class="btn btn-outline btn-sm btn-icon" data-action="edit" data-id="${pkg.id}" title="Edit Course">
               <i class="fa-solid fa-pen-to-square"></i>
@@ -545,10 +537,8 @@ document.addEventListener('DOMContentLoaded', function () {
         category: document.getElementById('addPkgCategory').value,
         industry: document.getElementById('addPkgIndustry').value,
         duration: document.getElementById('addPkgDuration').value,
+        eligibility: document.getElementById('addPkgEligibility').value,
         mode: document.getElementById('addPkgMode').value,
-        price: document.getElementById('addPkgPrice').value,
-        priceUnit: document.getElementById('addPkgUnit').value,
-        rating: document.getElementById('addPkgRating').value,
         badge: document.getElementById('addPkgBadge').value,
         image: document.getElementById('addPkgImageInput').value,
         description: document.getElementById('addPkgDescription').value,
@@ -580,11 +570,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('editPkgLocation').value = pkg.destination;
     document.getElementById('editPkgCategory').value = pkg.category || 'hospitality';
     document.getElementById('editPkgIndustry').value = pkg.industry || 'Hotel Management';
-    document.getElementById('editPkgDuration').value = pkg.duration;
+    document.getElementById('editPkgDuration').value = pkg.duration || '6 Months';
+    document.getElementById('editPkgEligibility').value = pkg.eligibility || '10th or 12th Pass';
     document.getElementById('editPkgMode').value = pkg.mode || 'Offline Class & Labs';
-    document.getElementById('editPkgPrice').value = pkg.price;
-    document.getElementById('editPkgUnit').value = pkg.priceUnit || '/ student';
-    document.getElementById('editPkgRating').value = pkg.rating;
     document.getElementById('editPkgBadge').value = pkg.badge || '';
     document.getElementById('editPkgImageInput').value = pkg.image;
     document.getElementById('editPkgImagePreview').src = pkg.image;
@@ -609,10 +597,8 @@ document.addEventListener('DOMContentLoaded', function () {
         category: document.getElementById('editPkgCategory').value,
         industry: document.getElementById('editPkgIndustry').value,
         duration: document.getElementById('editPkgDuration').value,
+        eligibility: document.getElementById('editPkgEligibility').value,
         mode: document.getElementById('editPkgMode').value,
-        price: document.getElementById('editPkgPrice').value,
-        priceUnit: document.getElementById('editPkgUnit').value,
-        rating: document.getElementById('editPkgRating').value,
         badge: document.getElementById('editPkgBadge').value,
         image: document.getElementById('editPkgImageInput').value,
         description: document.getElementById('editPkgDescription').value,
