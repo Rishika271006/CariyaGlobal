@@ -5,284 +5,323 @@
  * Persisted in browser localStorage (cariya_courses_v3)
  */
 
-const STORAGE_KEY = 'cariya_courses_v3';
-const LEGACY_STORAGE_KEY = 'cariya_packages_v1';
+const STORAGE_KEY = 'cariya_courses_v5';
+const LEGACY_STORAGE_KEY = 'cariya_courses_v4';
 const AUTH_KEY = 'cariya_admin_auth_v1';
 const INQUIRIES_KEY = 'cariya_inquiries_v1';
 
 // Default Cover Images available in CARIYA Global image directory
 const CARIYA_IMAGE_LIBRARY = [
-  { path: 'assets/images/hero-hotel-management-course.jpg', label: 'Hotel Management Course' },
-  { path: 'assets/images/hero-hotel-management-course-chandigarh.jpg', label: 'Hotel Management Chandigarh' },
-  { path: 'assets/images/hero-hospitality-management-course.jpg', label: 'Hospitality Management Course' },
-  { path: 'assets/images/hero-hospitality-courses.jpg', label: 'Hospitality Courses Hub' },
-  { path: 'assets/images/hero-hospitality-courses-chandigarh.jpg', label: 'Hospitality Courses Chandigarh' },
   { path: 'assets/images/hero-aviation-management-course.jpg', label: 'Aviation Management Course' },
-  { path: 'assets/images/hero-aviation.jpg', label: 'Aviation & Cabin Crew' },
-  { path: 'assets/images/hero-aviation-courses-chandigarh.jpg', label: 'Aviation Courses Chandigarh' },
+  { path: 'assets/images/hero-aviation-courses.jpg', label: 'Aviation Courses' },
+  { path: 'assets/images/hero-hotel-management-course.jpg', label: 'Hotel Management Course' },
+  { path: 'assets/images/hero-hospitality-management-course.jpg', label: 'Hospitality Management Course' },
+  { path: 'assets/images/hero-hospitality-courses.jpg', label: 'Hospitality Courses' },
   { path: 'assets/images/hero-tourism-management-course.jpg', label: 'Tourism Management Course' },
-  { path: 'assets/images/hero-tourism-courses.jpg', label: 'Tourism Courses & Guiding' },
-  { path: 'assets/images/hero-travel-management-course.jpg', label: 'Travel Trade & GDS Operations' },
-  { path: 'assets/images/hero-courses.jpg', label: 'All Courses & Programmes' }
+  { path: 'assets/images/hero-tourism-courses.jpg', label: 'Tourism Courses' },
+  { path: 'assets/images/hero-travel-management-course.jpg', label: 'Travel Management Course' },
+  { path: 'assets/images/hero-travel-courses.jpg', label: 'Travel Courses' },
+  { path: 'assets/images/hero-courses.jpg', label: 'All Courses Hub' }
 ];
 
-// Initial Real Courses Catalog for CARIYA Global (Duration & Eligibility focused)
+// Official Courses Catalog for CARIYA Global (Matching Verified Website Pages & Asian Pathways)
 const DEFAULT_COURSES = [
   {
-    id: 'course-hotel-mgmt',
-    title: 'Hotel Management Course (Front Office, F&B & Housekeeping)',
-    destination: 'Chandigarh Hub / Hybrid',
-    category: 'hospitality',
-    industry: 'Hotel Management',
-    duration: '6 Months (2, 3, 6 & 12 Mos)',
-    eligibility: '10th or 12th Pass',
-    mode: 'Offline Class & Labs',
-    rating: 4.92,
-    badge: 'AI-Powered Curriculum',
+    id: 'course-aviation-mgmt',
+    title: 'AI-Powered Aviation Management Course',
+    pageUrl: 'aviation-management-course.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
+    category: 'aviation',
+    industry: 'Aviation Management',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
+    rating: 4.95,
+    badge: 'AI-Powered Training',
     status: 'active',
-    image: 'assets/images/hero-hotel-management-course.jpg',
-    description: 'Comprehensive hotel operations diploma covering front office management, guest relations, housekeeping standards, F&B service, and emerging AI tools for personalized hospitality guest experiences.',
-    features: ['Front Office & Reservations', 'Housekeeping Presentation Standards', 'F&B Service Fundamentals', 'AI Guest Experience Tools'],
+    image: 'assets/images/hero-aviation-management-course.jpg',
+    description: "CARIYA Global's AI-Powered Aviation Management Course develops practical knowledge for the modern aviation industry, including airport operations, airline services, passenger handling, aviation customer service, ground operations, aviation administration and digital aviation technologies.",
+    features: [
+      'Airport & Aviation Operations',
+      'Airline Operations & Services',
+      'Passenger Handling & Ground Services',
+      'Aviation Customer Service',
+      'Aviation Administration & Management',
+      'Aviation Marketing & Digital Technologies'
+    ],
     inclusions: [
-      'Practical Lab Simulation & Front Office Software',
-      'PMS (Opera / Fidelio) Operations Training',
-      'Hospitality Grooming & Communication Clinics',
-      'Placement & Internship Fast-Track Referral',
-      'Verified CARIYA Global Certificate'
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Singapore, Thailand & Malaysia Study Pathways',
+      'AI-Assisted Customer & Operational Workflows',
+      'Industry-Recognised CARIYA Certificate / Diploma'
     ],
     createdAt: '2026-03-01T10:00:00Z'
   },
   {
+    id: 'course-hotel-mgmt',
+    title: 'AI-Powered Hotel Management Course',
+    pageUrl: 'hotel-management-course.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
+    category: 'hospitality',
+    industry: 'Hotel Management',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
+    rating: 4.93,
+    badge: 'AI-Powered Training',
+    status: 'active',
+    image: 'assets/images/hero-hotel-management-course.jpg',
+    description: "CARIYA Global's AI-powered Hotel Management Course develops practical knowledge of hotel operations, guest services and hospitality management. Combines core professional skills, operational understanding, digital workflows and emerging AI tools.",
+    features: [
+      'Front Office & Guest Services',
+      'Housekeeping Operations',
+      'Food & Beverage Operations',
+      'Hotel Operations & Administration',
+      'Hospitality Communication',
+      'AI-Powered Hotel Management'
+    ],
+    inclusions: [
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Singapore, Thailand & Malaysia Study Pathways',
+      'Personalized Guest Experience & AI Tools',
+      'Industry-Recognised CARIYA Certificate / Diploma'
+    ],
+    createdAt: '2026-03-02T10:00:00Z'
+  },
+  {
     id: 'course-hospitality-mgmt',
-    title: 'Hospitality Management Course (Resort Operations & Leadership)',
-    destination: 'Chandigarh Hub / Asia Track',
+    title: 'AI-Powered Hospitality Management Course',
+    pageUrl: 'hospitality-management-course.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
     category: 'hospitality',
     industry: 'Hospitality Leadership',
-    duration: '6 Months (3, 6 & 12 Mos)',
-    eligibility: '12th Pass or Equivalent',
-    mode: 'Hybrid / International',
-    rating: 4.90,
-    badge: 'Luxury Resort Pathway',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
+    rating: 4.91,
+    badge: 'AI-Powered Training',
     status: 'active',
     image: 'assets/images/hero-hospitality-management-course.jpg',
-    description: 'Executive management pathway exploring luxury hospitality, resort operations, department budgeting, customer experience strategy, and interdepartmental leadership across Asia.',
-    features: ['Luxury Resort Operations', 'Guest Relations Leadership', 'Quality Management', 'Revenue & Yield Basics'],
+    description: 'Executive pathway providing a broader view of hospitality, combining operations, guest experience, service management, professional communication and emerging AI technology awareness for luxury hospitality across Asia.',
+    features: [
+      'Hospitality Operations Structure',
+      'Guest Experience & Customer Service',
+      'Front Office & Accommodation',
+      'Food & Beverage & Events',
+      'Hospitality Sales, Marketing & Digital',
+      'Professional Skills & Career Readiness'
+    ],
     inclusions: [
-      'Departmental Rotations Simulation',
-      'Multicultural Workplace Communication',
-      'Executive Hospitality Portfolio Building',
-      'Singapore & Thailand International Pathway Guidance',
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Singapore, Thailand & Malaysia Study Pathways',
+      'AI-Assisted Customer-Service Workflows',
       'CARIYA Global Professional Diploma'
     ],
-    createdAt: '2026-03-05T11:30:00Z'
-  },
-  {
-    id: 'course-aviation-mgmt',
-    title: 'Aviation Management & Airport Operations Course',
-    destination: 'Chandigarh Hub',
-    category: 'aviation',
-    industry: 'Aviation & Airport Ops',
-    duration: '6 Months (3 & 6 Mos)',
-    eligibility: '12th Pass / Graduate',
-    mode: 'Offline Class & Labs',
-    rating: 4.95,
-    badge: 'Airport & Airline Career',
-    status: 'active',
-    image: 'assets/images/hero-aviation-management-course.jpg',
-    description: 'Professional airline and airport ground operations training covering check-in systems (DCS), passenger handling, ramp awareness, aviation safety regulations, and flight dispatch workflows.',
-    features: ['Airport Ground Handling', 'Aviation Safety & Security', 'DCS Check-in Systems', 'Boarding & Gate Procedures'],
-    inclusions: [
-      'Aviation Terminology & Dangerous Goods Awareness',
-      'Airline Mock Assessment Interviews',
-      'Personality Grooming & Group Discussion Drills',
-      'Direct Open-Day Screening Notifications',
-      'Industry Accredited Aviation Certificate'
-    ],
-    createdAt: '2026-03-10T09:15:00Z'
-  },
-  {
-    id: 'course-cabin-crew',
-    title: 'Cabin Crew Grooming & In-Flight Service Master Course',
-    destination: 'Chandigarh Hub',
-    category: 'aviation',
-    industry: 'Aviation & Cabin Crew',
-    duration: '3 Months Intensive',
-    eligibility: '12th Pass (Min 18 Years)',
-    mode: 'Offline Intensive',
-    rating: 4.94,
-    badge: 'High Selection Rate',
-    status: 'active',
-    image: 'assets/images/hero-aviation.jpg',
-    description: 'Intensive grooming, body language, voice modulation, in-flight passenger service etiquette, emergency procedures, and airline mock interview drills designed for domestic and international cabin crew aspirants.',
-    features: ['Grooming & Posture Clinics', 'In-Flight Announcement Drills', 'Customer Service & Safety Drills', 'Stress Interview Drills'],
-    inclusions: [
-      'Professional Studio Grooming Portfolio Shoot',
-      'Airline-Specific Screening Simulation Drills',
-      'Aviation First Aid & Emergency Protocol Basics',
-      'Personalized Video Analysis & Instructor Feedback'
-    ],
-    createdAt: '2026-03-12T14:20:00Z'
+    createdAt: '2026-03-03T10:00:00Z'
   },
   {
     id: 'course-tourism-mgmt',
-    title: 'International Tourism Management & Destination Development Course',
-    destination: 'Chandigarh Hub / Online',
+    title: 'AI-Powered Tourism Management Course',
+    pageUrl: 'tourism-management-course.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
     category: 'tourism',
     industry: 'Tourism Management',
-    duration: '6 Months (3 & 6 Mos)',
-    eligibility: '12th Pass / Any Stream',
-    mode: 'Hybrid / International',
-    rating: 4.86,
-    badge: 'Eco-Tourism & Global Travel',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
+    rating: 4.88,
+    badge: 'AI-Powered Training',
     status: 'active',
     image: 'assets/images/hero-tourism-management-course.jpg',
-    description: 'Executive training in international tourism development, destination marketing, eco-tourism, cultural tour planning, visitor experience strategy, and travel agency alliance building.',
-    features: ['Destination Marketing', 'Eco-Tourism Strategy', 'Tour Operating Systems', 'Global Visitor Experience'],
-    inclusions: [
-      'Case Studies in Asian Tourism Destinations',
-      'Field Survey & Tour Packaging Project',
-      'Digital Marketing for Tourism Desks',
-      'Verified Partner Training Certificate'
+    description: "CARIYA Global's AI-Powered Tourism Management Course develops practical knowledge for the wider tourism and visitor economy: destination management, travel services, tourism marketing, MICE, heritage tourism, and AI-powered destination workflows.",
+    features: [
+      'Tourism Fundamentals & Operations',
+      'Destination Management & Branding',
+      'Travel & Tour Operations',
+      'Tourism Marketing & Digital Promotion',
+      'MICE, Events & Experience Tourism',
+      'Heritage, Culture & Sustainable Tourism'
     ],
-    createdAt: '2026-03-15T08:00:00Z'
+    inclusions: [
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Singapore, Thailand & Malaysia Study Pathways',
+      'AI-Assisted Travel Planning & Itineraries',
+      'Industry-Recognised CARIYA Certificate / Diploma'
+    ],
+    createdAt: '2026-03-04T10:00:00Z'
   },
   {
-    id: 'course-tourism-courses',
-    title: 'Tourism Courses & Guiding Operations Foundation',
-    destination: 'Chandigarh Hub / Online',
-    category: 'tourism',
-    industry: 'Tourism Foundations',
-    duration: '3 Months Foundation',
-    eligibility: '10th or 12th Pass',
-    mode: 'Offline / Hybrid',
-    rating: 4.84,
-    badge: 'Travel Agency & Guiding',
-    status: 'active',
-    image: 'assets/images/hero-tourism-courses.jpg',
-    description: 'Foundation course covering tourist guidance techniques, itinerary planning, customer relations, cultural heritage presentation, and travel documentation across South & Southeast Asia.',
-    features: ['Tour Guiding Protocols', 'Cultural Heritage Presentation', 'Visitor Safety & Ethics', 'Asia Tour Itineraries'],
-    inclusions: [
-      'Practical Guiding Simulation & Commentary Drills',
-      'Group Leadership & Client Care Workshops',
-      'Asia Destination Knowledge Base',
-      'Course Completion Certificate'
-    ],
-    createdAt: '2026-03-18T10:30:00Z'
-  },
-  {
-    id: 'course-travel-ticketing',
-    title: 'Travel Trade Operations & Global GDS Ticketing Course',
-    destination: 'Online / Chandigarh Hub',
+    id: 'course-travel-mgmt',
+    title: 'AI-Powered Travel Management Course',
+    pageUrl: 'travel-management-course.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
     category: 'travel',
-    industry: 'Travel Trade & GDS',
-    duration: '3 Months',
-    eligibility: '12th Pass / Basic Computers',
-    mode: 'Online Interactive',
-    rating: 4.82,
-    badge: 'GDS Amadeus / Galileo',
+    industry: 'Travel Management',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
+    rating: 4.87,
+    badge: 'AI-Powered Training',
     status: 'active',
     image: 'assets/images/hero-travel-management-course.jpg',
-    description: 'Hands-on training on Global Distribution Systems (GDS Amadeus / Galileo), airline reservation codes, international fare calculation, PNR generation, and visa rules for travel professionals.',
-    features: ['GDS Reservation Systems', 'Fare Rules & Ticketing Logic', 'Visa Regulation Protocols', 'Domestic & International Itineraries'],
-    inclusions: [
-      'Live GDS Software Simulation Access',
-      'Practical Air Ticketing & Fare Calculation Drills',
-      'Commercial Costing Templates & Tools',
-      'Executive Travel Consultant Certification'
+    description: "CARIYA Global's Travel Management Course focuses on the operational and commercial side of travel, including itinerary planning, documentation, corporate travel, supplier coordination, tour packaging, customer management and AI-powered travel workflows.",
+    features: [
+      'Travel Operations & Ticketing',
+      'Travel Documentation & Regulations',
+      'Corporate Travel & Client Management',
+      'Tour Packaging & Itinerary Planning',
+      'Travel Sales & Customer Experience',
+      'MICE & Corporate Travel Workflows'
     ],
-    createdAt: '2026-03-20T12:00:00Z'
+    inclusions: [
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Singapore, Thailand & Malaysia Study Pathways',
+      'AI-Assisted Travel Ideation & Workflows',
+      'Industry-Recognised CARIYA Certificate / Diploma'
+    ],
+    createdAt: '2026-03-05T10:00:00Z'
   },
   {
-    id: 'course-travel-management',
-    title: 'Corporate Travel Management & MICE Operations Course',
-    destination: 'Chandigarh Hub / Hybrid',
-    category: 'travel',
-    industry: 'Corporate Travel & MICE',
-    duration: '6 Months (3 & 6 Mos)',
-    eligibility: '12th Pass / Graduate',
-    mode: 'Hybrid / International',
+    id: 'course-aviation-pathway',
+    title: 'Aviation Courses (Airline Services & Ground Operations Track)',
+    pageUrl: 'aviation-courses.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
+    category: 'aviation',
+    industry: 'Aviation Ground Operations',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
+    rating: 4.90,
+    badge: 'Core Sector Track',
+    status: 'active',
+    image: 'assets/images/hero-aviation-courses.jpg',
+    description: "Operational ground and passenger service training: terminal management, check-in, gate coordination, ramp awareness, baggage handling, safety compliance, and professional aviation communication across Asia's skies.",
+    features: [
+      'Airport & Ground Operations',
+      'Passenger Services & Check-In',
+      'Airline Commercial Basics & Fares',
+      'Safety, Security & Compliance',
+      'Cargo & Logistics Awareness',
+      'Professional Aviation Communication'
+    ],
+    inclusions: [
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Asia Sky Hub Opportunities (Singapore, Malaysia, Thailand)',
+      'Airline Screening & Interview Prep Drills',
+      'CARIYA Global Course Certificate'
+    ],
+    createdAt: '2026-03-06T10:00:00Z'
+  },
+  {
+    id: 'course-hospitality-pathway',
+    title: 'Hospitality Courses (Foundations & Luxury Operations Track)',
+    pageUrl: 'hospitality-courses.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
+    category: 'hospitality',
+    industry: 'Hospitality Operations',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
+    rating: 4.89,
+    badge: 'Core Sector Track',
+    status: 'active',
+    image: 'assets/images/hero-hospitality-courses.jpg',
+    description: 'Broad foundation in hospitality and hotel management for students looking to build practical skills. Combines professional education with AI-driven learning and practical industry training across Asia.',
+    features: [
+      'Front Office Operations',
+      'Guest Experience & Customer Service',
+      'Housekeeping Standards',
+      'Food & Beverage Operations',
+      'Hospitality Technology & Digital Workflows',
+      'Professional Communication & Etiquette'
+    ],
+    inclusions: [
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Singapore, Thailand & Malaysia Pathway Guidance',
+      'Hospitality Grooming & Communication Clinics',
+      'CARIYA Global Course Certificate'
+    ],
+    createdAt: '2026-03-07T10:00:00Z'
+  },
+  {
+    id: 'course-tourism-pathway',
+    title: 'Tourism Courses (Travel Agency & Destination Operations Track)',
+    pageUrl: 'tourism-courses.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
+    category: 'tourism',
+    industry: 'Tourism Operations',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
     rating: 4.85,
-    badge: 'Corporate & MICE Focus',
+    badge: 'Core Sector Track',
+    status: 'active',
+    image: 'assets/images/hero-tourism-courses.jpg',
+    description: 'Covers destination operations, tour planning, guiding, ground handling for visitors, commercial costing and sustainable tourism practice across Southeast Asia destinations.',
+    features: [
+      'Destination Knowledge & Seasonality',
+      'Tour Operations & Itinerary Scheduling',
+      'Visitor Experience & Guiding Ethics',
+      'Commercial Costing & Pricing Logic',
+      'Sustainable & Responsible Tourism',
+      'Digital & Online Marketing Channels'
+    ],
+    inclusions: [
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Asia Destination Pathways Guidance',
+      'Tour Planning & Costing Case Studies',
+      'CARIYA Global Course Certificate'
+    ],
+    createdAt: '2026-03-08T10:00:00Z'
+  },
+  {
+    id: 'course-travel-pathway',
+    title: 'Travel Courses (GDS, Ticketing & Tour Planning Track)',
+    pageUrl: 'travel-courses.html',
+    destination: 'Singapore • Thailand • Malaysia / Hybrid',
+    category: 'travel',
+    industry: 'Travel Trade & Ticketing',
+    duration: '2 / 3 / 6 / 12 Months',
+    eligibility: '10th Pass or 12th Pass',
+    mode: 'Online · Offline · Hybrid',
+    targetAudience: 'Students after 10th & 12th, Career Starters',
+    rating: 4.86,
+    badge: 'Core Sector Track',
     status: 'active',
     image: 'assets/images/hero-travel-courses.jpg',
-    description: 'Specialized course for managing corporate travel desks, MICE (Meetings, Incentives, Conferences, Exhibitions), corporate negotiation, and luxury inbound/outbound travel logistics.',
-    features: ['Corporate Travel Desks', 'MICE Event Management', 'Vendor & Hotel Contracts', 'Corporate Client Account Mgmt'],
-    inclusions: [
-      '10 Real-world Corporate Proposal Projects',
-      'Contract Negotiation Playbooks',
-      'Travel ERP & Expense Tools Overview',
-      'Advanced Travel Management Diploma'
+    description: 'Focuses on operational precision in the commercial travel trade: booking systems, fare structures, ticketing logic, multi-component itinerary sequencing, client qualification, and travel documentation.',
+    features: [
+      'Booking & Reservation Systems',
+      'Fares, Ticketing Concepts & Reissues',
+      'Itinerary & Multi-Component Package Building',
+      'Client Servicing & Sales Negotiation',
+      'Documentation & Visa Awareness',
+      'Travel Business & Distribution Models'
     ],
-    createdAt: '2026-03-22T16:45:00Z'
-  },
-  {
-    id: 'course-hotel-mgmt-chandigarh',
-    title: 'Hotel Management Diploma Course in Chandigarh (Sector 34-A)',
-    destination: 'Chandigarh Hub (SCO 64-65, Sector 34-A)',
-    category: 'hospitality',
-    industry: 'Chandigarh Hub Campus',
-    duration: '6 Months Campus Track',
-    eligibility: '10th or 12th Pass',
-    mode: 'Offline Class & Labs',
-    rating: 4.93,
-    badge: 'Sector 34-A Practical Labs',
-    status: 'active',
-    image: 'assets/images/hero-hotel-management-course-chandigarh.jpg',
-    description: 'Dedicated on-campus diploma at CARIYA Global Chandigarh Hub with physical front office simulation, food & beverage practical lab, guest handling workshops, and local hotel visits.',
-    features: ['In-Person Lab Training', 'Sector 34-A Training Hub', '1-on-1 Faculty Mentorship', 'Direct Tricity & Regional Placements'],
     inclusions: [
-      'Daily Practical Lab Sessions in Sector 34-A Hub',
-      'Uniform & Professional Grooming Kit Included',
-      'Local 5-Star Hotel Immersion Visits',
-      'Lifetime Alumni Placement Referral Network'
+      'Flexible 2, 3, 6 and 12-Month Pathways',
+      'Online, Offline and Hybrid Delivery',
+      'Singapore, Thailand & Malaysia Travel Pathways',
+      'Ticketing & Package Costing Simulation',
+      'CARIYA Global Course Certificate'
     ],
-    createdAt: '2026-03-25T13:10:00Z'
-  },
-  {
-    id: 'course-aviation-chandigarh',
-    title: 'Aviation & Airport Operations Diploma in Chandigarh',
-    destination: 'Chandigarh Hub (SCO 64-65, Sector 34-A)',
-    category: 'aviation',
-    industry: 'Chandigarh Hub Campus',
-    duration: '6 Months Campus Track',
-    eligibility: '12th Pass or Equivalent',
-    mode: 'Offline Class & Labs',
-    rating: 4.91,
-    badge: 'Airport & Airline Hub',
-    status: 'active',
-    image: 'assets/images/hero-aviation-courses-chandigarh.jpg',
-    description: 'Classroom and practical aviation training at CARIYA Global Chandigarh Hub covering airport security, passenger service, check-in software, grooming clinics, and interview assessment rounds.',
-    features: ['Direct Airport Orientation', 'Mock Check-in Counters', 'Personality Grooming Classes', 'Aviation English & Communication'],
-    inclusions: [
-      'Aviation Uniform & Grooming Standards Kit',
-      'DCS Simulation Software Training',
-      'Airlines Screening Interview Prep',
-      'Chandigarh Airport Practical Exposure Visit'
-    ],
-    createdAt: '2026-03-28T15:30:00Z'
-  },
-  {
-    id: 'course-hospitality-chandigarh',
-    title: 'Professional Hospitality & Food Service Course in Chandigarh',
-    destination: 'Chandigarh Hub (Sector 34-A)',
-    category: 'hospitality',
-    industry: 'Chandigarh Hub Campus',
-    duration: '3 Months Fast-Track',
-    eligibility: '10th Pass or Above',
-    mode: 'Offline Class & Labs',
-    rating: 4.87,
-    badge: 'Fast-Track Certification',
-    status: 'active',
-    image: 'assets/images/hero-hospitality-courses-chandigarh.jpg',
-    description: 'Short-term hands-on certificate course focusing on frontline hospitality service, banquet operations, bar & beverage service basics, guest communication, and dining room management.',
-    features: ['F&B Practical Drills', 'Banquet & Event Operations', 'Customer Service Etiquette', 'Fast-Track Completion'],
-    inclusions: [
-      'Hands-on Table Setting & Service Practice',
-      'Food Hygiene & Safety Protocols',
-      'Resume Building & Interview Coaching',
-      'Industry Recognized Certificate'
-    ],
-    createdAt: '2026-03-30T10:00:00Z'
+    createdAt: '2026-03-09T10:00:00Z'
   }
 ];
 
@@ -298,7 +337,11 @@ const CariyaCoursesStore = {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          // Verify that stored catalog doesn't contain legacy dummy entries
+          const hasLegacyDummy = parsed.some(p => p.id === 'course-cabin-crew' || (p.title && p.title.includes('Sector 34-A')));
+          if (!hasLegacyDummy) {
+            return parsed;
+          }
         }
       }
     } catch (e) {
@@ -335,13 +378,15 @@ const CariyaCoursesStore = {
     const newCourse = {
       id: id,
       title: courseData.title.trim(),
-      destination: courseData.destination.trim(),
+      pageUrl: courseData.pageUrl ? courseData.pageUrl.trim() : (courseData.url ? courseData.url.trim() : 'courses.html'),
+      destination: courseData.destination ? courseData.destination.trim() : 'Singapore • Thailand • Malaysia / Hybrid',
       category: courseData.category || 'hospitality',
       industry: courseData.industry || 'Hospitality',
-      duration: (courseData.duration || '6 Months').trim(),
-      eligibility: (courseData.eligibility || '10th / 12th Pass').trim(),
-      mode: courseData.mode || 'Offline Class & Labs',
-      rating: Number(courseData.rating) || 4.8,
+      duration: (courseData.duration || '2 / 3 / 6 / 12 Months').trim(),
+      eligibility: (courseData.eligibility || '10th Pass or 12th Pass').trim(),
+      mode: courseData.mode || 'Online · Offline · Hybrid',
+      targetAudience: courseData.targetAudience ? courseData.targetAudience.trim() : 'Students after 10th & 12th, Career Starters',
+      rating: Number(courseData.rating) || 4.9,
       badge: courseData.badge ? courseData.badge.trim() : '',
       status: courseData.status || 'active',
       image: courseData.image || 'assets/images/hero-courses.jpg',
@@ -372,8 +417,12 @@ const CariyaCoursesStore = {
       ...existing,
       ...updateData,
       id: id,
+      pageUrl: updateData.pageUrl !== undefined ? updateData.pageUrl.trim() : existing.pageUrl,
+      targetAudience: updateData.targetAudience !== undefined ? updateData.targetAudience.trim() : existing.targetAudience,
+      destination: updateData.destination !== undefined ? updateData.destination.trim() : existing.destination,
       duration: updateData.duration !== undefined ? updateData.duration.trim() : existing.duration,
       eligibility: updateData.eligibility !== undefined ? updateData.eligibility.trim() : existing.eligibility,
+      mode: updateData.mode !== undefined ? updateData.mode : existing.mode,
       rating: Number(updateData.rating !== undefined ? updateData.rating : existing.rating),
       features: Array.isArray(updateData.features) ? updateData.features : (typeof updateData.features === 'string' ? updateData.features.split(',').map(s => s.trim()).filter(Boolean) : existing.features),
       inclusions: Array.isArray(updateData.inclusions) ? updateData.inclusions : (typeof updateData.inclusions === 'string' ? updateData.inclusions.split(',').map(s => s.trim()).filter(Boolean) : existing.inclusions),

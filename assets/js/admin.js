@@ -186,13 +186,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const uniqueCats = new Set(courses.map(p => p.category)).size;
     if (metricCategories) metricCategories.textContent = uniqueCats;
 
-    // Campus Hubs count
-    const uniqueDests = new Set(courses.map(p => p.destination)).size;
-    if (metricDestinations) metricDestinations.textContent = uniqueDests;
+    // Campus Hubs count / Asian Pathways
+    if (metricDestinations) {
+      metricDestinations.textContent = 'Singapore • Thailand • Malaysia';
+    }
 
     // Eligibility Metric
     if (metricEligibility) {
-      metricEligibility.textContent = '10th / 12th / Grad';
+      metricEligibility.textContent = '10th / 12th Pass';
     }
   }
 
@@ -297,6 +298,9 @@ document.addEventListener('DOMContentLoaded', function () {
         </td>
         <td>
           <div class="action-buttons">
+            <a href="${pkg.pageUrl || 'courses.html'}" target="_blank" class="btn btn-outline btn-icon" title="View Course Page on Website" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+              <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--navy);"></i>
+            </a>
             <button class="btn btn-outline btn-icon" data-action="duplicate" data-id="${pkg.id}" title="Duplicate Course">
               <i class="fa-solid fa-clone" style="color: var(--blue);"></i>
             </button>
@@ -357,6 +361,9 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="admin-pkg-card-footer" style="display: flex; justify-content: space-between; align-items: center;">
           <small style="color: var(--text-muted); font-weight: 600;"><i class="fa-solid fa-location-dot" style="color: var(--red);"></i> ${pkg.destination}</small>
           <div class="action-buttons">
+            <a href="${pkg.pageUrl || 'courses.html'}" target="_blank" class="btn btn-outline btn-sm btn-icon" title="View Course Page on Website" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
             <button class="btn btn-outline btn-sm btn-icon" data-action="edit" data-id="${pkg.id}" title="Edit Course">
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
@@ -453,10 +460,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // Reset to Defaults
   if (resetPackagesBtn) {
     resetPackagesBtn.addEventListener('click', function () {
-      if (confirm('Reset courses back to the original CARIYA Global defaults? Any custom courses created will be overwritten.')) {
+      if (confirm('Reset courses back to the 9 official CARIYA Global website courses? Any custom courses created will be overwritten.')) {
         store.resetToDefaults();
         renderDashboard();
-        showToast('Reset to default courses', 'info');
+        showToast('Courses catalog reset to official website courses', 'info');
       }
     });
   }
@@ -534,6 +541,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const newCourseData = {
         title: document.getElementById('addPkgTitle').value,
         destination: document.getElementById('addPkgLocation').value,
+        pageUrl: document.getElementById('addPkgPageUrl') ? document.getElementById('addPkgPageUrl').value : 'courses.html',
+        targetAudience: document.getElementById('addPkgTargetAudience') ? document.getElementById('addPkgTargetAudience').value : '',
         category: document.getElementById('addPkgCategory').value,
         industry: document.getElementById('addPkgIndustry').value,
         duration: document.getElementById('addPkgDuration').value,
@@ -568,11 +577,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('editPkgId').value = pkg.id;
     document.getElementById('editPkgTitle').value = pkg.title;
     document.getElementById('editPkgLocation').value = pkg.destination;
+    if (document.getElementById('editPkgPageUrl')) document.getElementById('editPkgPageUrl').value = pkg.pageUrl || '';
+    if (document.getElementById('editPkgTargetAudience')) document.getElementById('editPkgTargetAudience').value = pkg.targetAudience || '';
     document.getElementById('editPkgCategory').value = pkg.category || 'hospitality';
     document.getElementById('editPkgIndustry').value = pkg.industry || 'Hotel Management';
-    document.getElementById('editPkgDuration').value = pkg.duration || '6 Months';
-    document.getElementById('editPkgEligibility').value = pkg.eligibility || '10th or 12th Pass';
-    document.getElementById('editPkgMode').value = pkg.mode || 'Offline Class & Labs';
+    document.getElementById('editPkgDuration').value = pkg.duration || '2 / 3 / 6 / 12 Months';
+    document.getElementById('editPkgEligibility').value = pkg.eligibility || '10th Pass or 12th Pass';
+    document.getElementById('editPkgMode').value = pkg.mode || 'Online · Offline · Hybrid';
     document.getElementById('editPkgBadge').value = pkg.badge || '';
     document.getElementById('editPkgImageInput').value = pkg.image;
     document.getElementById('editPkgImagePreview').src = pkg.image;
@@ -594,6 +605,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const updatedData = {
         title: document.getElementById('editPkgTitle').value,
         destination: document.getElementById('editPkgLocation').value,
+        pageUrl: document.getElementById('editPkgPageUrl') ? document.getElementById('editPkgPageUrl').value : '',
+        targetAudience: document.getElementById('editPkgTargetAudience') ? document.getElementById('editPkgTargetAudience').value : '',
         category: document.getElementById('editPkgCategory').value,
         industry: document.getElementById('editPkgIndustry').value,
         duration: document.getElementById('editPkgDuration').value,
@@ -756,7 +769,7 @@ document.addEventListener('DOMContentLoaded', function () {
         name: 'Rohit Verma',
         phone: '+91 99880 12345',
         email: 'rohit.v.asia@outlook.com',
-        destination: 'Cabin Crew Grooming Master Course',
+        destination: 'AI-Powered Tourism Management Course',
         status: 'Application Review'
       }
     ];

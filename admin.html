@@ -86,7 +86,7 @@
         <button class="sidebar-link active" data-tab="tabPackages">
           <i class="fa-solid fa-graduation-cap"></i>
           <span>Courses Management</span>
-          <span class="sidebar-badge" id="sidebarPkgBadge">11</span>
+          <span class="sidebar-badge" id="sidebarPkgBadge">9</span>
         </button>
 
         <button class="sidebar-link" data-tab="tabPosts">
@@ -194,7 +194,7 @@
               </div>
               <div class="metric-details">
                 <small>Total Courses</small>
-                <h3 id="metricTotalPackages">11</h3>
+                <h3 id="metricTotalPackages">9</h3>
               </div>
             </div>
 
@@ -214,7 +214,7 @@
               </div>
               <div class="metric-details">
                 <small>Entry Eligibility</small>
-                <h3 id="metricEligibility">10th / 12th / Grad</h3>
+                <h3 id="metricEligibility">10th / 12th Pass</h3>
               </div>
             </div>
 
@@ -223,8 +223,8 @@
                 <i class="fa-solid fa-map-location-dot"></i>
               </div>
               <div class="metric-details">
-                <small>Campus Hubs &amp; Modes</small>
-                <h3 id="metricDestinations">4</h3>
+                <small>Asian Pathways</small>
+                <h3 id="metricDestinations">Singapore · Thailand · Malaysia</h3>
               </div>
             </div>
           </div>
@@ -558,19 +558,19 @@
 
           <div class="form-group">
             <label for="addPkgTitle">Course Title *</label>
-            <input type="text" id="addPkgTitle" class="form-control" placeholder="e.g. Hotel Management Diploma (Front Office, F&B & Housekeeping)" required>
+            <input type="text" id="addPkgTitle" class="form-control" placeholder="e.g. AI-Powered Aviation Management Course" required>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="addPkgLocation">Study Hub / Campus *</label>
-              <input type="text" id="addPkgLocation" class="form-control" placeholder="e.g. Chandigarh Hub / Sector 34-A / Online / Hybrid" required>
+              <label for="addPkgLocation">Study Hub / Asian Pathways *</label>
+              <input type="text" id="addPkgLocation" class="form-control" placeholder="e.g. Singapore • Thailand • Malaysia / Hybrid" value="Singapore • Thailand • Malaysia / Hybrid" required>
             </div>
             <div class="form-group">
               <label for="addPkgCategory">Category / Sector *</label>
               <select id="addPkgCategory" class="form-control" required>
+                <option value="aviation">Aviation &amp; Airport Operations</option>
                 <option value="hospitality">Hospitality &amp; Hotel Management</option>
-                <option value="aviation">Aviation &amp; Cabin Crew</option>
                 <option value="tourism">Tourism Management</option>
                 <option value="travel">Travel Trade &amp; GDS</option>
               </select>
@@ -579,35 +579,48 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="addPkgIndustry">Sector Tag / Code</label>
-              <input type="text" id="addPkgIndustry" class="form-control" placeholder="e.g. Hotel Management" value="Hotel Management">
+              <label for="addPkgPageUrl">Website Page URL</label>
+              <input type="text" id="addPkgPageUrl" class="form-control" placeholder="e.g. aviation-management-course.html" value="aviation-management-course.html">
+              <small style="color: var(--text-muted); display: block; margin-top: 4px;">Direct link to public course page on cariyaglobal.com</small>
             </div>
             <div class="form-group">
-              <label for="addPkgDuration">Course Duration *</label>
-              <input type="text" id="addPkgDuration" class="form-control" placeholder="e.g. 6 Months (2, 3, 6, 12 Mos)" value="6 Months" required>
+              <label for="addPkgIndustry">Sector Tag / Code</label>
+              <input type="text" id="addPkgIndustry" class="form-control" placeholder="e.g. Aviation Management" value="Aviation Management">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="addPkgEligibility">Eligibility Criteria *</label>
-              <input type="text" id="addPkgEligibility" class="form-control" placeholder="e.g. 10th or 12th Pass / Graduate" value="10th or 12th Pass" required>
+              <label for="addPkgDuration">Course Duration *</label>
+              <input type="text" id="addPkgDuration" class="form-control" placeholder="e.g. 2 / 3 / 6 / 12 Months" value="2 / 3 / 6 / 12 Months" required>
             </div>
+            <div class="form-group">
+              <label for="addPkgEligibility">Eligibility Criteria *</label>
+              <input type="text" id="addPkgEligibility" class="form-control" placeholder="e.g. 10th Pass or 12th Pass" value="10th Pass or 12th Pass" required>
+            </div>
+          </div>
+
+          <div class="form-row">
             <div class="form-group">
               <label for="addPkgMode">Delivery Mode</label>
               <select id="addPkgMode" class="form-control">
+                <option value="Online · Offline · Hybrid" selected>Online · Offline · Hybrid (Flexible)</option>
                 <option value="Offline Class & Labs">Offline Class &amp; Labs</option>
                 <option value="Hybrid / International">Hybrid / International</option>
                 <option value="Online Interactive">Online Interactive</option>
-                <option value="On-campus Chandigarh">On-campus Chandigarh</option>
+                <option value="On-campus Chandigarh Hub">On-campus Chandigarh Hub</option>
               </select>
+            </div>
+            <div class="form-group">
+              <label for="addPkgTargetAudience">Target Audience</label>
+              <input type="text" id="addPkgTargetAudience" class="form-control" placeholder="e.g. Students after 10th & 12th, Career Starters" value="Students after 10th & 12th, Career Starters">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="addPkgBadge">Highlight Badge (Optional)</label>
-              <input type="text" id="addPkgBadge" class="form-control" placeholder="e.g. AI-Powered Curriculum / Sector 34-A Labs">
+              <input type="text" id="addPkgBadge" class="form-control" placeholder="e.g. AI-Powered Training" value="AI-Powered Training">
             </div>
             <div class="form-group">
               <label for="addPkgStatus">Status</label>
@@ -683,14 +696,14 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="editPkgLocation">Study Hub / Campus *</label>
-              <input type="text" id="editPkgLocation" class="form-control" required>
+              <label for="editPkgLocation">Study Hub / Asian Pathways *</label>
+              <input type="text" id="editPkgLocation" class="form-control" required placeholder="e.g. Singapore • Thailand • Malaysia / Hybrid">
             </div>
             <div class="form-group">
               <label for="editPkgCategory">Category / Sector *</label>
               <select id="editPkgCategory" class="form-control" required>
+                <option value="aviation">Aviation &amp; Airport Operations</option>
                 <option value="hospitality">Hospitality &amp; Hotel Management</option>
-                <option value="aviation">Aviation &amp; Cabin Crew</option>
                 <option value="tourism">Tourism Management</option>
                 <option value="travel">Travel Trade &amp; GDS</option>
               </select>
@@ -699,28 +712,41 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="editPkgIndustry">Sector Tag / Code</label>
-              <input type="text" id="editPkgIndustry" class="form-control">
+              <label for="editPkgPageUrl">Website Page URL</label>
+              <input type="text" id="editPkgPageUrl" class="form-control" placeholder="e.g. aviation-management-course.html">
+              <small style="color: var(--text-muted); display: block; margin-top: 4px;">Direct link to public course page on cariyaglobal.com</small>
             </div>
             <div class="form-group">
-              <label for="editPkgDuration">Course Duration *</label>
-              <input type="text" id="editPkgDuration" class="form-control" required placeholder="e.g. 6 Months (2, 3, 6, 12 Mos)">
+              <label for="editPkgIndustry">Sector Tag / Code</label>
+              <input type="text" id="editPkgIndustry" class="form-control">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="editPkgEligibility">Eligibility Criteria *</label>
-              <input type="text" id="editPkgEligibility" class="form-control" required placeholder="e.g. 10th or 12th Pass">
+              <label for="editPkgDuration">Course Duration *</label>
+              <input type="text" id="editPkgDuration" class="form-control" required placeholder="e.g. 2 / 3 / 6 / 12 Months">
             </div>
+            <div class="form-group">
+              <label for="editPkgEligibility">Eligibility Criteria *</label>
+              <input type="text" id="editPkgEligibility" class="form-control" required placeholder="e.g. 10th Pass or 12th Pass">
+            </div>
+          </div>
+
+          <div class="form-row">
             <div class="form-group">
               <label for="editPkgMode">Delivery Mode</label>
               <select id="editPkgMode" class="form-control">
+                <option value="Online · Offline · Hybrid">Online · Offline · Hybrid (Flexible)</option>
                 <option value="Offline Class & Labs">Offline Class &amp; Labs</option>
                 <option value="Hybrid / International">Hybrid / International</option>
                 <option value="Online Interactive">Online Interactive</option>
-                <option value="On-campus Chandigarh">On-campus Chandigarh</option>
+                <option value="On-campus Chandigarh Hub">On-campus Chandigarh Hub</option>
               </select>
+            </div>
+            <div class="form-group">
+              <label for="editPkgTargetAudience">Target Audience</label>
+              <input type="text" id="editPkgTargetAudience" class="form-control" placeholder="e.g. Students after 10th & 12th, Career Starters">
             </div>
           </div>
 
