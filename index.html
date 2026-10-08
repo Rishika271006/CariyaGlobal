@@ -9,13 +9,23 @@
   <link rel="canonical" href="https://www.cariyaglobal.com/">
   <meta name="theme-color" content="#0B2545">
 
-  <!-- Open Graph / Meta -->
+  <!-- Open Graph / Social SEO -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="CARIYA Global | Build Your Future Across Asia">
+  <meta property="og:title" content="CARIYA Global | Build Your Future Across Asia - Hospitality, Tourism, Aviation & Travel">
   <meta property="og:description" content="CARIYA Global guides students toward hospitality, tourism, aviation & travel education, internships and careers across Asia. Explore. Experience. Belong.">
   <meta property="og:url" content="https://www.cariyaglobal.com/">
   <meta property="og:site_name" content="CARIYA Global">
-  <meta property="og:image" content="assets/images/hero-home.jpg">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:image" content="https://www.cariyaglobal.com/assets/images/hero-home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="CARIYA Global - Build Your Future Across Asia">
+
+  <!-- Twitter Card SEO -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CARIYA Global | Build Your Future Across Asia">
+  <meta name="twitter:description" content="Education, training, internships and career pathways in Hospitality, Tourism, Aviation & Travel across Asia.">
+  <meta name="twitter:image" content="https://www.cariyaglobal.com/assets/images/hero-home.jpg">
 
   <!-- Favicons -->
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -31,12 +41,20 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "EducationalOrganization",
+        "@type": ["EducationalOrganization", "Organization"],
         "@id": "https://www.cariyaglobal.com/#organization",
         "name": "CARIYA Global",
         "alternateName": ["CARIYA", "Cariya Global", "Metasol Edutech Services LLP"],
+        "legalName": "Metasol Edutech Services LLP",
         "url": "https://www.cariyaglobal.com/",
-        "logo": "https://www.cariyaglobal.com/assets/images/logo-cariya-global.png",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://www.cariyaglobal.com/#logo",
+          "url": "https://www.cariyaglobal.com/assets/images/logo-cariya-global.png",
+          "caption": "CARIYA Global"
+        },
+        "image": "https://www.cariyaglobal.com/assets/images/hero-home.jpg",
+        "description": "CARIYA Global connects people, places and possibilities across Hospitality, Tourism, Aviation and Travel through international education, professional training, internships and career pathways across Asia.",
         "email": "info@cariyaglobal.com",
         "telephone": "+919115511250",
         "address": {
@@ -46,7 +64,156 @@
           "addressRegion": "Punjab",
           "postalCode": "160022",
           "addressCountry": "IN"
+        },
+        "areaServed": [
+          {"@type": "Country", "name": "India"},
+          {"@type": "Country", "name": "Singapore"},
+          {"@type": "Country", "name": "Malaysia"},
+          {"@type": "Country", "name": "Thailand"},
+          {"@type": "Country", "name": "Japan"},
+          {"@type": "Country", "name": "South Korea"}
+        ],
+        "knowsAbout": [
+          "Aviation Management Education",
+          "Hotel Management Courses",
+          "Hospitality Management Education",
+          "Tourism Management Education",
+          "Travel Trade and GDS Training",
+          "International Internships in Asia",
+          "Study Abroad Counselling"
+        ],
+        "sameAs": [
+          "https://www.youtube.com/@CARIYAGlobal",
+          "https://www.linkedin.com/company/cariya-global/",
+          "https://www.facebook.com/CARIYAglobal"
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+919115511250",
+            "email": "info@cariyaglobal.com",
+            "contactType": "admissions",
+            "areaServed": "IN",
+            "availableLanguage": ["English", "Hindi", "Punjabi"]
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.cariyaglobal.com/#website",
+        "name": "CARIYA Global",
+        "url": "https://www.cariyaglobal.com/",
+        "description": "Build Your Future Across Asia in Hospitality, Tourism, Aviation and Travel.",
+        "inLanguage": "en-IN",
+        "publisher": {
+          "@id": "https://www.cariyaglobal.com/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.cariyaglobal.com/courses.html?q={search_term_string}",
+          "query-input": "required name=search_term_string"
         }
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://www.cariyaglobal.com/#courses-list",
+        "name": "CARIYA Global Official Courses Across Asia",
+        "itemListOrder": "https://schema.org/ItemListOrderAscending",
+        "numberOfItems": 9,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "AI-Powered Aviation Management Course",
+            "url": "https://www.cariyaglobal.com/aviation-management-course.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "AI-Powered Hotel Management Course",
+            "url": "https://www.cariyaglobal.com/hotel-management-course.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "AI-Powered Hospitality Management Course",
+            "url": "https://www.cariyaglobal.com/hospitality-management-course.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "AI-Powered Tourism Management Course",
+            "url": "https://www.cariyaglobal.com/tourism-management-course.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "AI-Powered Travel Management Course",
+            "url": "https://www.cariyaglobal.com/travel-management-course.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "Aviation Courses (Airline Services & Ground Operations Track)",
+            "url": "https://www.cariyaglobal.com/aviation-courses.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 7,
+            "name": "Hospitality Courses (Foundations & Luxury Operations Track)",
+            "url": "https://www.cariyaglobal.com/hospitality-courses.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 8,
+            "name": "Tourism Courses (Travel Agency & Destination Operations Track)",
+            "url": "https://www.cariyaglobal.com/tourism-courses.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 9,
+            "name": "Travel Courses (GDS, Ticketing & Tour Planning Track)",
+            "url": "https://www.cariyaglobal.com/travel-courses.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.cariyaglobal.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is CARIYA Global?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CARIYA Global is an education-and-career ecosystem that guides students toward hospitality, tourism, aviation and travel pathways — covering courses, training, internships and careers — with a focus on building futures across Asia."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is CARIYA Global a university or college?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. CARIYA Global is not a university, college or degree-granting institution. It provides counselling, course guidance and application support connecting students to education and career pathways."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which industries does CARIYA Global focus on?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CARIYA Global focuses on four core industries: Hospitality, Tourism, Aviation and Travel."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which countries does CARIYA Global cover for study and careers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CARIYA Global's core Asian destinations are Singapore, Thailand and Malaysia, alongside broader guidance across Asia (including Japan and South Korea), supported by a local hub in Chandigarh, India."
+            }
+          }
+        ]
       }
     ]
   }

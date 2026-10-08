@@ -3109,3 +3109,204 @@ section.two-col.reverse > *,
 .tag-list li:hover a {
   color: var(--blue);
 }
+
+/* ==========================================================================
+   COMPREHENSIVE MOBILE-FRIENDLY & TOUCH OPTIMIZATIONS
+   ========================================================================== */
+
+/* Universal mobile viewport & touch resets */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent image / media layout shifts and overflow */
+img, picture, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mobile Touch Targets & Form Control Ergonomics */
+@media (max-width: 768px) {
+  /* Prevent iOS Safari auto-zoom on form inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Accessible touch targets */
+  .btn,
+  .btn-primary,
+  .btn-ghost,
+  .btn-ghost-light,
+  .card-action-link,
+  .pkg-filter-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+  }
+
+  .nav-toggle {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Tablet & Mobile Grid Tweaks */
+@media (max-width: 992px) {
+  .site-header {
+    height: 72px;
+  }
+  .header-inner {
+    padding: 0 20px;
+    height: 100%;
+  }
+  .logo-img {
+    height: 40px;
+  }
+  .mobile-drawer {
+    width: min(86vw, 360px);
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+  .drawer-nav-link {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Phone Screen Adjustments (< 640px) */
+@media (max-width: 640px) {
+  .container,
+  .container-narrow {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Breadcrumb touch horizontal scrolling */
+  .breadcrumb,
+  .breadcrumb-wrap,
+  .breadcrumb-list {
+    padding: 12px 16px !important;
+    font-size: 0.82rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .breadcrumb::-webkit-scrollbar,
+  .breadcrumb-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Table and data horizontal touch scroll */
+  .table-wrap,
+  .data-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Notice boxes and stat cards */
+  .notice-box {
+    padding: 18px 16px;
+    font-size: 0.95rem;
+  }
+  .stat-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .stat {
+    padding: 16px;
+  }
+
+  /* Floating WhatsApp button mobile ergonomics */
+  .floating-whatsapp {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
+    z-index: 9999;
+    padding: 14px;
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+  }
+
+  /* Mobile Section Spacing */
+  .section {
+    padding: 44px 0;
+  }
+  .section-header {
+    margin-bottom: 28px;
+  }
+  .section-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* Compact Mobile Devices (< 480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.85rem !important;
+    line-height: 1.22;
+  }
+  h2 {
+    font-size: 1.45rem !important;
+    line-height: 1.25;
+  }
+  h3 {
+    font-size: 1.18rem !important;
+  }
+  .section-header h2 {
+    font-size: 1.45rem !important;
+  }
+  .hero-sub,
+  .section-sub {
+    font-size: 0.95rem !important;
+    line-height: 1.55;
+  }
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .hero-cta .btn {
+    width: 100%;
+    text-align: center;
+  }
+  .industry-grid,
+  .destination-grid,
+  .card-grid {
+    gap: 16px;
+  }
+  .stat .stat-text h3 {
+    font-size: 1.55rem !important;
+  }
+  .drawer-head {
+    padding: 16px 20px;
+  }
+  .drawer-nav-list {
+    padding: 16px 20px;
+  }
+}
+
