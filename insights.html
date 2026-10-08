@@ -417,7 +417,40 @@
 <p>Career pathway guidance.</p>
 <span class="card-link">Explore &rarr;</span>
 </a></div>
-</section><section class="section">
+</section>
+
+<!-- =====================================================================
+     ALL ARTICLES & INSIGHTS (MANAGED IN REAL-TIME VIA ADMIN)
+     ===================================================================== -->
+<section class="section section-light" id="all-articles-section" style="background:#F8FAFC; border-top:1px solid var(--border-light); border-bottom:1px solid var(--border-light);">
+  <div class="container">
+    <div class="section-head section-head-left" style="margin-bottom: 24px;">
+      <div class="section-head-text">
+        <p class="eyebrow">Expert Guidance &amp; Articles</p>
+        <h2>All Articles &amp; Sector Insights</h2>
+        <p>Explore articles, industry analyses, and career strategies written by CARIYA Global faculty and regional mentors across Asia.</p>
+      </div>
+    </div>
+
+    <!-- Filter tabs for sectors -->
+    <div class="insights-filter-tabs" id="insightsFilterTabs" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;">
+      <button class="btn btn-sm btn-primary filter-tab active" data-category="all">All Articles</button>
+      <button class="btn btn-sm btn-outline filter-tab" data-category="hospitality">Hospitality</button>
+      <button class="btn btn-sm btn-outline filter-tab" data-category="aviation">Aviation</button>
+      <button class="btn btn-sm btn-outline filter-tab" data-category="internships">Internships</button>
+      <button class="btn btn-sm btn-outline filter-tab" data-category="tourism">Tourism</button>
+      <button class="btn btn-sm btn-outline filter-tab" data-category="travel">Travel</button>
+      <button class="btn btn-sm btn-outline filter-tab" data-category="study-asia">Study in Asia</button>
+    </div>
+
+    <!-- Dynamic Posts Grid -->
+    <div class="industry-grid" id="insightsPostsGrid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px;">
+      <!-- Hydrated dynamically from CariyaPostsStore -->
+    </div>
+  </div>
+</section>
+
+<section class="section">
 <div class="article-body"><h2>Why CARIYA Insights With CARIYA Global</h2><p>CARIYA Global connects education, professional training, internship pathways and career guidance in one ecosystem, rather than leaving you to piece them together yourself. Guidance is given straight: where a detail is not confirmed, this site says so instead of guessing.</p><p>Every pathway starts the same way &mdash; a counselling conversation about what actually fits your background, budget and goal.</p><a href="start-your-journey.html" class="btn btn-primary">Start Your Journey</a></div>
 </section>
 <!-- build note (internal, not rendered): Launch-stage hub shell only &mdash; no individual articles, authors, publish dates, or statistics should be fabricated or implied to exist yet. All references to article volume, cadence or bylines beyond the site-wide editorial team constant must use [ADD VERIFIED INFORMATION]. -->
@@ -663,6 +696,8 @@ Chat with us on WhatsApp
     <span>Chat on WhatsApp</span>
   </a>
 
+  <!-- CARIYA Data Stores -->
+  <script src="assets/js/packages-data.js"></script>
   <!-- Main JavaScript File -->
   <script src="assets/js/main.js"></script>
 </body>

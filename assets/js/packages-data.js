@@ -475,6 +475,7 @@ const DEFAULT_POSTS = [
     content: 'Artificial intelligence is revolutionizing the global hospitality industry. Modern hotels and luxury resorts are integrating AI-powered personalization, automated front desk check-in systems, predictive customer preferences, and dynamic revenue management tools.',
     link: 'insights.html',
     status: 'published',
+    featuredOnHome: true,
     createdAt: '2026-10-08T09:00:00Z'
   },
   {
@@ -490,6 +491,7 @@ const DEFAULT_POSTS = [
     content: 'Airlines across India, the Middle East, and Southeast Asia are experiencing record passenger volume. Recruitment teams place high value on communication poise, situational awareness, grooming standards, and customer service composure.',
     link: 'aviation-courses.html',
     status: 'published',
+    featuredOnHome: true,
     createdAt: '2026-10-05T11:00:00Z'
   },
   {
@@ -505,7 +507,104 @@ const DEFAULT_POSTS = [
     content: 'Employers in tourism and luxury hospitality place immense weight on candidates with international exposure. An overseas internship demonstrates cultural adaptability, language fluency, and familiarity with multinational standard operating procedures.',
     link: 'internships.html',
     status: 'published',
+    featuredOnHome: true,
     createdAt: '2026-10-02T14:30:00Z'
+  },
+  {
+    id: 'post-ecotourism-asia',
+    title: 'Sustainable Tourism & Ecotourism: High-Growth Career Tracks in Southeast Asia',
+    category: 'tourism',
+    industry: 'Eco-Tourism',
+    author: 'Tourism Faculty Panel',
+    date: '28 Sep 2026',
+    readTime: '5 min read',
+    image: 'assets/images/hero-tourism-management-course.jpg',
+    excerpt: 'Explore how green certifications, sustainable resort stewardship, and cultural heritage tours are generating new executive opportunities across Thailand, Bali, and Vietnam.',
+    content: 'The global shift toward eco-conscious travel is redefining destination management. Luxury resorts and boutique travel providers now seek professionals skilled in carbon neutrality planning, sustainable supply chain management, and authentic cultural engagement.',
+    link: 'tourism-management-course.html',
+    status: 'published',
+    featuredOnHome: false,
+    createdAt: '2026-09-28T10:00:00Z'
+  },
+  {
+    id: 'post-travel-gds-tech',
+    title: 'Mastering GDS & Modern Travel Tech: Why Amadeus and Galileo Skills Still Win',
+    category: 'travel',
+    industry: 'Travel Tech & GDS',
+    author: 'Travel Trade Guild',
+    date: '24 Sep 2026',
+    readTime: '4 min read',
+    image: 'assets/images/hero-travel-management-course.jpg',
+    excerpt: 'Understand the core architecture of Global Distribution Systems (GDS), IATA billing systems, and New Distribution Capability (NDC) shaping modern ticketing.',
+    content: 'Even in an era of direct booking apps, corporate travel management, luxury itinerary planning, and consolidator ticketing rely on Global Distribution Systems like Amadeus and Galileo. Students mastering fare calculation and automated ticketing enjoy immediate career placement.',
+    link: 'travel-courses.html',
+    status: 'published',
+    featuredOnHome: false,
+    createdAt: '2026-09-24T08:30:00Z'
+  },
+  {
+    id: 'post-singapore-malaysia-study',
+    title: 'Studying in Asia: Comparing Singapore, Malaysia & Thailand for Hospitality Education',
+    category: 'study-asia',
+    industry: 'Study in Asia',
+    author: 'Admissions Advisory Panel',
+    date: '18 Sep 2026',
+    readTime: '7 min read',
+    image: 'assets/images/hero-study-in-singapore.jpg',
+    excerpt: 'A realistic breakdown of tuition affordability, living standards, work authorization, and internship pathways across Asia\'s top education destinations.',
+    content: 'Choosing where to study hospitality or tourism abroad requires balancing academic credentials with practical training rights. Singapore offers premier luxury brands and cutting-edge operational frameworks; Malaysia offers cost-effective dual qualifications; Thailand provides unparalleled resort hospitality training.',
+    link: 'study-in-asia.html',
+    status: 'published',
+    featuredOnHome: false,
+    createdAt: '2026-09-18T12:00:00Z'
+  },
+  {
+    id: 'post-luxury-resort-pms',
+    title: 'The Secrets of Hotel Front Office: Opera Cloud & Property Management Systems',
+    category: 'hospitality',
+    industry: 'Hotel Management',
+    author: 'CARIYA Technical Trainer',
+    date: '12 Sep 2026',
+    readTime: '5 min read',
+    image: 'assets/images/hero-hospitality-management-course.jpg',
+    excerpt: 'Why practical simulation on PMS software like Opera Cloud gives students an unfair advantage in luxury 5-star hotel interviews.',
+    content: 'Front desk managers look for candidates who need zero basic training. By learning reservation check-in workflows, guest profile management, room allocation logic, and cashiering reconciliations before placement, students start with supervisory potential.',
+    link: 'hospitality-management-course.html',
+    status: 'published',
+    featuredOnHome: false,
+    createdAt: '2026-09-12T15:00:00Z'
+  },
+  {
+    id: 'post-aviation-ground-vs-cabin',
+    title: 'Airport Ground Handling vs. Cabin Crew: Which Aviation Pathway Fits You?',
+    category: 'aviation',
+    industry: 'Aviation Careers',
+    author: 'Aviation Faculty Panel',
+    date: '06 Sep 2026',
+    readTime: '4 min read',
+    image: 'assets/images/hero-aviation-courses.jpg',
+    excerpt: 'Compare day-to-day duties, shift timings, physical requirements, and long-term supervisory tracks between flight operations and airport customer services.',
+    content: 'While cabin crew roles offer high travel exposure and prestige, airport ground handling operations (ramp management, load dispatch, boarding supervision, VIP concierge) offer predictable rosters and faster promotions into airport duty station managers.',
+    link: 'aviation-management-course.html',
+    status: 'published',
+    featuredOnHome: false,
+    createdAt: '2026-09-06T11:20:00Z'
+  },
+  {
+    id: 'post-interview-resume-guide',
+    title: 'How to Build an International Hospitality Resume That Clears First-Round Screening',
+    category: 'internships',
+    industry: 'Career Advice',
+    author: 'Career Guidance Cell',
+    date: '01 Sep 2026',
+    readTime: '6 min read',
+    image: 'assets/images/hero-career-opportunities.jpg',
+    excerpt: 'Practical resume structuring, professional grooming photography, situational interview tactics, and cultural etiquette for international recruiters.',
+    content: 'Overseas hotel HR managers scan hundreds of international internship applications daily. Formatting your practical modules, language capabilities, customer service anecdotes, and certifications in international standard format is essential to securing early interview offers.',
+    link: 'career-opportunities.html',
+    status: 'published',
+    featuredOnHome: false,
+    createdAt: '2026-09-01T09:15:00Z'
   }
 ];
 
@@ -516,7 +615,20 @@ const CariyaPostsStore = {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          // Merge any new default posts seamlessly so admin accesses all posts
+          const existingIds = new Set(parsed.map(p => p.id));
+          let merged = [...parsed];
+          let updated = false;
+          DEFAULT_POSTS.forEach(def => {
+            if (!existingIds.has(def.id)) {
+              merged.push(def);
+              updated = true;
+            }
+          });
+          if (updated) {
+            this.saveAll(merged);
+          }
+          return merged;
         }
       }
     } catch (e) {
@@ -544,7 +656,15 @@ const CariyaPostsStore = {
   getTopPublished: function (limit = 3) {
     const list = this.getAll();
     const published = list.filter(item => item.status === 'published');
-    return published.slice(0, limit);
+    const featured = published.filter(item => item.featuredOnHome);
+    const nonFeatured = published.filter(item => !item.featuredOnHome);
+    const ordered = [...featured, ...nonFeatured];
+    return ordered.slice(0, limit);
+  },
+
+  getPublished: function () {
+    const list = this.getAll();
+    return list.filter(item => item.status === 'published');
   },
 
   add: function (postData) {
@@ -563,6 +683,7 @@ const CariyaPostsStore = {
       content: postData.content ? postData.content.trim() : '',
       link: postData.link ? postData.link.trim() : 'insights.html',
       status: postData.status || 'published',
+      featuredOnHome: Boolean(postData.featuredOnHome),
       createdAt: new Date().toISOString()
     };
     list.unshift(newPost);
@@ -579,6 +700,7 @@ const CariyaPostsStore = {
     const updated = {
       ...existing,
       ...updateData,
+      featuredOnHome: updateData.featuredOnHome !== undefined ? Boolean(updateData.featuredOnHome) : existing.featuredOnHome,
       id: id,
       updatedAt: new Date().toISOString()
     };
@@ -602,6 +724,17 @@ const CariyaPostsStore = {
     const target = list.find(item => item.id === id);
     if (target) {
       target.status = target.status === 'published' ? 'draft' : 'published';
+      this.saveAll(list);
+      return target;
+    }
+    return null;
+  },
+
+  toggleFeatured: function (id) {
+    const list = this.getAll();
+    const target = list.find(item => item.id === id);
+    if (target) {
+      target.featuredOnHome = !target.featuredOnHome;
       this.saveAll(list);
       return target;
     }

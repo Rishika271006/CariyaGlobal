@@ -91,8 +91,8 @@
 
         <button class="sidebar-link" data-tab="tabPosts">
           <i class="fa-solid fa-newspaper"></i>
-          <span>Front Page Posts</span>
-          <span class="sidebar-badge" id="sidebarPostBadge">3</span>
+          <span>All Posts &amp; Articles</span>
+          <span class="sidebar-badge" id="sidebarPostBadge">9</span>
         </button>
 
         <button class="sidebar-link" data-tab="tabInquiries">
@@ -107,6 +107,11 @@
         </button>
 
         <div class="nav-section-title">Live Website Shortcuts</div>
+
+        <a href="insights.html" target="_blank" class="sidebar-link">
+          <i class="fa-solid fa-newspaper"></i>
+          <span>Public Insights Hub</span>
+        </a>
 
         <a href="courses.html" target="_blank" class="sidebar-link">
           <i class="fa-solid fa-book-open"></i>
@@ -344,16 +349,16 @@
               <div>
                 <div class="content-card-title">
                   <i class="fa-solid fa-newspaper" style="color: var(--blue-primary);"></i>
-                  Front Page Posts &amp; Articles
+                  All Posts &amp; Articles Management
                 </div>
                 <p style="color: var(--text-muted); font-size: 0.88rem; margin: 4px 0 0 0;">
-                  Manage articles and insights displayed on the CARIYA Global homepage. The first 3 published articles are highlighted to visitors.
+                  Complete administrative control over all CARIYA Global articles, industry insights, and homepage featured stories.
                 </p>
               </div>
 
               <div>
                 <button class="btn btn-primary btn-sm" id="openAddPostBtn">
-                  <i class="fa-solid fa-plus"></i> Add New Post
+                  <i class="fa-solid fa-plus"></i> Add New Article
                 </button>
               </div>
             </div>
@@ -362,7 +367,7 @@
             <div class="table-toolbar">
               <div class="table-search">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchPostInput" placeholder="Search posts by title, industry, author...">
+                <input type="text" id="searchPostInput" placeholder="Search all posts by title, sector, author, tags...">
               </div>
 
               <div class="table-filter-group">
@@ -373,6 +378,13 @@
                   <option value="internships">Internships</option>
                   <option value="tourism">Tourism</option>
                   <option value="travel">Travel</option>
+                  <option value="study-asia">Study in Asia</option>
+                </select>
+
+                <select id="filterPostFeaturedSelect" class="form-control" style="width: auto;">
+                  <option value="all">All Placements</option>
+                  <option value="featured">Homepage Featured ⭐</option>
+                  <option value="catalog">Insights Hub Only</option>
                 </select>
 
                 <select id="filterPostStatusSelect" class="form-control" style="width: auto;">
@@ -394,6 +406,7 @@
                   <tr>
                     <th>Article &amp; Thumbnail</th>
                     <th>Sector &amp; Tag</th>
+                    <th>Front Page</th>
                     <th>Date &amp; Read Time</th>
                     <th>Author</th>
                     <th>Status</th>
@@ -853,12 +866,21 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="addPostStatus">Publication Status</label>
-            <select id="addPostStatus" class="form-control">
-              <option value="published">Published (Visible on Frontend)</option>
-              <option value="draft">Draft (Hidden from Frontend)</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="addPostFeatured">Homepage Placement</label>
+              <select id="addPostFeatured" class="form-control">
+                <option value="false">Standard Catalog Article</option>
+                <option value="true">⭐ Feature on Homepage (Top 3)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="addPostStatus">Publication Status</label>
+              <select id="addPostStatus" class="form-control">
+                <option value="published">Published (Visible on Frontend)</option>
+                <option value="draft">Draft (Hidden from Frontend)</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-group">
@@ -880,8 +902,13 @@
           </div>
 
           <div class="form-group">
-            <label for="addPostExcerpt">Short Excerpt (Displayed on Front Page Card) *</label>
-            <textarea id="addPostExcerpt" class="form-control" rows="3" placeholder="Provide a concise 2-sentence teaser summarizing the post..." required></textarea>
+            <label for="addPostExcerpt">Short Excerpt (Teaser for Cards) *</label>
+            <textarea id="addPostExcerpt" class="form-control" rows="2" placeholder="Provide a concise 2-sentence teaser summarizing the post..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="addPostContent">Full Article Content / Narrative</label>
+            <textarea id="addPostContent" class="form-control" rows="4" placeholder="Detailed article paragraphs, analysis, and career advice..."></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -900,7 +927,7 @@
   <div class="modal-overlay" id="editPostModal">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-pen-to-square" style="color: var(--navy);"></i> Edit Front Page Post</h3>
+        <h3><i class="fa-solid fa-pen-to-square" style="color: var(--navy);"></i> Edit Article Details</h3>
         <button class="modal-close" aria-label="Close modal">&times;</button>
       </div>
       <form id="editPostForm">
@@ -919,6 +946,8 @@
                 <option value="aviation">Aviation &amp; Cabin Crew</option>
                 <option value="internships">International Internships</option>
                 <option value="tourism">Tourism &amp; Travel</option>
+                <option value="travel">Travel Trade &amp; GDS</option>
+                <option value="study-asia">Study in Asia</option>
                 <option value="career">Career Insights</option>
               </select>
             </div>
@@ -950,12 +979,21 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="editPostStatus">Publication Status</label>
-            <select id="editPostStatus" class="form-control">
-              <option value="published">Published (Visible on Frontend)</option>
-              <option value="draft">Draft (Hidden from Frontend)</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editPostFeatured">Homepage Placement</label>
+              <select id="editPostFeatured" class="form-control">
+                <option value="false">Standard Catalog Article</option>
+                <option value="true">⭐ Feature on Homepage (Top 3)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editPostStatus">Publication Status</label>
+              <select id="editPostStatus" class="form-control">
+                <option value="published">Published (Visible on Frontend)</option>
+                <option value="draft">Draft (Hidden from Frontend)</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-group">
@@ -976,8 +1014,13 @@
           </div>
 
           <div class="form-group">
-            <label for="editPostExcerpt">Short Excerpt (Displayed on Front Page Card) *</label>
-            <textarea id="editPostExcerpt" class="form-control" rows="3" required></textarea>
+            <label for="editPostExcerpt">Short Excerpt (Teaser for Cards) *</label>
+            <textarea id="editPostExcerpt" class="form-control" rows="2" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="editPostContent">Full Article Content / Narrative</label>
+            <textarea id="editPostContent" class="form-control" rows="4"></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -1003,7 +1046,7 @@
         <i class="fa-solid fa-trash-can" style="font-size: 3rem; color: #DC2626; margin-bottom: 16px; display: block;"></i>
         <h4>Delete this post?</h4>
         <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 8px;">
-          You are about to delete <strong id="deletePostTitle" style="color: var(--navy);"></strong>. It will be immediately removed from the front page and insights list.
+          You are about to delete <strong id="deletePostTitle" style="color: var(--navy);"></strong>. It will be immediately removed from the website catalog.
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center;">
@@ -1011,6 +1054,24 @@
         <button type="button" class="btn btn-danger" id="confirmDeletePostBtn">
           <i class="fa-solid fa-trash"></i> Delete Post
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ARTICLE PREVIEW MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="previewPostModal">
+    <div class="modal-dialog" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-newspaper" style="color: var(--blue-primary);"></i> Article Details &amp; Live Preview</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="previewPostBody" style="padding: 24px;">
+        <!-- Populated via JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-cancel">Close</button>
       </div>
     </div>
   </div>

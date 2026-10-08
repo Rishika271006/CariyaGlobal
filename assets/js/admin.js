@@ -870,7 +870,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ==========================================================================
-  // 12. FRONT PAGE POSTS CONTROLLER
+  // 12. ALL POSTS & ARTICLES CONTROLLER
   // ==========================================================================
   function initPostsManagement() {
     const postsStore = window.CariyaPostsStore;
@@ -882,6 +882,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const metricPublishedPosts = document.getElementById('metricPublishedPosts');
     const searchPostInput = document.getElementById('searchPostInput');
     const filterPostCategorySelect = document.getElementById('filterPostCategorySelect');
+    const filterPostFeaturedSelect = document.getElementById('filterPostFeaturedSelect');
     const filterPostStatusSelect = document.getElementById('filterPostStatusSelect');
     const resetPostsBtn = document.getElementById('resetPostsBtn');
     const postsTableBody = document.getElementById('postsTableBody');
@@ -896,6 +897,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const deletePostModal = document.getElementById('deletePostModal');
     const deletePostTitle = document.getElementById('deletePostTitle');
     const confirmDeletePostBtn = document.getElementById('confirmDeletePostBtn');
+
+    const previewPostModal = document.getElementById('previewPostModal');
+    const previewPostBody = document.getElementById('previewPostBody');
 
     let postToDeleteId = null;
 
@@ -937,6 +941,13 @@ document.addEventListener('DOMContentLoaded', function () {
         list = list.filter(p => p.category === cat);
       }
 
+      const featuredFilter = filterPostFeaturedSelect ? filterPostFeaturedSelect.value : 'all';
+      if (featuredFilter === 'featured') {
+        list = list.filter(p => p.featuredOnHome);
+      } else if (featuredFilter === 'catalog') {
+        list = list.filter(p => !p.featuredOnHome);
+      }
+
       const stat = filterPostStatusSelect ? filterPostStatusSelect.value : 'all';
       if (stat !== 'all') {
         list = list.filter(p => p.status === stat);
@@ -953,10 +964,10 @@ document.addEventListener('DOMContentLoaded', function () {
       if (posts.length === 0) {
         postsTableBody.innerHTML = `
           <tr>
-            <td colspan="6" style="text-align: center; padding: 48px 20px; color: var(--text-muted);">
+            <td colspan="7" style="text-align: center; padding: 48px 20px; color: var(--text-muted);">
               <i class="fa-solid fa-file-circle-xmark" style="font-size: 2.5rem; color: #CBD5E1; margin-bottom: 12px; display: block;"></i>
               <div style="font-size: 1.05rem; font-weight: 600;">No articles match your criteria</div>
-              <p style="font-size: 0.85rem; margin-top: 4px;">Try clearing filters or adding a new front page article.</p>
+              <p style="font-size: 0.85rem; margin-top: 4px;">Try clearing filters or adding a new article to the catalog.</p>
             </td>
           </tr>
         `;
@@ -965,6 +976,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       posts.forEach(post => {
         const isPublished = post.status === 'published';
+        const isFeatured = Boolean(post.featuredOnHome);
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>
@@ -972,7 +984,7 @@ document.addEventListener('DOMContentLoaded', function () {
               <img src="${escapeHtml(post.image || 'assets/images/hero-home.jpg')}" alt="" style="width: 52px; height: 42px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-subtle); flex-shrink: 0;" onerror="this.src='assets/images/hero-home.jpg'">
               <div>
                 <strong style="color: var(--navy); display: block; font-size: 0.95rem; line-height: 1.35;">${escapeHtml(post.title)}</strong>
-                <span style="font-size: 0.78rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; max-width: 380px;">${escapeHtml(post.excerpt || '')}</span>
+                <span style="font-size: 0.78rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; max-width: 340px;">${escapeHtml(post.excerpt || '')}</span>
               </div>
             </div>
           </td>
@@ -980,6 +992,12 @@ document.addEventListener('DOMContentLoaded', function () {
             <span class="badge badge-sector" style="font-size: 0.76rem; background: var(--blue-light); color: var(--navy); padding: 4px 10px; border-radius: 20px; font-weight: 600;">
               ${escapeHtml(post.industry || post.category || 'Insights')}
             </span>
+          </td>
+          <td>
+            <button class="status-pill ${isFeatured ? 'status-active' : 'status-inactive'}" data-post-action="toggle-featured" data-id="${escapeHtml(post.id)}" title="Click to toggle Homepage placement" style="cursor: pointer; border: none; font-size: 0.76rem;">
+              <i class="fa-solid ${isFeatured ? 'fa-star' : 'fa-circle-minus'}" style="color: ${isFeatured ? '#F59E0B' : '#94A3B8'};"></i>
+              ${isFeatured ? 'Front Page' : 'Catalog'}
+            </button>
           </td>
           <td>
             <div style="font-size: 0.85rem; font-weight: 600; color: var(--navy);">${escapeHtml(post.date || 'Recent')}</div>
@@ -996,6 +1014,9 @@ document.addEventListener('DOMContentLoaded', function () {
           </td>
           <td style="text-align: right; white-space: nowrap; padding-right: 20px;">
             <div class="action-btn-group" style="display: inline-flex; gap: 6px;">
+              <button class="btn btn-outline btn-sm btn-icon" data-post-action="preview" data-id="${escapeHtml(post.id)}" title="Preview Article">
+                <i class="fa-solid fa-eye"></i>
+              </button>
               <button class="btn btn-outline btn-sm btn-icon" data-post-action="edit" data-id="${escapeHtml(post.id)}" title="Edit Post">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
@@ -1021,6 +1042,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (dateInput) {
         dateInput.value = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
       }
+      const featuredInput = document.getElementById('addPostFeatured');
+      if (featuredInput) featuredInput.value = 'false';
       if (addPostModal) addPostModal.classList.add('active');
     }
 
@@ -1041,6 +1064,10 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('editPostLink').value = post.link || 'insights.html';
       document.getElementById('editPostStatus').value = post.status || 'published';
       document.getElementById('editPostExcerpt').value = post.excerpt || '';
+      const contentEl = document.getElementById('editPostContent');
+      if (contentEl) contentEl.value = post.content || '';
+      const featuredEl = document.getElementById('editPostFeatured');
+      if (featuredEl) featuredEl.value = post.featuredOnHome ? 'true' : 'false';
 
       const imgInput = document.getElementById('editPostImageInput');
       const imgPrev = document.getElementById('editPostImagePreview');
@@ -1050,6 +1077,47 @@ document.addEventListener('DOMContentLoaded', function () {
       setupImagePicker('editPostImageSelectorGrid', 'editPostImageInput', 'editPostImagePreview', 'editPostImageUpload');
 
       if (editPostModal) editPostModal.classList.add('active');
+    }
+
+    function openPreviewModal(id) {
+      const post = postsStore.getById(id);
+      if (!post || !previewPostBody || !previewPostModal) return;
+
+      previewPostBody.innerHTML = `
+        <div style="margin-bottom: 16px; overflow: hidden; border-radius: 10px; max-height: 240px;">
+          <img src="${escapeHtml(post.image || 'assets/images/hero-home.jpg')}" alt="" style="width: 100%; height: 240px; object-fit: cover;" onerror="this.src='assets/images/hero-home.jpg'">
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px;">
+          <span class="badge" style="background: var(--blue-light); color: var(--navy); font-weight: 600; padding: 4px 10px; border-radius: 20px;">
+            ${escapeHtml(post.industry || post.category)}
+          </span>
+          ${post.featuredOnHome ? '<span class="badge" style="background: #FEF3C7; color: #92400E; font-weight: 600; padding: 4px 10px; border-radius: 20px;">⭐ Featured on Front Page</span>' : ''}
+          <span class="badge" style="background: ${post.status === 'published' ? '#D1FAE5' : '#F1F5F9'}; color: ${post.status === 'published' ? '#065F46' : '#64748b'}; font-weight: 600; padding: 4px 10px; border-radius: 20px;">
+            ${post.status === 'published' ? 'Published Online' : 'Draft'}
+          </span>
+        </div>
+        <h3 style="font-size: 1.35rem; color: var(--navy); margin-bottom: 10px; line-height: 1.35;">${escapeHtml(post.title)}</h3>
+        <div style="display: flex; gap: 14px; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+          <span><i class="fa-solid fa-user-pen" style="margin-right: 4px;"></i> ${escapeHtml(post.author || 'CARIYA Desk')}</span>
+          <span><i class="fa-regular fa-calendar" style="margin-right: 4px;"></i> ${escapeHtml(post.date || 'Recent')}</span>
+          <span><i class="fa-regular fa-clock" style="margin-right: 4px;"></i> ${escapeHtml(post.readTime || '4 min read')}</span>
+        </div>
+        <div style="background: #F8FAFC; border-left: 4px solid var(--blue-primary); padding: 12px 16px; border-radius: 6px; margin-bottom: 18px;">
+          <strong style="display: block; font-size: 0.85rem; color: var(--navy); margin-bottom: 4px;">Card Summary / Excerpt:</strong>
+          <p style="margin: 0; font-size: 0.92rem; color: var(--text-main);">${escapeHtml(post.excerpt || '')}</p>
+        </div>
+        <div style="font-size: 0.95rem; line-height: 1.7; color: var(--text-main);">
+          ${escapeHtml(post.content || post.excerpt || 'Full article content has not been specified yet.')}
+        </div>
+        <div style="margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.82rem; color: var(--text-muted);">Target: <code>${escapeHtml(post.link || 'insights.html')}</code></span>
+          <a href="${escapeHtml(post.link || 'insights.html')}" target="_blank" class="btn btn-outline btn-sm">
+            Open Live Destination &rarr;
+          </a>
+        </div>
+      `;
+
+      previewPostModal.classList.add('active');
     }
 
     function openDeleteModal(id) {
@@ -1077,8 +1145,10 @@ document.addEventListener('DOMContentLoaded', function () {
           readTime: document.getElementById('addPostReadTime').value.trim(),
           link: document.getElementById('addPostLink').value.trim(),
           status: document.getElementById('addPostStatus').value,
+          featuredOnHome: document.getElementById('addPostFeatured') ? (document.getElementById('addPostFeatured').value === 'true') : false,
           image: document.getElementById('addPostImageInput').value.trim(),
-          excerpt: document.getElementById('addPostExcerpt').value.trim()
+          excerpt: document.getElementById('addPostExcerpt').value.trim(),
+          content: document.getElementById('addPostContent') ? document.getElementById('addPostContent').value.trim() : ''
         };
 
         const created = postsStore.add(newPost);
@@ -1105,8 +1175,10 @@ document.addEventListener('DOMContentLoaded', function () {
           readTime: document.getElementById('editPostReadTime').value.trim(),
           link: document.getElementById('editPostLink').value.trim(),
           status: document.getElementById('editPostStatus').value,
+          featuredOnHome: document.getElementById('editPostFeatured') ? (document.getElementById('editPostFeatured').value === 'true') : false,
           image: document.getElementById('editPostImageInput').value.trim(),
-          excerpt: document.getElementById('editPostExcerpt').value.trim()
+          excerpt: document.getElementById('editPostExcerpt').value.trim(),
+          content: document.getElementById('editPostContent') ? document.getElementById('editPostContent').value.trim() : ''
         };
 
         const updated = postsStore.update(id, updateData);
@@ -1138,10 +1210,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (resetPostsBtn) {
       resetPostsBtn.addEventListener('click', function () {
-        if (confirm('Reset all front page articles back to official CARIYA Global defaults? Any custom posts will be overwritten.')) {
+        if (confirm('Reset all articles back to official CARIYA Global defaults? All custom changes will be restored to defaults.')) {
           postsStore.saveAll(window.DEFAULT_POSTS);
           renderPostsTable();
-          showToast('Front page posts reset to official defaults', 'info');
+          showToast('Articles catalog reset to official defaults', 'info');
         }
       });
     }
@@ -1149,6 +1221,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Filter Listeners
     if (searchPostInput) searchPostInput.addEventListener('input', renderPostsTable);
     if (filterPostCategorySelect) filterPostCategorySelect.addEventListener('change', renderPostsTable);
+    if (filterPostFeaturedSelect) filterPostFeaturedSelect.addEventListener('change', renderPostsTable);
     if (filterPostStatusSelect) filterPostStatusSelect.addEventListener('change', renderPostsTable);
 
     // Delegated actions for Posts
@@ -1159,7 +1232,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const action = btn.getAttribute('data-post-action');
       const id = btn.getAttribute('data-id');
 
-      if (action === 'edit') {
+      if (action === 'preview') {
+        openPreviewModal(id);
+      } else if (action === 'edit') {
         openEditModal(id);
       } else if (action === 'delete') {
         openDeleteModal(id);
@@ -1168,6 +1243,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (toggled) {
           renderPostsTable();
           showToast(`Article status set to ${toggled.status}`, 'info');
+        }
+      } else if (action === 'toggle-featured') {
+        const toggled = postsStore.toggleFeatured(id);
+        if (toggled) {
+          renderPostsTable();
+          showToast(`Article ${toggled.featuredOnHome ? 'featured on Front Page' : 'moved to standard catalog'}`, 'info');
         }
       }
     });
