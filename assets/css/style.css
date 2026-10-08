@@ -612,7 +612,8 @@ p {
   font-size: 0.88rem;
   color: var(--text-muted);
 }
-.lead-form {
+.lead-form,
+.contact-form {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -623,26 +624,97 @@ p {
   gap: 6px;
   text-align: left;
 }
-.form-field label {
-  font-size: 0.82rem;
+.form-field label,
+.contact-form label,
+.lead-form label {
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--navy);
+  display: block;
 }
-.form-field input, .form-field select, .form-field textarea {
+.form-field input,
+.form-field select,
+.form-field textarea,
+.contact-form input,
+.contact-form select,
+.contact-form textarea,
+.lead-form input,
+.lead-form select,
+.lead-form textarea {
   width: 100%;
   padding: 12px 14px;
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
   font-size: 0.92rem;
+  font-family: inherit;
   background: var(--bg-surface);
   color: var(--text-main);
   transition: all var(--transition-fast);
+  box-sizing: border-box;
 }
-.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus,
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus,
+.lead-form input:focus,
+.lead-form select:focus,
+.lead-form textarea:focus {
   outline: none;
   border-color: var(--red);
   background: #FFFFFF;
   box-shadow: 0 0 0 3px var(--red-glow);
+}
+.contact-form textarea,
+.lead-form textarea,
+.form-field textarea {
+  resize: vertical;
+  min-height: 85px;
+}
+.contact-form select,
+.lead-form select,
+.form-field select {
+  cursor: pointer;
+  background-color: var(--bg-surface);
+}
+
+/* Dedicated Journey & Consultation Form Card */
+.journey-form-card {
+  background: #FFFFFF;
+  color: var(--text-main);
+  border-radius: var(--radius-xl);
+  padding: 32px 28px;
+  box-shadow: 0 16px 40px rgba(11, 37, 69, 0.08);
+  border: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+.journey-form-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--blue) 100%);
+}
+.journey-form-card .btn-primary,
+.journey-form-card button[type="submit"] {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-md);
+  margin-top: 6px;
+  border: none;
+  cursor: pointer;
 }
 .btn-wa-lead {
   background: #25D366;
@@ -3057,7 +3129,7 @@ section.two-col.reverse > *,
   }
   .cols-3 { grid-template-columns: repeat(2, 1fr); }
   .two-col { grid-template-columns: 1fr; gap: 32px; }
-  .two-col-media { max-width: 520px; margin: 0 auto; }
+  .two-col-media, .journey-form-card { max-width: 540px; margin: 0 auto; }
   .trust-grid { grid-template-columns: 1fr; gap: 32px; }
   .faq-list-2col { grid-template-columns: 1fr; }
   .wa-band-inner { grid-template-columns: 1fr; }
@@ -3071,6 +3143,7 @@ section.two-col.reverse > *,
   .finder-row { grid-template-columns: 1fr; }
   .wa-band { padding: 32px 20px; }
   .answer-block { padding: 22px 20px; }
+  .journey-form-card { padding: 22px 16px; }
   .hero-cta { flex-direction: column; width: 100%; }
   .hero-cta .btn { width: 100%; }
 }

@@ -69,17 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const nameInput = form.querySelector('input[name="waName"], input[name="name"]');
       const phoneInput = form.querySelector('input[name="waPhone"], input[name="phone"]');
-      const courseInput = form.querySelector('select[name="waCourse"], select[name="interest"], select[name="course"]');
+      const emailInput = form.querySelector('input[name="email"], input[name="waEmail"]');
+      const courseInput = form.querySelector('select[name="waCourse"], select[name="interest"], select[name="course"], select[name="goal"]');
       const msgInput = form.querySelector('textarea[name="message"]');
 
       const name = nameInput ? nameInput.value.trim() : 'Prospective Student';
       const phone = phoneInput ? phoneInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
       const course = courseInput ? courseInput.value : 'General Enquiry';
       const message = msgInput ? msgInput.value.trim() : '';
 
       let text = `Hello CARIYA Global!%0A%0A*Name:* ${encodeURIComponent(name)}`;
       if (phone) text += `%0A*Phone:* ${encodeURIComponent(phone)}`;
-      if (course) text += `%0A*Course / Interest:* ${encodeURIComponent(course)}`;
+      if (email) text += `%0A*Email:* ${encodeURIComponent(email)}`;
+      if (course) text += `%0A*Goal / Interest:* ${encodeURIComponent(course)}`;
       if (message) text += `%0A*Message:* ${encodeURIComponent(message)}`;
       text += `%0A%0APlease provide guidance regarding admissions, courses, and internship pathways across Asia.`;
 
@@ -99,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForms = document.querySelectorAll('.contact-form:not([data-whatsapp])');
   contactForms.forEach(cForm => {
     cForm.addEventListener('submit', (e) => {
-      const waCourse = cForm.querySelector('select[name="interest"]');
+      const waCourse = cForm.querySelector('select[name="interest"], select[name="goal"], select[name="course"]');
       if (waCourse) {
         e.preventDefault();
         const name = cForm.querySelector('input[name="name"]')?.value || '';
@@ -108,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const interest = waCourse.value || '';
         const msg = cForm.querySelector('textarea[name="message"]')?.value || '';
 
-        let text = `Hello CARIYA Global!%0A*Name:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A*Phone:* ${encodeURIComponent(phone)}%0A*Interest:* ${encodeURIComponent(interest)}%0A*Message:* ${encodeURIComponent(msg)}`;
+        let text = `Hello CARIYA Global!%0A*Name:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A*Phone:* ${encodeURIComponent(phone)}%0A*Goal / Interest:* ${encodeURIComponent(interest)}%0A*Message:* ${encodeURIComponent(msg)}`;
         const waUrl = `https://wa.me/919115511250?text=${text}`;
         showToast('Connecting you directly via WhatsApp...', 'success');
         setTimeout(() => window.open(waUrl, '_blank'), 400);
