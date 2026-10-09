@@ -201,15 +201,29 @@ p {
   color: var(--red-light);
 }
 .top-bar-badge {
+  display: inline-flex;
+  align-items: center;
   background: rgba(214, 40, 57, 0.2);
   color: var(--red-light);
   border: 1px solid rgba(214, 40, 57, 0.4);
-  padding: 2px 8px;
+  padding: 2px 10px;
   border-radius: var(--radius-full);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+a.top-bar-badge:hover,
+a.top-bar-badge:focus-visible {
+  background: var(--red);
+  color: #FFFFFF;
+  border-color: var(--red);
+  box-shadow: 0 0 10px rgba(214, 40, 57, 0.45);
+  transform: translateY(-1px);
 }
 
 /* Sticky Main Header */
@@ -1918,7 +1932,10 @@ p {
   .footer-top {
     grid-template-columns: 1fr;
   }
-  .top-bar-right {
+  .top-bar-right span:not(.top-bar-badge) {
+    display: none;
+  }
+  .top-bar-left a[href^="mailto"] {
     display: none;
   }
   .floating-whatsapp span {
