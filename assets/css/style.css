@@ -3046,6 +3046,89 @@ section.two-col.reverse > *,
   color: var(--red-light);
   font-weight: 800;
 }
+/* WhatsApp Lead Card inside .wa-band */
+.wa-lead-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-xl);
+  padding: 34px 28px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.wa-lead-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #25D366 0%, #128C7E 100%);
+}
+
+.wa-lead-card h2 {
+  color: #FFFFFF !important;
+  font-size: clamp(1.35rem, 2.2vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.wa-lead-card p:not(.wa-lead-note) {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.wa-lead-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.wa-lead-form input,
+.wa-lead-form select {
+  width: 100%;
+  display: block;
+  padding: 13px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  background: #FFFFFF;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.wa-lead-form input::placeholder {
+  color: #718096;
+}
+
+.wa-lead-form input:focus,
+.wa-lead-form select:focus {
+  border-color: #25D366;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.3);
+}
+
+.wa-lead-form select {
+  cursor: pointer;
+  appearance: auto;
+  color: var(--text-main);
+}
+
 .wa-lead-btn {
   display: flex;
   align-items: center;
@@ -3057,23 +3140,34 @@ section.two-col.reverse > *,
   border-radius: var(--radius-md);
   padding: 14px 20px;
   font-weight: 800;
-  font-size: 0.98rem;
+  font-size: 1rem;
   font-family: var(--font-heading);
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
   width: 100%;
+  margin-top: 4px;
 }
+
 .wa-lead-btn:hover {
   background: #1EBE5D;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.45);
 }
+
+.wa-lead-btn svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
 .wa-lead-note {
-  font-size: 0.76rem;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.72);
   text-align: center;
-  margin-top: 10px;
+  margin-top: 12px;
+  margin-bottom: 0;
+  line-height: 1.4;
 }
 
 /* CTA Band */
@@ -3336,6 +3430,7 @@ section.two-col.reverse > *,
   .wa-band { padding: 32px 20px; }
   .answer-block { padding: 22px 20px; }
   .journey-form-card { padding: 22px 16px; }
+  .wa-lead-card { padding: 24px 18px; }
   .stay-updated-section { padding: 40px 0; }
   .stay-updated-card { padding: 32px 20px; border-radius: var(--radius-lg); }
   .stay-updated-widget { padding: 24px 18px; }
